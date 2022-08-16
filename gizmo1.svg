@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="610mm"
+   height="439mm"
+   viewBox="0 0 610 439"
+   version="1.1"
+   id="root"
+   sodipodi:docname="gizmo1.svg"
+   inkscape:version="1.2 (56b05e47e7, 2022-06-09, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview26"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.4575017"
+     inkscape:cx="46.655177"
+     inkscape:cy="1369.4667"
+     inkscape:window-width="1920"
+     inkscape:window-height="995"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="gizmoDateHandle" />
+  <defs
+     id="defs3799">
+    <linearGradient
+       id="linearGradient5179">
+      <stop
+         style="stop-color:#001eff;stop-opacity:1;"
+         offset="0"
+         id="stop5175" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0.50624049"
+         id="stop5546" />
+      <stop
+         style="stop-color:#ff0000;stop-opacity:1;"
+         offset="1"
+         id="stop5177" />
+    </linearGradient>
+    <linearGradient
+       xlink:href="#linearGradient5179"
+       id="linearGradient5181"
+       x1="150.40749"
+       y1="15.291453"
+       x2="203.74118"
+       y2="15.155789"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.5380474,0,0,1.5380474,266.61804,344.61067)" />
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       id="filter20028"
+       x="-0.37871015"
+       y="-0.37871015"
+       width="1.7574203"
+       height="1.7574203">
+      <feFlood
+         flood-opacity="1"
+         flood-color="rgb(32,32,0)"
+         result="flood"
+         id="feFlood20018" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite20020" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="2.4809"
+         result="blur"
+         id="feGaussianBlur20022" />
+      <feOffset
+         dx="1.38778e-16"
+         dy="1.38778e-16"
+         result="offset"
+         id="feOffset20024" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite20026" />
+    </filter>
+  </defs>
+  <g
+     id="layer1">
+    <circle
+       style="fill:#ffcc00;fill-rule:evenodd;stroke:#554400;stroke-width:0.365001;stop-color:#000000"
+       id="path4081"
+       cx="22.85927"
+       cy="378.56848"
+       r="8.1020546" />
+    <path
+       style="fill:#554400;fill-rule:evenodd;stroke:none;stroke-width:0.365001;stop-color:#000000"
+       id="path4187"
+       d="m 32.756415,211.60548 -8.979319,5.18422 0,-10.36843 z"
+       transform="matrix(0.65068539,0,0,0.65068539,5.479179,240.84813)" />
+    <rect
+       style="fill:#554400;fill-rule:evenodd;stroke:#554400;stroke-width:0.595532;stop-color:#000000"
+       id="rectDateGizmo"
+       width="546.16937"
+       height="0.93992656"
+       x="47.17572"
+       y="378.03143"
+       rx="0"
+       ry="0" />
+    <rect
+       style="fill:url(#linearGradient5181);fill-opacity:1;fill-rule:evenodd;stroke:#554400;stroke-width:0.443491;stop-color:#000000"
+       id="rect5018"
+       width="99.231041"
+       height="8.8259172"
+       x="490.90375"
+       y="363.25189"
+       ry="4.4129586"
+       rx="4.6434426" />
+    <g
+       id="gizmoDateHandle">
+      <path
+         id="gizmoDateBubble"
+         style="fill:#ffcc00;fill-rule:evenodd;stroke:#554400;stroke-width:0.365001;image-rendering:auto;stop-color:#000000"
+         d="m 30.230302,362.3833 h 36.595837 c 2.39527,0 4.32359,1.95086 4.32359,4.37412 0,2.42326 -1.92832,4.37412 -4.32359,4.37412 H 49.875045 l -1.670273,6.71776 -1.487523,-6.71776 H 30.230302 c -2.39527,0 -4.323591,-1.95086 -4.323591,-4.37412 0,-2.42326 1.928321,-4.37412 4.323591,-4.37412 z"
+         onmouseover=""
+         sodipodi:nodetypes="sssscccsss" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61615px;line-height:1.25;font-family:Homework;-inkscape-font-specification:Homework;letter-spacing:0px;word-spacing:0px;fill:#554400;fill-opacity:1;stroke:none;stroke-width:0.234006"
+         x="48.231136"
+         y="368.56406"
+         id="gizmoDateText2"><tspan
+           id="gizmoDateText"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;fill:#554400;fill-opacity:1;stroke-width:0.234006"
+           x="48.231136"
+           y="368.56406">Sat 16, 3 AM</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:Homework;-inkscape-font-specification:Homework;letter-spacing:0px;word-spacing:0px;mix-blend-mode:difference;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="493.59042"
+       y="369.85672"
+       id="text13769"><tspan
+         id="tspan13767"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';fill:#ffffff;stroke-width:0.264583"
+         x="493.59042"
+         y="369.85672">MPH&gt;  1     2    3    4    5    6</tspan></text>
+  </g>
+</svg>

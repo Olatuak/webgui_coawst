@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Brython test</title>
+<meta charset="iso-8859-1">
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1,maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script src="https://cdn.jsdelivr.net/npm/brython@3/brython.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/brython@3/brython_stdlib.js"></script>
+<link rel="stylesheet" type="text/css" href="navi.css" />
+<link rel="apple-touch-icon" href="icon.png"/>
+<link rel="apple-touch-startup-image" href="splash.png">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin="anonymous"/>
+
+
+ <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin="anonymous"></script>
+
+<script src="easy-button.js"></script>
+<script type="text/python" src="show_source.py"></script>
+<style>
+
+#container{
+    text-align: center;
+}
+#mapid{
+    height: 800px;
+    width: 1000px;
+}
+
+.img-overlay-wrap {
+  position: relative;
+  display: inline-block; /* <= shrinks container to image size */
+}
+.img-overlay-wrap svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+
+.img-overlay-wrap mapid {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.gizmo {
+  fill: #94a3ab;
+  transition: 0.5s;
+}
+
+.gizmo:hover {
+
+  filter: brightness(150%) drop-shadow( 0px 0px 3px rgba(200, 255, 200, 1));
+}
+
+.play2 {
+  fill: #94a3ab;
+  transition: 0.5s;
+}
+
+.play2:hover {
+  filter: brightness(150%) drop-shadow( 0px 0px 3px rgba(200, 255, 200, 1));
+}
+
+.svgtxt{
+  -webkit-touch-callout: none;
+  -webkit-user-select:none;
+  -khtml-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  -o-user-select:none;
+  user-select:none;
+}
+
+
+
+
+.img-overlay-wrap test2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+}
+</style>
+
+</head>
+<body onLoad="brython(1)">
+<i class="fa-solid fa-star"></i>
+<i class="fa-regulars fa-star"></i>
+<div id="header">
+    <H1>Your position</H1>
+</div>
+
+<div id="container">
+    <div id="coords"></div>
+    <div class="img-overlay-wrap">
+        <div id="mapid"></div>
+<!--        <div id="test2">dsds</div>-->
+
+
+<svg
+   style="pointer-events:none"
+   width="1000px"
+   height="800px"
+   viewBox="0 0 610 439"
+   version="1.1"
+   id="root"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs33">
+
+    <linearGradient
+       x1="490.68201"
+       y1="367.66486"
+       x2="590.35651"
+       y2="367.66486"
+       gradientUnits="userSpaceOnUse"
+       id="cmapGrad">
+      <stop
+         style="stop-color:#f0001a;stop-opacity:0.91489273;"
+         offset="0"
+         id="stop5678" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0.95294118;"
+         offset="0.48991847"
+         id="stop5691" />
+      <stop
+         style="stop-color:#3370d7;stop-opacity:1;"
+         offset="1"
+         id="stop5680" />
+    </linearGradient>
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       id="filter2251"
+       x="-0.020729406"
+       y="-0.32011349"
+       width="1.0414588"
+       height="1.640227">
+      <feFlood
+         flood-opacity="0.67451"
+         flood-color="rgb(36,49,189)"
+         result="flood"
+         id="feFlood2241" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite2243" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="2"
+         result="blur"
+         id="feGaussianBlur2245" />
+      <feOffset
+         dx="1.38778e-16"
+         dy="1.38778e-16"
+         result="offset"
+         id="feOffset2247" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite2249" />
+    </filter>
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(0,61)">
+    <circle
+       class="play2"
+       style="pointer-events:all;stroke-width:0.365001;stroke:#554400;fill-rule:evenodd;"
+       id="play2"
+       cx="22.85927"
+       cy="378.56848"
+       onmouseover=""
+       r="8.1020546" />
+    <path
+       style="fill-rule:evenodd;stroke:none;stroke-width:0.365001;stop-color:#000000"
+       id="path19"
+       d="m 32.756415,211.60548 -8.979319,5.18422 v -10.36843 z"
+       transform="matrix(0.65068539,0,0,0.65068539,5.479179,240.84813)"
+       onmouseover="" />
+    <rect
+       class="play2"
+       style="fill:#554400;fill-rule:evenodd;stroke:#554400;stroke-width:0.595532;stop-color:#000000"
+       id="rectDateGizmo"
+       width="546.16937"
+       height="0.93992656"
+       x="47.17572"
+       y="378.03143"
+       rx="0"
+       ry="0" />
+    <rect
+       style="fill:url(#cmapGrad);fill-opacity:1;fill-rule:evenodd;stroke:#554400;stroke-width:0.443491;stop-color:#000000"
+       id="rect5018"
+       width="99.231041"
+       height="8.8259172"
+       x="490.90375"
+       y="363.25189"
+       ry="4.4129586"
+       rx="4.6434426" />
+    <g
+       x="110"
+       id="gizmoDateHandle">
+      <path
+         class="gizmo"
+         id="gizmoDateBubble"
+         style="fill-rule:evenodd;stroke:#554400;stroke-width:0.365001;image-rendering:auto;stop-color:#000000;pointer-events:all"
+         d="m 30.230302,362.3833 h 36.595837 c 2.39527,0 4.32359,1.95086 4.32359,4.37412 0,2.42326 -1.92832,4.37412 -4.32359,4.37412 H 49.345878 l -1.670273,6.71776 -1.714438,-6.71776 H 30.230302 c -2.39527,0 -4.323591,-1.95086 -4.323591,-4.37412 0,-2.42326 1.928321,-4.37412 4.323591,-4.37412 z"
+         onmouseover="" />
+      <text
+         class="svgtxt"
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61615px;line-height:1.25;font-family:Homework;-inkscape-font-specification:Homework;letter-spacing:0px;word-spacing:0px;fill:#554400;fill-opacity:1;stroke:none;stroke-width:0.234006"
+         x="48.231136"
+         y="368.56406"
+         user-select="none"
+         id="gizmoDateText2"><tspan
+           id="gizmoDateText"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;fill:#554400;fill-opacity:1;stroke-width:0.234006"
+           x="48.231136"
+           y="368.56406">Sat 16, 3 AM</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:Homework;-inkscape-font-specification:Homework;letter-spacing:0px;word-spacing:0px;mix-blend-mode:difference;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="493.59042"
+       y="369.85672"
+       id="text13769"><tspan
+         id="tspan13767"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';fill:#ffffff;stroke-width:0.264583"
+         x="493.59042"
+         y="369.85672">MPH&gt;  1     2    3    4    5    6</tspan></text>
+  </g>
+  <rect
+     class="play2"
+     style="fill:#554400;fill-rule:evenodd;stroke:#554400;stroke-width:0.26595;stop-color:#000000"
+     id="rectDepthGizmo"
+     width="116.1299"
+     height="0.88159215"
+     x="89.827507"
+     y="-589.73187"
+     rx="0"
+     ry="0"
+     transform="rotate(90)" />
+  <rect
+     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000"
+     id="rect525"
+     width="2.9019623"
+     height="1.3081919"
+     x="589.21533"
+     y="88.974625" />
+  <rect
+     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000"
+     id="rect1745"
+     width="2.9019623"
+     height="1.3081919"
+     x="589.21533"
+     y="108.27399" />
+  <rect
+     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000"
+     id="rect1747"
+     width="2.9019623"
+     height="1.3081919"
+     x="589.21533"
+     y="127.57335" />
+  <rect
+     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000"
+     id="rect1749"
+     width="2.9019623"
+     height="1.3081919"
+     x="589.21533"
+     y="146.87271" />
+  <rect
+     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000"
+     id="rect1751"
+     width="2.9019623"
+     height="1.3081919"
+     x="589.21533"
+     y="166.17207" />
+  <rect
+     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000"
+     id="rect1753"
+     width="2.9019623"
+     height="1.3081919"
+     x="589.21533"
+     y="185.47144" />
+  <rect
+     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000"
+     id="rect1755"
+     width="2.9019623"
+     height="1.3081919"
+     x="589.21533"
+     y="204.7708" />
+  <g
+     id="gizmoDepthHandle">
+    <path
+       id="gizmoDepthBubble"
+       class="gizmo"
+       style="pointer-events:all;stop-color:#000000;stroke-width:0.689306;stroke:#2b0000;fill-rule:evenodd;fill:#ff8080;opacity:1;"
+       d="m 546.32994,84.470691 h 30.65138 c 1.92256,0 3.47033,1.470942 3.47033,3.298075 l 8.90745,1.538564 -8.90745,1.505089 c 0,1.827134 -1.54777,3.298075 -3.47033,3.298075 h -30.65138 c -1.92256,0 -3.47033,-1.470941 -3.47033,-3.298075 v -3.043653 c 0,-1.827133 1.54777,-3.298075 3.47033,-3.298075 z" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.43312px;line-height:1.25;font-family:Homework;-inkscape-font-specification:Homework;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.482484"
+       x="573.72479"
+       y="91.544289"
+       id="gizmoDepthText"><tspan
+         id="gizmoDepthText2"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.43312px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;stroke-width:0.482484"
+         x="561.85431"
+         y="91.544289">Surface</tspan></text>
+  </g>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15.494px;line-height:1.25;font-family:Homework;-inkscape-font-specification:Homework;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.645583;filter:url(#filter2251)"
+     x="572.37073"
+     y="-15.031613"
+     id="textCoordsDate"
+     transform="matrix(0.85015546,0,0,0.85015546,104.42984,18.801895)"><tspan
+       id="tspan310"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:end;text-anchor:end;fill:#ffffff;stroke-width:0.645583"
+       x="572.37073"
+       y="-15.031613">Text with day and coordinates</tspan></text>
+</svg>
+
+
+
+
+    </div>
+
+
+</div>
+
+<script type="text/python" src="test.py">
+
+</script>
+
+
+
+
+</body>
+</html>

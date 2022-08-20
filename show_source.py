@@ -112,9 +112,10 @@ def show(ev):
 def show_external(req):
     """Used after an Ajax request for external script."""
     show_source(req.text)
+    pass
 
 href = window.location.href
 href = href[href.rfind("/") + 1:]
 
-document.body.insertBefore(html.DIV(btn, style={"text-align": "right"}),
-    document.body.children[0])
+# document.body.insertBefore(html.DIV(btn, style={"text-align": "right"}),
+#     document.body.children[0])

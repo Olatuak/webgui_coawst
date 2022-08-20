@@ -6,47 +6,18 @@
    viewBox="0 0 610 439"
    version="1.1"
    id="root"
-   sodipodi:docname="svg.svg"
-   inkscape:version="1.2.1 (ef4d3fba62, 2022-07-19, custom)"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     id="namedview193"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     showgrid="false"
-     inkscape:zoom="1.0825"
-     inkscape:cx="682.67898"
-     inkscape:cy="491.45497"
-     inkscape:window-width="1920"
-     inkscape:window-height="1043"
-     inkscape:window-x="1920"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
   <defs
      id="defs33">
     <linearGradient
-       id="linearGradient5682">
-      <stop
-         style="stop-color:#ffffff;stop-opacity:1;"
-         offset="0"
-         id="stop5686" />
-      <stop
-         style="stop-color:#ffffff;stop-opacity:0;"
-         offset="1"
-         id="stop5688" />
-    </linearGradient>
-    <linearGradient
-       id="linearGradient5682-1">
+       x1="490.68201"
+       y1="367.66486"
+       x2="590.35651"
+       y2="367.66486"
+       gradientUnits="userSpaceOnUse"
+       id="cmapGrad"
+       gradientTransform="translate(0,21.96)">
       <stop
          style="stop-color:#f0001a;stop-opacity:0.91489273;"
          offset="0"
@@ -60,14 +31,6 @@
          offset="1"
          id="stop5680" />
     </linearGradient>
-    <linearGradient
-       xlink:href="#linearGradient5682-1"
-       id="linearGradient5684"
-       x1="490.68201"
-       y1="367.66486"
-       x2="590.35651"
-       y2="367.66486"
-       gradientUnits="userSpaceOnUse" />
     <filter
        style="color-interpolation-filters:sRGB;"
        id="filter2251"
@@ -103,110 +66,41 @@
          result="composite2"
          id="feComposite2249" />
     </filter>
-    <filter
-       style="color-interpolation-filters:sRGB;"
-       inkscape:label="Drop Shadow"
-       id="filter6043"
-       x="-0.021561956"
-       y="-0.39976618"
-       width="1.0431239"
-       height="1.7995324">
-      <feFlood
-         flood-opacity="1"
-         flood-color="rgb(32,32,0)"
-         result="flood"
-         id="feFlood6033" />
-      <feComposite
-         in="flood"
-         in2="SourceGraphic"
-         operator="in"
-         result="composite1"
-         id="feComposite6035" />
-      <feGaussianBlur
-         in="composite1"
-         stdDeviation="0.4"
-         result="blur"
-         id="feGaussianBlur6037" />
-      <feOffset
-         dx="1.38778e-16"
-         dy="1.38778e-16"
-         result="offset"
-         id="feOffset6039" />
-      <feComposite
-         in="SourceGraphic"
-         in2="offset"
-         operator="over"
-         result="fbSourceGraphic"
-         id="feComposite6041" />
-      <feColorMatrix
-         result="fbSourceGraphicAlpha"
-         in="fbSourceGraphic"
-         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
-         id="feColorMatrix8343" />
-      <feFlood
-         id="feFlood8345"
-         flood-opacity="1"
-         flood-color="rgb(32,32,0)"
-         result="flood"
-         in="fbSourceGraphic" />
-      <feComposite
-         in2="fbSourceGraphic"
-         id="feComposite8347"
-         in="flood"
-         operator="in"
-         result="composite1" />
-      <feGaussianBlur
-         id="feGaussianBlur8349"
-         in="composite1"
-         stdDeviation="0.4"
-         result="blur" />
-      <feOffset
-         id="feOffset8351"
-         dx="1.38778e-16"
-         dy="1.38778e-16"
-         result="offset" />
-      <feComposite
-         in2="offset"
-         id="feComposite8353"
-         in="fbSourceGraphic"
-         operator="over"
-         result="composite2" />
-    </filter>
   </defs>
   <g
-     id="layer1">
-    <ellipse
+     id="layer1"
+     transform="translate(0,61)">
+    <circle
        class="play2"
-       style="fill-rule:evenodd;stroke:#554400;stroke-width:0.365001;pointer-events:all"
+       style="pointer-events:all;stroke-width:0.365001;stroke:#554400;fill-rule:evenodd"
        id="play2"
        cx="22.85927"
        cy="378.56848"
        onmouseover=""
-       ry="8.1020546"
-       rx="8.1020546" />
+       r="8.1020546" />
     <path
        style="fill-rule:evenodd;stroke:none;stroke-width:0.365001;stop-color:#000000"
        id="path19"
-       d="m 32.756415,211.60548 -8.979319,5.18422 0,-10.36843 z"
+       d="m 32.756415,211.60548 -8.979319,5.18422 v -10.36843 z"
        transform="matrix(0.65068539,0,0,0.65068539,5.479179,240.84813)"
        onmouseover="" />
     <rect
        class="play2"
-       style="fill:#554400;fill-rule:evenodd;stroke:#554400;stroke-width:0.595532;stop-color:#000000"
+       style="fill:#ff00ff;fill-rule:evenodd;stroke:#800080;stroke-width:0.595532;stop-color:#000000"
        id="rectDateGizmo"
-       width="546.16937"
-       height="0.93992656"
+       width="512.76587"
+       height="0.93994141"
        x="47.17572"
        y="378.03143"
        rx="0"
        ry="0" />
     <rect
-       style="fill:url(#linearGradient5684);fill-opacity:1.0;fill-rule:evenodd;stroke:#554400;stroke-width:0.443491;stop-color:#000000"
+       style="fill:url(#cmapGrad);fill-opacity:1;fill-rule:evenodd;stroke:#554400;stroke-width:0.443491;stop-color:#000000"
        id="rect5018"
        width="99.231041"
        height="8.8259172"
        x="490.90375"
-       y="363.25189"
+       y="385.21191"
        ry="4.4129586"
        rx="4.6434426" />
     <g
@@ -215,32 +109,32 @@
       <path
          class="gizmo"
          id="gizmoDateBubble"
-         style="fill-rule:evenodd;stroke:#554400;stroke-width:0.365001;image-rendering:auto;stop-color:#000000;pointer-events:all"
-         d="m 30.230302,362.3833 h 36.595837 c 2.39527,0 4.32359,1.95086 4.32359,4.37412 0,2.42326 -1.92832,4.37412 -4.32359,4.37412 H 49.345878 l -1.670273,6.71776 -1.714438,-6.71776 H 30.230302 c -2.39527,0 -4.323591,-1.95086 -4.323591,-4.37412 0,-2.42326 1.928321,-4.37412 4.323591,-4.37412 z"
+         style="pointer-events:all;stop-color:#000000;image-rendering:auto;stroke-width:0.365001;stroke:#554400;fill-rule:evenodd;"
+         d="m 24.130302,359.9433 h 46.970454 c 2.39527,0 4.32359,1.95086 4.32359,4.37412 0,2.42326 -1.92832,4.37412 -4.32359,4.37412 H 49.345878 l -1.670273,9.15776 -1.714438,-9.15776 H 24.130302 c -2.39527,0 -4.323591,-1.95086 -4.323591,-4.37412 0,-2.42326 1.928321,-4.37412 4.323591,-4.37412 z"
          onmouseover="" />
       <text
          class="svgtxt"
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61615px;line-height:1.25;font-family:Homework;-inkscape-font-specification:Homework;letter-spacing:0px;word-spacing:0px;fill:#554400;fill-opacity:1;stroke:none;stroke-width:0.234006"
-         x="48.231136"
-         y="368.56406"
+         x="47.92844"
+         y="366.12405"
          user-select="none"
          id="gizmoDateText2"><tspan
            id="gizmoDateText"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;fill:#554400;fill-opacity:1;stroke-width:0.234006"
-           x="48.231136"
-           y="368.56406">Sat 16, 3 AM</tspan></text>
+           x="47.92844"
+           y="366.12405">Sat 16, 3 AM</tspan></text>
     </g>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;font-family:Homework;-inkscape-font-specification:Homework;letter-spacing:0px;word-spacing:0px;mix-blend-mode:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583;filter:url(#filter6043)"
+       style="user-select:none;stroke-width:0.264583;stroke:none;fill-opacity:1;fill:#ffffff;mix-blend-mode:difference;word-spacing:0px;letter-spacing:0px;-inkscape-font-specification:Homework;font-family:Homework;line-height:1.25;font-size:6.35px;font-stretch:normal;font-weight:normal;font-variant:normal;font-style:normal;"
        x="493.59042"
-       y="369.85672"
+       y="391.81674"
        id="text13769"><tspan
          id="tspan13767"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';fill:#ffffff;stroke-width:0.264583"
          x="493.59042"
-         y="369.85672">MPH&gt;  1     2    3    4    5    6</tspan></text>
+         y="391.81674">MPH&gt;  1     2    3    4    5    6</tspan></text>
   </g>
   <rect
      class="play2"
@@ -322,13 +216,21 @@
   </g>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15.494px;line-height:1.25;font-family:Homework;-inkscape-font-specification:Homework;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.645583;filter:url(#filter2251)"
+     style="user-select:none;filter:url(#filter2251);stroke-width:0.645583;stroke:none;fill-opacity:1;fill:#ffffff;text-anchor:end;word-spacing:0px;letter-spacing:0px;text-align:end;-inkscape-font-specification:Homework;font-family:Homework;line-height:1.25;font-size:15.494px;font-stretch:normal;font-weight:normal;font-variant:normal;font-style:normal;"
      x="572.37073"
      y="-15.031613"
      id="textCoordsDate"
-     transform="matrix(0.85015546,0,0,0.85015546,98.329841,23.681895)"><tspan
+     transform="matrix(0.85015546,0,0,0.85015546,104.42984,18.801895)"><tspan
        id="tspan310"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:end;text-anchor:end;fill:#ffffff;stroke-width:0.645583"
        x="572.37073"
        y="-15.031613">Text with day and coordinates</tspan></text>
+  <rect
+     style="opacity:0.992256;fill:#800080;fill-rule:evenodd;stroke:none;stroke-width:7.26215;stop-color:#000000;fill-opacity:0.55627108"
+     id="dateTick"
+     class="dateTick"
+     width="1.2513598"
+     height="2.4570351"
+     x="46.876831"
+     y="440.05548" />
 </svg>

@@ -216,13 +216,17 @@ def navi(pos):
 
     a = leaflet.marker([39.2, 2.0]).addTo(map)
 
-    print(a.__dict__.keys())
+    print(map.__dict__.keys())
 
     map.options.crs = crs
     print('KKKKKK', map.options.crs.__dict__) #tobboxstring())
 
+
+
     layer1.addTo(map)
     sapoWLLayer.addTo(map)
+
+    map.setView([39, 2], 8)
 
     print('KKKKKK', sapoWLLayer.options.__dict__)  # tobboxstring())
     print('KKKKK2', layer1.options.__dict__)  # tobboxstring())

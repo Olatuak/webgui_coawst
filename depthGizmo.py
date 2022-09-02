@@ -4,17 +4,17 @@ from browser import alert, document, window, html, svg
 
 # Global variables
 gizmoYPos = -1
-isGizmoDown = False
+isDepthGizmoDown = False
 
 y1RectDepth = -1
 y2RectDepth = -1
 
 
 def onGizmoDepthDown(event):
-    global isGizmoDown, gizmoYPos
+    global isDepthGizmoDown, gizmoYPos
 
     gizmoYPos = event.y
-    isGizmoDown = True
+    isDepthGizmoDown = True
 
     # While the button is pressed, the whole document will be listening to events. This is so events work
     # outside the normally active elements.
@@ -22,25 +22,26 @@ def onGizmoDepthDown(event):
     svgroot.style['pointer-events'] = 'all'
 
 def onGizmoDepthUp(event):
-    global isGizmoDown, gizmoYPos
+    global isDepthGizmoDown, gizmoYPos
 
-    isGizmoDown = False
-    gizmoYPos = -1
+    if isDepthGizmoDown:
+        isDepthGizmoDown = False
+        gizmoYPos = -1
 
-    # Makes the document unresponsive again (except for the normally avtive elements in the gizmo).
-    # This allows leaflet to handle the rest of events.
-    svgroot = document['root']
-    svgroot.style['pointer-events'] = 'none'
+        # Makes the document unresponsive again (except for the normally avtive elements in the gizmo).
+        # This allows leaflet to handle the rest of events.
+        svgroot = document['root']
+        svgroot.style['pointer-events'] = 'none'
 
-    # Consolidates the transforms.
-    transformList = document['gizmoDepthHandle'].transform.baseVal
-    transformList.consolidate()
+        # Consolidates the transforms.
+        transformList = document['gizmoDepthHandle'].transform.baseVal
+        transformList.consolidate()
 
 
 def onGizmoDepthMove(event):
-    global isGizmoDown, gizmoYPos, pos
+    global isDepthGizmoDown, gizmoYPos, pos
 
-    if isGizmoDown:
+    if isDepthGizmoDown:
 
         dy = event.y - gizmoYPos
         gizmoYPos = event.y

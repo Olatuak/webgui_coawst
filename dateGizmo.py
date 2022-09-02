@@ -7,7 +7,7 @@ import datetime
 xPointer = -1
 xGizmo = 0.0
 oldxPointerSVG = 0
-isGizmoDown = False
+isDateGizmoDown = False
 selectedDateIdx = 0
 
 x1RectDate = -1
@@ -99,10 +99,10 @@ def binSearchDateCloser(date, dates):
         return iL
 
 def onGizmoDateDown(event):
-    global isGizmoDown, xPointer, oldxPointerSVG
+    global isDateGizmoDown, xPointer, oldxPointerSVG
 
     xPointer = event.x
-    isGizmoDown = True
+    isDateGizmoDown = True
 
     svgroot = document['root']
     mat = svgroot.getScreenCTM()  # This is to convert screen coordinates into SVG units.
@@ -113,33 +113,43 @@ def onGizmoDateDown(event):
     svgroot = document['root']
     svgroot.style['pointer-events'] = 'all'
 
-def onGizmoDateUp(event):
-    global isGizmoDown, xPointer, selectedDateIdx, dates
+def updateDateText():
+    global isDateGizmoDown, xPointer, selectedDateIdx, dates
 
     selectDate = dates[selectedDateIdx]
-    document['textCoordsDate'].text = '%s' % selectDate.strftime('%Y-%m-%dT%H:%M:%S')
-    if onDateChange is not None:
-        onDateChange(layer, dates[selectedDateIdx])
+    strDate = '%s' % selectDate.strftime('%Y-%m-%dT%H:%M')
+    document['textDate2'].text = strDate
+    document['gizmoDateText'].text = strDate
 
-    isGizmoDown = False
-    xPointer = -1
 
-    # Makes the document unresponsive again (except for the normally avtive elements in the gizmo).
-    # This allows leaflet to handle the rest of events.
-    svgroot = document['root']
-    svgroot.style['pointer-events'] = 'none'
+def onGizmoDateUp(event):
+    global isDateGizmoDown, xPointer, selectedDateIdx, dates
 
-    # Consolidates the transforms.
-    transformList = document['gizmoDateHandle'].transform.baseVal
-    transformList.consolidate()
+    if isDateGizmoDown:
+        updateDateText()
+
+        if onDateChange is not None:
+            onDateChange(layer, dates[selectedDateIdx])
+
+        isDateGizmoDown = False
+        xPointer = -1
+
+        # Makes the document unresponsive again (except for the normally avtive elements in the gizmo).
+        # This allows leaflet to handle the rest of events.
+        svgroot = document['root']
+        svgroot.style['pointer-events'] = 'none'
+
+        # Consolidates the transforms.
+        transformList = document['gizmoDateHandle'].transform.baseVal
+        transformList.consolidate()
 
 
 
 def onGizmoDateMove(event):
-    global isGizmoDown, xPointer, pos, layer, datePos, oldxPointerSVG, dates, xGizmo, selectedDateIdx
+    global isDateGizmoDown, xPointer, pos, layer, datePos, oldxPointerSVG, dates, xGizmo, selectedDateIdx
     
     
-    if isGizmoDown:
+    if isDateGizmoDown:
 
         # dx = event.x - xPointer
         xPointer = event.x
@@ -203,10 +213,17 @@ def onGizmoDateMove(event):
         idxDate = binSearchDateCloser(date, dates)  # Index of the existing date closer to the 'date'
         date = dates[idxDate]
         selectedDateIdx = idxDate
-        gizmoDateText = document['gizmoDateText']
-        gizmoDateText.text = '%.4i-%.2i-%.2iT%.2i:%.2i' % (date.year, date.month, date.day, date.hour, date.minute)
+        # dateText = document['textDate']
 
-        print('JJJJJ', pos, binSearchDateCloser(date, dates), len(dates))
+        idxDate = binSearchDateCloser(date, dates)
+        date = dates[idxDate]
+
+        strDate = '%.4i-%.2i-%.2iT%.2i:%.2i' % (date.year, date.month, date.day, date.hour, date.minute)
+        gizmoDateText = document['gizmoDateText']
+        gizmoDateText.text = strDate
+        # dateText.text = '%.4i-%.2i-%.2iT%.2i:%.2i' % (date.year, date.month, date.day, date.hour, date.minute)
+
+        # print('JJJJJ', pos, dates[idxDate])
 
         if onDateChange is not None:
             # onDateChange(layer, date)
@@ -217,6 +234,8 @@ def onGizmoDateMove(event):
 
 
         # print(document['gizmoDateBubble'].getBoundingClientRect().__dict__)
+
+
 def setTicks(dates):
 # Puts ticks along the dates line.
     global datePos
@@ -232,12 +251,10 @@ def setTicks(dates):
             break
 
         idx += 1
-
     sampleTick = document['dateTick']
 
     # Computes the width of the dates line.
     widthDates = float(document['rectDateGizmo']['width']) - float(sampleTick['width'])
-
     # Creates all the ticks
     for idx, date in enumerate(dates):
         newTick = sampleTick.cloneNode()
@@ -248,6 +265,7 @@ def setTicks(dates):
         newTick['x'] = xTick
         datePos += [xTick]
         sampleTick.parent.append(newTick)
+
 
 
 def setupDateGizmo(lyr, dat1, dat2, txtDates, onDateChng):
@@ -283,7 +301,7 @@ def setupDateGizmo(lyr, dat1, dat2, txtDates, onDateChng):
     setTicks(dates)
 
     # Starts the date labels with the first one
-    document['textCoordsDate'].text = '%s' % dates[0].strftime('%Y-%m-%dT%H:%M:%S')
+    # document['textDate2'].text = '%s' % dates[0].strftime('%Y-%m-%dT%H:%M:%S')
     document['gizmoDateText'] = '%.4i-%.2i-%.2iT%.2i:%.2i' % (dates[0].year, dates[0].month, dates[0].day, dates[0].hour, dates[0].minute)
 
     document["gizmoDateHandle"].bind("mousedown", onGizmoDateDown)
@@ -295,4 +313,6 @@ def setupDateGizmo(lyr, dat1, dat2, txtDates, onDateChng):
     rect = document['rectDateGizmo'].getBoundingClientRect()
     x1RectDate = rect.left
     x2RectDate = rect.right
+
+    updateDateText()
 

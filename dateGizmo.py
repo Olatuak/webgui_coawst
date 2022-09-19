@@ -49,6 +49,7 @@ def binSearchDateLess(date, strDates):
 
     return iM
 
+
 def binSearchDateLarger(date, strDates):
     # Performs a binary search for the closest date in 'dates' larger than 'date'. WARNING: assumes 'dates' is ordered.
 
@@ -71,6 +72,7 @@ def binSearchDateLarger(date, strDates):
         M = convertDate(strDates[iM].strip())
 
     return iM
+
 
 def binSearchDateCloser(date, dates):
     # Performs a binary search for the closest date in 'dates'. WARNING: assumes 'dates' is ordered.
@@ -98,6 +100,7 @@ def binSearchDateCloser(date, dates):
     else:
         return iL
 
+
 def onGizmoDateDown(event):
     global isDateGizmoDown, xPointer, oldxPointerSVG
 
@@ -112,6 +115,7 @@ def onGizmoDateDown(event):
     # outside the normally active elements.
     svgroot = document['root']
     svgroot.style['pointer-events'] = 'all'
+
 
 def updateDateText():
     global isDateGizmoDown, xPointer, selectedDateIdx, dates
@@ -139,10 +143,9 @@ def onGizmoDateUp(event):
         svgroot = document['root']
         svgroot.style['pointer-events'] = 'none'
 
-        # Consolidates the transforms.
+        # Consolidates the transforms. This is to avoid having a long lst of transformations.
         transformList = document['gizmoDateHandle'].transform.baseVal
         transformList.consolidate()
-
 
 
 def onGizmoDateMove(event):
@@ -238,6 +241,7 @@ def onGizmoDateMove(event):
 
 def setTicks(dates):
 # Puts ticks along the dates line.
+
     global datePos
 
     datePos = []
@@ -265,7 +269,6 @@ def setTicks(dates):
         newTick['x'] = xTick
         datePos += [xTick]
         sampleTick.parent.append(newTick)
-
 
 
 def setupDateGizmo(lyr, dat1, dat2, txtDates, onDateChng):

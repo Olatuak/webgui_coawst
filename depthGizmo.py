@@ -21,6 +21,7 @@ def onGizmoDepthDown(event):
     svgroot = document['root']
     svgroot.style['pointer-events'] = 'all'
 
+
 def onGizmoDepthUp(event):
     global isDepthGizmoDown, gizmoYPos
 
@@ -84,6 +85,7 @@ def onGizmoDepthMove(event):
 
 
         # print(document['gizmoDateBubble'].getBoundingClientRect().__dict__)
+
 
 def setupDepthGizmo(dep1, dep2):
     global y1RectDepth, y2RectDepth

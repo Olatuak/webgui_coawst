@@ -304,7 +304,6 @@ def setupDateGizmo(lyr, dat1, dat2, txtDates, onDateChng):
     setTicks(dates)
 
     # Starts the date labels with the first one
-    # document['textDate2'].text = '%s' % dates[0].strftime('%Y-%m-%dT%H:%M:%S')
     document['gizmoDateText'] = '%.4i-%.2i-%.2iT%.2i:%.2i' % (dates[0].year, dates[0].month, dates[0].day, dates[0].hour, dates[0].minute)
 
     document["gizmoDateHandle"].bind("mousedown", onGizmoDateDown)

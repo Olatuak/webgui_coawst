@@ -14,11 +14,15 @@ request = None
 
 curDate = None
 
-layerName = 'significant_wave_height'
+# layerName = 'significant_wave_height'
+layerName = 'zeta'
 
 dateStart = datetime.datetime(2019, 2, 16, 8, 0)
 dateEnd   = datetime.datetime(2019, 2, 22, 8, 0)
-# layerName = 'zeta'
+
+dateStart = datetime.datetime(2022, 9, 22, 6, 30)
+dateEnd   = datetime.datetime(2022, 9, 23, 0, 0)
+
 
 world_map = document["mapid"]
 
@@ -33,7 +37,7 @@ def onDateChange(layer, date):
     global curDate
 
     curDate = date
-    newDate = date.strftime('%Y-%m-%dT%H:00:00.0Z')
+    newDate = date.strftime('%Y-%m-%dT%H:%M:00.0Z')
     # newDate = date.strftime('%Y-%m-%dT')  #xxxxxx
 
     # print('>>>>>', newDate)
@@ -47,6 +51,8 @@ def onDateChange(layer, date):
 
 def onPointerMove(event):
     global isPeeking, map, layerName
+
+    print (event.__dict__)
 
     latlngPointer = map.mouseEventToLatLng(event)
 
@@ -77,7 +83,7 @@ def onPointerMove(event):
         crs = 'CRS:84'
 
         fileFeatureInfo = open(reqFeatureInfo.format(wmsURL=wmsURL, layerName = layerName, crs=crs, strBBox=strBBox, mapSizeX=mapSize.x,
-                                                     mapSizeY=mapSize.y, x=round(x), y=round(y), time=curDate.strftime('%Y-%m-%dT%H:00:00.0Z')))
+                                                     mapSizeY=mapSize.y, x=round(x), y=round(y), time=curDate.strftime('%Y-%m-%dT%H:%M:00.0Z')))
         txtFeatureInfo = fileFeatureInfo.read()
 
         parser = window.DOMParser.new()
@@ -138,7 +144,7 @@ class Button(leaflet.Control):
 #         }
 
 
-fileConf = open('conf.xml')
+fileConf = open('conf2.xml')
 txtConf = fileConf.read()
 parserConf = window.DOMParser.new()
 treeConf = parserConf.parseFromString(txtConf, "application/xml")
@@ -158,8 +164,9 @@ sapoWLLayer = leaflet.tileLayer.wms(sapoWMS, {
     # 'colorscalerange': '-0.4,0.4',
     'abovemaxcolor':   "extend",
     'belowmincolor':   "extend",
-    'time':            dateStart.strftime('%Y-%m-%dT%H:00:00.0Z'),   #xxxxxxx
+    'time':            dateStart.strftime('%Y-%m-%dT%H:%M:00.0Z'),   #xxxxxxx
     'crs': crs,  #leaflet.CRS.EPSG3395,  # 'CRS:84'
+    'version': '1.3.0',
     # 'bounds': leaflet.latLngBounds([0.0,0.0],[10.0,10.0]),
     # 'center': '26.73, -81.975',
     # 'crs': leaflet.CRS.EPSG3857, #'CRS:84', #'EPSG:3857',
@@ -167,7 +174,8 @@ sapoWLLayer = leaflet.tileLayer.wms(sapoWMS, {
     # 'time': '2022-08-10',
     # 'NUMCOLORBANDS':   250,
     # 'PALETTE':  ["#D73027", "#FC8D59", "#D9EF8B",],    #'scb_bugnylorrd',
-    'styles': 'areafill/ferret',
+    # 'styles': 'areafill/ferret',
+    'styles': 'boxfill/ferret',
     # 'styles': 'areafill/scb_bugnylorrd',
     # 'sld_body': sldBody,
     # 'styles': 'raster-color-map',
@@ -222,9 +230,13 @@ print('ffdfdfd', sapoWMS)
 # #     print(457)
 # # date = open('https://thredds.socib.es/thredds/wms/operational_models/oceanographical/wave/model_run_aggregation/sapo_ib/sapo_ib_best.ncd?request=GetCapabilities&service=WMS&version=1.3.0&layer=significant_wave_height&time=2019-02-04T15:00:00.000Z')
 # stop
-fileCapabilities = open(reqCapabilities.format(wmsURL = sapoWMS, layerName = layerName, strTime = '2019-02-04T15:00:00.000Z'))
+try:
+    pass
+    # fileCapabilities = open(reqCapabilities.format(wmsURL = sapoWMS, layerName = layerName, strTime = '2019-02-04T15:00:00.000Z'))
+except:
+    pass
 
-print('ffdfdfd', sapoWMS)
+print('ffdfdf111d', sapoWMS)
 # sapoWMS
 
 # a = ajax.open('GET', 'https://thredds.socib.es/thredds/wms/operational_models/oceanographical/wave/model_run_aggregation/sapo_ib/sapo_ib_best.ncd?request=GetCapabilities&service=WMS&version=1.3.0&', False)
@@ -237,18 +249,21 @@ parser = window.DOMParser.new()
 
 # print(a.__dict__)
 # print(a.read())
-capabilities = fileCapabilities.read()
+try:
+    capabilities = fileCapabilities.read()
 
-# print('^^^^', capabilities)
+    # print('^^^^', capabilities)
 
-tree = parser.parseFromString(capabilities, "application/xml")
-capabilities = None
-# b = document(a)
-root = tree.firstChild.firstChild
+    tree = parser.parseFromString(capabilities, "application/xml")
+    capabilities = None
+    # b = document(a)
+    root = tree.firstChild.firstChild
 
-elemDimension = tree.getElementsByTagName('Dimension')
-# print(tree.textContent)
-txtDates = elemDimension[0].innerHTML.split(',')
+    elemDimension = tree.getElementsByTagName('Dimension')
+    # print(tree.textContent)
+    txtDates = elemDimension[0].innerHTML.split(',')
+except:
+    txtDates = '2022-09-22T06:30:00.000Z,2022-09-22T07:00:00.000Z,2022-09-22T07:30:00.000Z,2022-09-22T08:00:00.000Z,2022-09-22T08:30:00.000Z,2022-09-22T09:00:00.000Z,2022-09-22T09:30:00.000Z,2022-09-22T10:00:00.000Z,2022-09-22T10:30:00.000Z,2022-09-22T11:00:00.000Z,2022-09-22T11:30:00.000Z,2022-09-22T12:00:00.000Z,2022-09-22T12:30:00.000Z,2022-09-22T13:00:00.000Z,2022-09-22T13:30:00.000Z,2022-09-22T14:00:00.000Z,2022-09-22T14:30:00.000Z,2022-09-22T15:00:00.000Z,2022-09-22T15:30:00.000Z,2022-09-22T16:00:00.000Z,2022-09-22T16:30:00.000Z,2022-09-22T17:00:00.000Z,2022-09-22T17:30:00.000Z,2022-09-22T18:00:00.000Z,2022-09-22T18:30:00.000Z,2022-09-22T19:00:00.000Z,2022-09-22T19:30:00.000Z'.split(',')
 
 
 
@@ -268,7 +283,8 @@ txtDates = elemDimension[0].innerHTML.split(',')
 #     'attribution': '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 #     'crossOrigin': 'anonymous'})
 # layer1 = leaflet.tileLayer.wms('http://ows.mundialis.de/services/service?', {'layers': 'TOPO-OSM-WMS'})
-layer1 = leaflet.tileLayer.wms('http://ows.mundialis.de/services/service?', {'layers': 'SRTM30-Colored-Hillshade'})
+layer1 = leaflet.tileLayer.wms('https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?', {'layers': 'gebco_latest'})
+# layer1 = leaflet.tileLayer.wms('http://ows.mundialis.de/services/service?', {'layers': 'SRTM30-Colored-Hillshade'})
 map = leaflet.map('mapid').setView([39.25, 2], 8)
 
 # print('LLLL', document.__dict__.keys())

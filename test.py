@@ -136,7 +136,7 @@ def navi(pos):
     # document["coords"] <= ul
 
     sapoWMS = 'https://icoast.rc.ufl.edu/thredds/wms/coawst/snb/forecast/SNB_FORECAST_best.ncd'
-    sapoWMS = 'https://thredds.socib.es/thredds/wms/operational_models/oceanographical/wave/model_run_aggregation/sapo_ib/sapo_ib_best.ncd'  # xxxxxxxxx
+    # sapoWMS = 'https://thredds.socib.es/thredds/wms/operational_models/oceanographical/wave/model_run_aggregation/sapo_ib/sapo_ib_best.ncd'  # xxxxxxxxx
     print(leaflet.Proj.CRS)
 
     # print(7654321, crs.__dict__.keys())

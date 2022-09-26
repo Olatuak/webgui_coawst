@@ -5,7 +5,9 @@ import html as HTML
 from dateGizmo  import *
 from depthGizmo import *
 from colorBar   import *
+from conf       import *
 
+reloadTileOnError = False
 
 isPeeking = False
 map = None
@@ -14,14 +16,13 @@ request = None
 
 curDate = None
 
-# layerName = 'significant_wave_height'
-layerName = 'zeta'
+
 
 dateStart = datetime.datetime(2019, 2, 16, 8, 0)
 dateEnd   = datetime.datetime(2019, 2, 22, 8, 0)
 
-dateStart = datetime.datetime(2022, 9, 22, 6, 30)
-dateEnd   = datetime.datetime(2022, 9, 23, 0, 0)
+dateStart = datetime.datetime(2022, 9, 21, 0, 0)
+dateEnd   = datetime.datetime(2022, 11, 28, 0, 0)
 
 
 world_map = document["mapid"]
@@ -82,7 +83,8 @@ def onPointerMove(event):
 
         crs = 'CRS:84'
 
-        fileFeatureInfo = open(reqFeatureInfo.format(wmsURL=wmsURL, layerName = layerName, crs=crs, strBBox=strBBox, mapSizeX=mapSize.x,
+
+        fileFeatureInfo = open(conf.reqFeatureInfo.format(wmsURL=conf.wmsURL, layerName = layerName, crs=crs, strBBox=strBBox, mapSizeX=mapSize.x,
                                                      mapSizeY=mapSize.y, x=round(x), y=round(y), time=curDate.strftime('%Y-%m-%dT%H:%M:00.0Z')))
         txtFeatureInfo = fileFeatureInfo.read()
 
@@ -144,19 +146,33 @@ class Button(leaflet.Control):
 #         }
 
 
-fileConf = open('conf2.xml')
-txtConf = fileConf.read()
-parserConf = window.DOMParser.new()
-treeConf = parserConf.parseFromString(txtConf, "application/xml")
-wmsURL = (treeConf.getElementsByTagName('wmsurl'))[0].innerHTML
-reqFeatureInfo  = HTML.unescape(treeConf.getElementsByTagName('featureinforeq' )[0].innerHTML)
-reqCapabilities = HTML.unescape(treeConf.getElementsByTagName('capabilitiesreq')[0].innerHTML)
+conf = Conf('conf3.xml')
 
+layerName = conf.layers[0]['name']
+print('JJJJJ', layerName)
 
-sapoWMS = wmsURL
+# fileConf = open('conf3.xml')
+# txtConf = fileConf.read()
+# parserConf = window.DOMParser.new()
+# treeConf = parserConf.parseFromString(txtConf, "application/xml")
+# wmsURL = (treeConf.getElementsByTagName('wmsurl'))[0].innerHTML
+# reqFeatureInfo  = HTML.unescape(treeConf.getElementsByTagName('featureinforeq' )[0].innerHTML)
+# reqCapabilities = HTML.unescape(treeConf.getElementsByTagName('capabilitiesreq')[0].innerHTML)
+
+print('DFJKLDFJKLS')
+print('DFJKLDFJKLS')
+print('DFJKLDFJKLS')
+print('DFJKLDFJKLS')
+print('DFJKLDFJKLS')
+print('DFJKLDFJKLS')
+print('DFJKLDFJKLS')
+print('DFJKLDFJKLS', conf.wmsURL)
+print('DFJKLDFJKLS')
+print('DFJKLDFJKLS')
+print('DFJKLDFJKLS')
+sapoWMS = conf.wmsURL
 
 sapoWLLayer = leaflet.tileLayer.wms(sapoWMS, {
-    # 'layers':          'zeta',  #xxxxxxx
     'layers':          layerName,
     'format':          'image/png',
     'transparent':     True,
@@ -263,7 +279,7 @@ try:
     # print(tree.textContent)
     txtDates = elemDimension[0].innerHTML.split(',')
 except:
-    txtDates = '2022-09-22T06:30:00.000Z,2022-09-22T07:00:00.000Z,2022-09-22T07:30:00.000Z,2022-09-22T08:00:00.000Z,2022-09-22T08:30:00.000Z,2022-09-22T09:00:00.000Z,2022-09-22T09:30:00.000Z,2022-09-22T10:00:00.000Z,2022-09-22T10:30:00.000Z,2022-09-22T11:00:00.000Z,2022-09-22T11:30:00.000Z,2022-09-22T12:00:00.000Z,2022-09-22T12:30:00.000Z,2022-09-22T13:00:00.000Z,2022-09-22T13:30:00.000Z,2022-09-22T14:00:00.000Z,2022-09-22T14:30:00.000Z,2022-09-22T15:00:00.000Z,2022-09-22T15:30:00.000Z,2022-09-22T16:00:00.000Z,2022-09-22T16:30:00.000Z,2022-09-22T17:00:00.000Z,2022-09-22T17:30:00.000Z,2022-09-22T18:00:00.000Z,2022-09-22T18:30:00.000Z,2022-09-22T19:00:00.000Z,2022-09-22T19:30:00.000Z'.split(',')
+    txtDates = '2022-09-22T00:00:00.000Z,2022-09-23T00:00:00.000Z,2022-09-24T00:00:00.000Z,2022-09-25T00:00:00.000Z,2022-09-26T00:00:00.000Z'.split(',')
 
 
 
@@ -312,10 +328,11 @@ def onTileLoad(event):
 
 def onError(event):
     # If there is an error loading a tile, recreates it.
-    layer = event.target
-    fragment = document.createDocumentFragment()
-    layer._addTile(event.coords, fragment)
-    layer._level.el.appendChild(fragment)
+    if reloadTileOnError:
+        layer = event.target
+        fragment = document.createDocumentFragment()
+        layer._addTile(event.coords, fragment)
+        layer._level.el.appendChild(fragment)
 
 sapoWLLayer.on('tileload', onTileLoad)
 sapoWLLayer.on('tileerror', onError)

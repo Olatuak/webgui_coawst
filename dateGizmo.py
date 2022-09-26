@@ -242,6 +242,8 @@ def onGizmoDateMove(event):
 def setTicks(dates):
 # Puts ticks along the dates line.
 
+    print('>>>>>', dates)
+
     global datePos
 
     datePos = []
@@ -301,6 +303,7 @@ def setupDateGizmo(lyr, dat1, dat2, txtDates, onDateChng):
 
         dates += [date]
 
+    print('>>>>>', date1, date2,dates, txtDates, idxDate1, idxDate2)
     setTicks(dates)
 
     # Starts the date labels with the first one

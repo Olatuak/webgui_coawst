@@ -7,7 +7,7 @@
    width="1000px"
    style="pointer-events:none"
    sodipodi:docname="svg.svg"
-   inkscape:version="1.2.1 (ef4d3fba62, 2022-07-19, custom)"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -16,22 +16,22 @@
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:dc="http://purl.org/dc/elements/1.1/">
   <sodipodi:namedview
-     id="namedview4503"
+     id="namedview61"
      pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
+     bordercolor="#000000"
+     borderopacity="0.25"
      inkscape:showpageshadow="2"
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
-     inkscape:zoom="3.0617724"
-     inkscape:cx="929.03706"
-     inkscape:cy="801.16995"
+     inkscape:zoom="16.94"
+     inkscape:cx="945.07084"
+     inkscape:cy="136.12751"
      inkscape:window-width="1920"
-     inkscape:window-height="1043"
-     inkscape:window-x="1920"
-     inkscape:window-y="0"
+     inkscape:window-height="1027"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="root" />
   <metadata
@@ -48,7 +48,7 @@
   <defs
      id="defs33">
     <linearGradient
-       gradientTransform="translate(-30.101538,21.96)"
+       gradientTransform="translate(-12.188635,45.709979)"
        id="cmapGrad"
        gradientUnits="userSpaceOnUse"
        y2="367.66486"
@@ -132,15 +132,6 @@
        id="rectDateGizmo"
        style="fill:#ffcc00;fill-rule:evenodd;stroke:none;stroke-width:0.74270439"
        class="play2" />
-    <rect
-       rx="4.6434426"
-       ry="4.4129586"
-       y="385.21191"
-       x="460.80215"
-       height="8.8259172"
-       width="99.231041"
-       id="rect5018"
-       style="fill:url(#cmapGrad);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.443491;stop-color:#000000" />
     <g
        style="stroke:none"
        id="gizmoDateHandle"
@@ -289,7 +280,7 @@
        id="textCoords2">   </tspan></text>
   <rect
      class="svgbutton"
-     style="pointer-events:all;opacity:0.601525;fill:#ffcc00;fill-opacity:0.78039;fill-rule:evenodd;stroke:none;stroke-width:0;stop-color:#000000;stroke-dasharray:none"
+     style="pointer-events:all;opacity:0.67537313;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stop-color:#000000;stroke-dasharray:none"
      id="btnPoint"
      width="20.425196"
      height="20.425196"
@@ -311,8 +302,8 @@
      d="M 592.0645,22.426321 H 575.58315"
      id="path1546" />
   <rect
-     class="svgbutton"
-     style="pointer-events:all;opacity:0.601525;fill:#ffcc00;fill-opacity:0.776443;fill-rule:evenodd;stroke:none;stroke-width:0;stop-color:#000000;stroke-dasharray:none"
+     class="svgLayersButton"
+     style="pointer-events:all;opacity:0.67537313;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stop-color:#000000;stroke-dasharray:none"
      id="btnLayer"
      width="20.425196"
      height="20.425196"
@@ -348,32 +339,74 @@
      transform="matrix(1,0,0.60288906,0.79782503,0,0)" />
   <text
      id="txtUnits"
-     y="452.95081"
-     x="474.11829"
+     y="415.13077"
+     x="492.4183"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;letter-spacing:0px;word-spacing:0px;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
      xml:space="preserve"><tspan
-       y="452.95081"
-       x="458.99673"
+       y="415.13077"
+       x="477.29675"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:end;text-anchor:end;fill:#000000;stroke:none;stroke-width:0.264583"
        id="tspan4288">MPH</tspan></text>
   <text
      id="textMinVal"
-     y="458.84293"
-     x="473.73685"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.26912px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.136213"
+     y="422.24289"
+     x="492.03687"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.88px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.136213"
      xml:space="preserve"><tspan
-       y="458.84293"
-       x="463.16568"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.136213"
-       id="tspan4292">-10</tspan></text>
+       y="422.24289"
+       x="481.4657"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.136213;font-size:4.88px"
+       id="textMinVal2">-10</tspan></text>
   <text
-     id="text4298"
-     y="458.84293"
-     x="568.89685"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.26912px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.136213"
+     id="textMaxVal"
+     y="422.24289"
+     x="587.19641"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.88px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.136213"
      xml:space="preserve"><tspan
-       y="458.84293"
-       x="558.32568"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.136213"
-       id="tspan4296">10</tspan></text>
+       y="422.24289"
+       x="576.62524"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.88px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.136213"
+       id="textMaxVal2">10</tspan></text>
+  <rect
+     rx="4.6434426"
+     ry="4.4129586"
+     y="408.96185"
+     x="478.71506"
+     height="8.8259172"
+     width="99.231041"
+     id="rect5018"
+     style="fill:url(#cmapGrad);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.443491;stop-color:#000000" />
+  <g
+     id="g1212"
+     class="svgLayersMenu"
+     transform="translate(0,-1.5080752)">
+    <rect
+       style="opacity:0.340675;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stroke-dasharray:none;image-rendering:auto;stop-color:#000000"
+       id="rectLayer"
+       width="38.725239"
+       height="12.49524"
+       x="555.44"
+       y="56.154789"
+       ry="4.3122425" />
+    <rect
+       style="fill:#d45500;stroke:none;stroke-width:4.99144"
+       id="rectHighlightItem1"
+       width="35.289227"
+       height="9.7225504"
+       x="557.42621"
+       y="57.673553"
+       ry="3.672962"
+       class="svgMenuItemHighlight" />
+    <text
+       xml:space="preserve"
+       style="font-size:8.13333px;opacity:1;fill:#ffcc00;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none;image-rendering:auto"
+       x="559.70013"
+       y="65.027611"
+       id="txtLayer1"
+       class="svgMenuItem"><tspan
+         id="tspan1168"
+         style="font-size:8.13333px;fill:#000000;stroke:none;stroke-width:0;stroke-dasharray:none"
+         x="559.70013"
+         y="65.027611">Layer 1</tspan></text>
+  </g>
 </svg>

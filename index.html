@@ -78,8 +78,21 @@
 }
 
 .svgbutton:hover {
-
   filter: brightness(150%) drop-shadow( 0px 0px 3px rgba(200, 255, 200, 1));
+}
+
+.svgLayersButton {
+  fill: #94a3ab;
+  transition: 0.5s;
+}
+
+.svgLayersButton:hover {
+  filter: brightness(150%) drop-shadow( 0px 0px 3px rgba(200, 255, 200, 1));
+}
+
+.svgLayersButton:hover ~ .svgLayersMenu {
+  filter: brightness(150%) drop-shadow( 0px 0px 3px rgba(200, 255, 200, 1));
+  opacity: 1;
 }
 
 .play2 {
@@ -109,6 +122,49 @@
   left: 0;
   z-index: 2;
 }
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
 }
 </style>
 
@@ -121,6 +177,14 @@
 <!--</div>-->
 
 <div id="header"><img src="header.png"></div>
+<div class="dropdown">
+  <button class="dropbtn">Dropdown</button>
+  <div class="dropdown-content">
+    <a href="#">Link 1</a>
+    <a href="#">Link 2</a>
+    <a href="#">Link 3</a>
+  </div>
+</div>
 <div id="container">
 <!--    <div id="coords"></div>-->
     <div class="img-overlay-wrap">
@@ -154,7 +218,7 @@
   <defs
      id="defs33">
     <linearGradient
-       gradientTransform="translate(-30.101538,21.96)"
+       gradientTransform="translate(-12.188635,45.709979)"
        id="cmapGrad"
        gradientUnits="userSpaceOnUse"
        y2="367.66486"
@@ -238,15 +302,6 @@
        id="rectDateGizmo"
        style="fill:#ffcc00;fill-rule:evenodd;stroke:none;stroke-width:0.74270439"
        class="play2" />
-    <rect
-       rx="4.6434426"
-       ry="4.4129586"
-       y="385.21191"
-       x="460.80215"
-       height="8.8259172"
-       width="99.231041"
-       id="rect5018"
-       style="fill:url(#cmapGrad);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.443491;stop-color:#000000" />
     <g
        style="stroke:none"
        id="gizmoDateHandle"
@@ -395,7 +450,7 @@
        id="textCoords2">   </tspan></text>
   <rect
      class="svgbutton"
-     style="pointer-events:all;opacity:0.601525;fill:#ffcc00;fill-opacity:0.78039;fill-rule:evenodd;stroke:none;stroke-width:0;stop-color:#000000;stroke-dasharray:none"
+     style="pointer-events:all;opacity:0.67537313;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stop-color:#000000;stroke-dasharray:none"
      id="btnPoint"
      width="20.425196"
      height="20.425196"
@@ -417,8 +472,8 @@
      d="M 592.0645,22.426321 H 575.58315"
      id="path1546" />
   <rect
-     class="svgbutton"
-     style="pointer-events:all;opacity:0.601525;fill:#ffcc00;fill-opacity:0.776443;fill-rule:evenodd;stroke:none;stroke-width:0;stop-color:#000000;stroke-dasharray:none"
+     class="svgLayersButton"
+     style="pointer-events:all;opacity:0.67537313;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stop-color:#000000;stroke-dasharray:none"
      id="btnLayer"
      width="20.425196"
      height="20.425196"
@@ -454,35 +509,77 @@
      transform="matrix(1,0,0.60288906,0.79782503,0,0)" />
   <text
      id="txtUnits"
-     y="452.95081"
-     x="474.11829"
+     y="415.13077"
+     x="492.4183"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;letter-spacing:0px;word-spacing:0px;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
      xml:space="preserve"><tspan
-       y="452.95081"
-       x="458.99673"
+       y="415.13077"
+       x="477.29675"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:end;text-anchor:end;fill:#000000;stroke:none;stroke-width:0.264583"
        id="tspan4288">MPH</tspan></text>
   <text
      id="textMinVal"
-     y="458.84293"
-     x="473.73685"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.26912px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.136213"
+     y="422.24289"
+     x="492.03687"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.88px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.136213"
      xml:space="preserve"><tspan
-       y="458.84293"
-       x="463.16568"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.136213"
+       y="422.24289"
+       x="481.4657"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.136213;font-size:4.88px"
        id="textMinVal2">-10</tspan></text>
   <text
      id="textMaxVal"
-     y="458.84293"
-     x="568.89685"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.26912px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.136213"
+     y="422.24289"
+     x="587.19641"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.88px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.136213"
      xml:space="preserve"><tspan
-       y="458.84293"
-       x="558.32568"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.136213"
+       y="422.24289"
+       x="576.62524"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.88px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.136213"
        id="textMaxVal2">10</tspan></text>
+  <rect
+     rx="4.6434426"
+     ry="4.4129586"
+     y="408.96185"
+     x="478.71506"
+     height="8.8259172"
+     width="99.231041"
+     id="rect5018"
+     style="fill:url(#cmapGrad);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.443491;stop-color:#000000" />
+  <g
+     id="menuLayers"
+     class="svgLayersMenu">
+    <rect
+       style="opacity:0.340675;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stroke-dasharray:none;image-rendering:auto;stop-color:#000000"
+       id="rectLayer"
+       width="38.725239"
+       height="12.49524"
+       x="555.44"
+       y="56.154789"
+       ry="3.1959491" />
+    <rect
+       style="fill:#d45500;stroke:none;stroke-width:4.99144"
+       id="rectHighlightItem1"
+       width="35.289227"
+       height="9.7225504"
+       x="557.42621"
+       y="57.673553"
+       ry="1.6564345"
+       class="svgMenuItemHighlight" />
+    <text
+       xml:space="preserve"
+       style="font-size:8.13333px;opacity:1;fill:#ffcc00;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none;image-rendering:auto"
+       x="559.70013"
+       y="65.027611"
+       id="txtLayer1"
+       class="svgMenuItem"><tspan
+         id="tspan1168"
+         style="font-size:8.13333px;fill:#000000;stroke:none;stroke-width:0;stroke-dasharray:none"
+         x="559.70013"
+         y="65.027611">Layer 1</tspan></text>
+  </g>
 </svg>
+
 
 
 

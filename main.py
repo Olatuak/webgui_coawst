@@ -6,8 +6,9 @@ from dateGizmo  import *
 from depthGizmo import *
 from colorBar   import *
 from conf       import *
+from layersMenu import *
 
-reloadTileOnError = False
+reloadTileOnError = True
 
 isPeeking = False
 map = None
@@ -33,7 +34,6 @@ leaflet = window.L
 crs = leaflet.CRS.EPSG4326
 
 
-
 def onDateChange(layer, date):
     global curDate
 
@@ -53,7 +53,7 @@ def onDateChange(layer, date):
 def onPointerMove(event):
     global isPeeking, map, layerName
 
-    print (event.__dict__)
+    # print (event.__dict__)
 
     latlngPointer = map.mouseEventToLatLng(event)
 
@@ -146,7 +146,12 @@ class Button(leaflet.Control):
 #         }
 
 
-conf = Conf('conf3.xml')
+conf = Conf('conf.xml')
+
+
+# Creates the menu with the available layers
+setupLayersMenu(conf)
+
 
 layerName = conf.layers[0]['name']
 print('JJJJJ', layerName)
@@ -247,8 +252,7 @@ print('ffdfdfd', sapoWMS)
 # # date = open('https://thredds.socib.es/thredds/wms/operational_models/oceanographical/wave/model_run_aggregation/sapo_ib/sapo_ib_best.ncd?request=GetCapabilities&service=WMS&version=1.3.0&layer=significant_wave_height&time=2019-02-04T15:00:00.000Z')
 # stop
 try:
-    pass
-    # fileCapabilities = open(reqCapabilities.format(wmsURL = sapoWMS, layerName = layerName, strTime = '2019-02-04T15:00:00.000Z'))
+    fileCapabilities = open(conf.reqCapabilities.format(wmsURL = sapoWMS, layerName = layerName, strTime = '2019-02-04T15:00:00.000Z'))
 except:
     pass
 
@@ -305,7 +309,7 @@ map = leaflet.map('mapid').setView([39.25, 2], 8)
 
 # print('LLLL', document.__dict__.keys())
 
-print(map.__dict__.keys())
+# print(map.__dict__.keys())
 
 map.options.crs = crs
 # print('KKKKKK', map.options.crs.__dict__) #tobboxstring())

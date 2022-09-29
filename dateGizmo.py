@@ -263,12 +263,10 @@ def setTicks(dates):
     widthDates = float(document['rectDateGizmo']['width']) - float(sampleTick['width'])
     # Creates all the ticks
     for idx, date in enumerate(dates):
-        newTick = sampleTick.cloneNode()
-
+        newTick = sampleTick.cloneNode(True)
         xSample = float(sampleTick['x'])
-
         xTick = xSample + widthDates * idx / (len(dates) - 1)
-        newTick['x'] = xTick
+        newTick['x'] = '%.4f' % xTick
         datePos += [xTick]
         sampleTick.parent.append(newTick)
 
@@ -303,7 +301,6 @@ def setupDateGizmo(lyr, dat1, dat2, txtDates, onDateChng):
 
         dates += [date]
 
-    print('>>>>>', date1, date2,dates, txtDates, idxDate1, idxDate2)
     setTicks(dates)
 
     # Starts the date labels with the first one

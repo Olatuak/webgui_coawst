@@ -58,7 +58,6 @@ def onGizmoDepthMove(event):
         yHandle = rect.top + rect.height/2.0
         dy = yHandle - y1RectDepth
         if dy < 0:
-            print(mat.a, mat.b, mat.c, mat.d, mat.e, mat.f)
             translate.setTranslate(0, -dy/mat.d)
         dy = y2RectDepth - yHandle
         if dy < 0:
@@ -80,11 +79,8 @@ def onGizmoDepthMove(event):
             gizmoDepthText.text = 'Surface'
         else:
             gizmoDepthText.text = '%i m' % pos
-        # print(gizmoDateText.text)
 
 
-
-        # print(document['gizmoDateBubble'].getBoundingClientRect().__dict__)
 
 
 def setupDepthGizmo(dep1, dep2):
@@ -103,5 +99,4 @@ def setupDepthGizmo(dep1, dep2):
     rect = document['rectDepthGizmo'].getBoundingClientRect()
     y1RectDepth = rect.top
     y2RectDepth = rect.bottom
-    print(y1RectDepth,y2RectDepth)
     # print (rect.__dict__)

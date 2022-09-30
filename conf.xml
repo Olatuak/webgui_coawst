@@ -1,55 +1,74 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <conf>
 
-<viewcenter>39.25, 2.0</viewcenter>
-<viewzoom>8</viewzoom>
 
-<basemaps>
-    <basemap>
-        <name>Gebco</name>
-        <url>https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?</url>
-    </basemap>
-    <basemap>
-        <name>Gebco clone</name>
-        <url>https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?</url>
-    </basemap>
-</basemaps>
+    <datefmt>%.4i-%.2i-%.2iT%.2i:%.2i</datefmt>
+    <viewcenter>39.25, 2.0</viewcenter>
+    <viewzoom>8</viewzoom>
 
-<wmsservers>
-    <server>
-        <name>socib</name>
-        <url>https://thredds.socib.es/thredds/wms/operational_models/oceanographical/wave/model_run_aggregation/sapo_ib/sapo_ib_best.ncd</url>
-        <featureinforeq>{wmsURL}?service=WMS&amp;version=1.3.0&amp;request=GetFeatureInfo&amp;CRS={crs}&amp;QUERY_LAYERS={layerName}&amp;BBOX={strBBox}&amp;INFO_FORMAT=text/xml&amp;WIDTH={mapSizeX}&amp;HEIGHT={mapSizeY}&amp;I={x}&amp;J={y}&amp;TIME={time}&amp;FEATURE_COUNT=1&amp;</featureinforeq>
-        <capabilitiesreq>{wmsURL}?request=GetCapabilities&amp;service=WMS&amp;version=1.3.0&amp;layer={layerName}&amp;time={strTime}</capabilitiesreq>
-    </server>
-</wmsservers>
 
-<layers>
-    <layer>
-        <server>socib</server>
-        <name>significant_wave_height</name>
-        <longname>L0- water levels</longname>
-        <min>-1.5</min>
-        <max>1.5</max>
-        <abovemaxcol>extend</abovemaxcol>
-        <belowmincol>extend</belowmincol>
-        <units>m</units>
-        <style>boxfill/ferret</style>
-        <visible>True</visible>
-        <transparent>True</transparent>
-    </layer>
-    <layer>
-        <server>socib</server>
-        <name>wave_height_of_swell_part</name>
-        <longname>L0- Hm0 xxxxxxxxxxxx</longname>
-        <min>-0.5</min>
-        <max>0.5</max>
-        <abovemaxcol>extend</abovemaxcol>
-        <belowmincol>extend</belowmincol>
-        <units>m</units>
-        <style>boxfill/ferret</style>
-        <visible>True</visible>
-        <transparent>True</transparent>
-    </layer>
-</layers>
+    <colormaps>
+        <!--    colors and stops should be lists as python code-->
+        <colormap>
+            <name>boxfill/ferret</name>
+            <colors>[[0.8,0.0,1.0], [0.3,0.2,1.0], [0.0,0.6,0.3], [1.0,1.0,0.0], [1.0,0.0,0.0], [0.6,0.0,0.0]]</colors>
+            <stops>[0.0/5, 1.0/5, 2.0/5, 3.0/5, 4.0/5, 5.0/5]</stops>
+        </colormap>
+    </colormaps>
+
+
+    <basemaps>
+        <basemap>
+            <name>Gebco</name>
+            <url>https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?</url>
+            <layer>gebco_latest</layer>
+        </basemap>
+        <basemap>
+            <name>Gebco clone</name>
+            <url>https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?</url>
+            <layer>gebco_latest</layer>
+        </basemap>
+    </basemaps>
+
+
+    <wmsservers>
+        <server>
+            <name>socib</name>
+            <url>https://thredds.socib.es/thredds/wms/operational_models/oceanographical/wave/model_run_aggregation/sapo_ib/sapo_ib_best.ncd</url>
+            <featureinforeq>{wmsURL}?service=WMS&amp;version=1.3.0&amp;request=GetFeatureInfo&amp;CRS={crs}&amp;QUERY_LAYERS={layerName}&amp;BBOX={strBBox}&amp;INFO_FORMAT=text/xml&amp;WIDTH={mapSizeX}&amp;HEIGHT={mapSizeY}&amp;I={x}&amp;J={y}&amp;TIME={time}&amp;FEATURE_COUNT=1&amp;</featureinforeq>
+            <capabilitiesreq>{wmsURL}?request=GetCapabilities&amp;service=WMS&amp;version=1.3.0&amp;layer={layerName}&amp;time={strTime}</capabilitiesreq>
+        </server>
+    </wmsservers>
+
+
+    <layers>
+        <layer>
+            <server>socib</server>
+            <name>significant_wave_height</name>
+            <longname>L0- water levels</longname>
+            <min>-1.5</min>
+            <max>1.5</max>
+            <abovemaxcol>extend</abovemaxcol>
+            <belowmincol>extend</belowmincol>
+            <units>m</units>
+            <style>boxfill/ferret</style>
+            <visible>True</visible>
+            <transparent>True</transparent>
+        </layer>
+        <layer>
+            <server>socib</server>
+            <name>wave_height_of_swell_part</name>
+            <longname>L0- Hm0</longname>
+            <min>-0.5</min>
+            <max>0.5</max>
+            <abovemaxcol>extend</abovemaxcol>
+            <belowmincol>extend</belowmincol>
+            <units>m</units>
+            <style>boxfill/ferret</style>
+            <visible>True</visible>
+            <transparent>True</transparent>
+        </layer>
+    </layers>
+
+
 </conf>

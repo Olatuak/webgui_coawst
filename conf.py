@@ -14,6 +14,27 @@ class Conf:
         self.viewcenter = [float(strViewcenter[0]), float(strViewcenter[1])]
         self.zoom = int(treeConf.getElementsByTagName('viewzoom')[0].innerHTML)
 
+        self.datefmt = treeConf.getElementsByTagName('datefmt')[0].innerHTML
+
+        # Reads the colormaps section
+        try:
+            colormapsSection = (treeConf.getElementsByTagName('colormaps'))[0]
+            colormaps = colormapsSection.getElementsByTagName('colormap')
+            self.colormaps = {}
+
+            for colormap in colormaps:
+                tempColormap = {'name':   colormap.getElementsByTagName('name')[0].innerHTML,
+                                'colors': eval(colormap.getElementsByTagName('colors')[0].innerHTML),
+                                'stops':  eval(colormap.getElementsByTagName('stops')[0].innerHTML),
+                               }
+                name = colormap.getElementsByTagName('name')[0].innerHTML
+                self.colormaps[name] = tempColormap
+
+
+        except:
+            print('ERROR: reading colormaps section of configuration file. Please check.')
+
+
         # Reads the basemaps section
         try:
             basemapsSection = (treeConf.getElementsByTagName('basemaps'))[0]
@@ -24,7 +45,7 @@ class Conf:
                 print(basemap)
                 tempBasemap = {'name': basemap.getElementsByTagName('name')[0].innerHTML,
                                'url':  HTML.unescape(basemap.getElementsByTagName('url')[0].innerHTML),
-
+                               'layer':HTML.unescape(basemap.getElementsByTagName('layer')[0].innerHTML),
                               }
                 self.basemaps += [tempBasemap]
 

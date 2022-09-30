@@ -9,10 +9,8 @@ from conf       import *
 from layersMenu import *
 from maps       import *
 
-reloadTileOnError = True
 
 isPeeking = False
-map = None
 
 request = None
 
@@ -24,7 +22,7 @@ dateStart = datetime.datetime(2019, 2, 16, 8, 0)
 dateEnd   = datetime.datetime(2019, 2, 22, 8, 0)
 
 dateStart = datetime.datetime(2022, 9, 21, 0, 0)
-dateEnd   = datetime.datetime(2022, 11, 28, 0, 0)
+dateEnd   = datetime.datetime(2022, 9, 26, 0, 0)
 
 
 world_map = document["mapid"]
@@ -50,8 +48,9 @@ def onDateChange(layer, date):
 
 
 def onPointerMove(event):
-    global isPeeking, map, layerName
+    global isPeeking, layerName, mapLayers
 
+    map = mapLayers.map
     latlngPointer = map.mouseEventToLatLng(event)
 
     xy2 = map.mouseEventToContainerPoint(event)
@@ -115,7 +114,7 @@ conf = Conf('conf.xml')
 # Creates the menu with the available layers
 setupLayersMenu(conf)
 
-maps = Maps(dateStart, crs, conf, leaflet)
+mapLayers = Maps(dateStart, crs, conf, leaflet)
 
 #
 # layerName = conf.layers[0]['name']
@@ -181,38 +180,13 @@ except:
 # map.setView(conf.viewcenter, conf.zoom)
 
 
-
-def onTileLoad(event):
-
-    pass
-
-def onError(event):
-    # If there is an error loading a tile, recreates it.
-    if reloadTileOnError:
-        layer = event.target
-        fragment = document.createDocumentFragment()
-        layer._addTile(event.coords, fragment)
-        layer._level.el.appendChild(fragment)
-
-print(' UNCOMMENT   ')
-print(' UNCOMMENT   ')
-print(' UNCOMMENT   ')
-print(' UNCOMMENT   ')
-# sapoWLLayer.on('tileload', onTileLoad)
-# sapoWLLayer.on('tileerror', onError)
-
 # Put marker on map
 # leaflet.marker([xyz.latitude, xyz.longitude]).addTo(map)
 
-capabilities = repr(map.getContainer())
-
-capabilities = leaflet.polygon(map, [leaflet.latLng(50.5, 30.5), leaflet.latLng(20.5, 20.5)])
-map.addLayer(capabilities)
-
 curDate = dateStart
 
-setupDateGizmo(sapoWLLayer, dateStart, dateEnd, txtDates, onDateChange)
-setupDepthGizmo(0, 10)
+setupDateGizmo(mapLayers.mainLayer, dateStart, dateEnd, txtDates, onDateChange, conf)
+setupDepthGizmo(0, 10, False)
 
 # cmap = setupCMap(document, [0,0.5,1], ['#f0ff1a', '#ffffff', '#3370d7'], -50, 50)
 

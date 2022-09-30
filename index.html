@@ -326,6 +326,10 @@
            id="gizmoDateText">Sat 16, 3 AM</tspan></text>
     </g>
   </g>
+  <g visibility = "hidden"
+     id="DepthControl">
+
+
   <rect
      transform="rotate(90)"
      ry="0"
@@ -337,48 +341,6 @@
      id="rectDepthGizmo"
      style="fill:#554400;fill-rule:evenodd;stroke:#554400;stroke-width:0.26595;stop-color:#000000"
      class="play2" />
-  <rect
-     y="88.974625"
-     x="589.21533"
-     height="1.3081919"
-     width="2.9019623"
-     id="rect525"
-     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000" />
-  <rect
-     y="108.27399"
-     x="589.21533"
-     height="1.3081919"
-     width="2.9019623"
-     id="rect1745"
-     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000" />
-  <rect
-     y="127.57335"
-     x="589.21533"
-     height="1.3081919"
-     width="2.9019623"
-     id="rect1747"
-     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000" />
-  <rect
-     y="146.87271"
-     x="589.21533"
-     height="1.3081919"
-     width="2.9019623"
-     id="rect1749"
-     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000" />
-  <rect
-     y="166.17207"
-     x="589.21533"
-     height="1.3081919"
-     width="2.9019623"
-     id="rect1751"
-     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000" />
-  <rect
-     y="185.47144"
-     x="589.21533"
-     height="1.3081919"
-     width="2.9019623"
-     id="rect1753"
-     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000" />
   <rect
      y="204.7708"
      x="589.21533"
@@ -403,6 +365,7 @@
          x="561.85431"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.43312px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;stroke-width:0.482484"
          id="gizmoDepthText2">Surface</tspan></text>
+  </g>
   </g>
   <rect
      ry="4.1256037"
@@ -507,45 +470,50 @@
      y="49.002697"
      ry="0"
      transform="matrix(1,0,0.60288906,0.79782503,0,0)" />
-  <text
-     id="txtUnits"
-     y="415.13077"
-     x="492.4183"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;letter-spacing:0px;word-spacing:0px;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-     xml:space="preserve"><tspan
+  <g
+     id="colorBar"
+     visibility="hidden"
+  translate="(100,100)">
+    <text
+       id="txtUnits"
        y="415.13077"
-       x="477.29675"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:end;text-anchor:end;fill:#000000;stroke:none;stroke-width:0.264583"
-       id="tspan4288">MPH</tspan></text>
-  <text
-     id="textMinVal"
-     y="422.24289"
-     x="492.03687"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.88px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.136213"
-     xml:space="preserve"><tspan
+       x="492.4183"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;letter-spacing:0px;word-spacing:0px;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"><tspan class="txtUnits"
+         y="415.13077"
+         x="477.29675"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:end;text-anchor:end;fill:#000000;stroke:none;stroke-width:0.264583"
+         id="tspan4288">MPH</tspan></text>
+    <text
+       id="textMinVal"
        y="422.24289"
-       x="481.4657"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.136213;font-size:4.88px"
-       id="textMinVal2">-10</tspan></text>
-  <text
-     id="textMaxVal"
-     y="422.24289"
-     x="587.19641"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.88px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.136213"
-     xml:space="preserve"><tspan
+       x="492.03687"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.88px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.136213"
+       xml:space="preserve"><tspan class="textMinVal"
+         y="422.24289"
+         x="481.4657"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.136213;font-size:4.88px"
+         id="textMinVal2">-10</tspan></text>
+    <text
+       id="textMaxVal"
        y="422.24289"
-       x="576.62524"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.88px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.136213"
-       id="textMaxVal2">10</tspan></text>
-  <rect
+       x="587.19641"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.88px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.136213"
+       xml:space="preserve"><tspan class="textMaxVal"
+         y="422.24289"
+         x="576.62524"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.88px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.136213"
+         id="textMaxVal2">10</tspan></text>
+    <rect
      rx="4.6434426"
      ry="4.4129586"
      y="408.96185"
      x="478.71506"
      height="8.8259172"
      width="99.231041"
-     id="rect5018"
+     id="rectColorBar"
      style="fill:url(#cmapGrad);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.443491;stop-color:#000000" />
+  </g>
   <g
      id="menuLayers"
      class="svgLayersMenu">

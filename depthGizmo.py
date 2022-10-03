@@ -21,7 +21,6 @@ def onGizmoDepthDown(event):
     svgroot = document['root']
     svgroot.style['pointer-events'] = 'all'
 
-
 def onGizmoDepthUp(event):
     global isDepthGizmoDown, gizmoYPos
 
@@ -37,7 +36,6 @@ def onGizmoDepthUp(event):
         # Consolidates the transforms.
         transformList = document['gizmoDepthHandle'].transform.baseVal
         transformList.consolidate()
-
 
 def onGizmoDepthMove(event):
     global isDepthGizmoDown, gizmoYPos, pos
@@ -58,7 +56,6 @@ def onGizmoDepthMove(event):
         yHandle = rect.top + rect.height/2.0
         dy = yHandle - y1RectDepth
         if dy < 0:
-            print(mat.a, mat.b, mat.c, mat.d, mat.e, mat.f)
             translate.setTranslate(0, -dy/mat.d)
         dy = y2RectDepth - yHandle
         if dy < 0:
@@ -80,28 +77,27 @@ def onGizmoDepthMove(event):
             gizmoDepthText.text = 'Surface'
         else:
             gizmoDepthText.text = '%i m' % pos
-        # print(gizmoDateText.text)
 
-
-
-        # print(document['gizmoDateBubble'].getBoundingClientRect().__dict__)
-
-
-def setupDepthGizmo(dep1, dep2):
+def setupDepthGizmo(dep1, dep2, visible = True):
     global y1RectDepth, y2RectDepth
     global depth1, depth2
 
     depth1 = dep1
     depth2 = dep2
 
-    document["gizmoDepthHandle"].bind("mousedown", onGizmoDepthDown)
-    document["gizmoDepthHandle"].bind("mouseup",   onGizmoDepthUp)
-    document["gizmoDepthHandle"].bind("mousemove", onGizmoDepthMove)
-    document["root"            ].bind("mousemove", onGizmoDepthMove)
-    document["root"            ].bind("mouseup",   onGizmoDepthUp)
+    if visible:
+        document["gizmoDepthHandle"].bind("mousedown", onGizmoDepthDown)
+        document["gizmoDepthHandle"].bind("mouseup",   onGizmoDepthUp)
+        document["gizmoDepthHandle"].bind("mousemove", onGizmoDepthMove)
+        document["root"            ].bind("mousemove", onGizmoDepthMove)
+        document["root"            ].bind("mouseup",   onGizmoDepthUp)
 
-    rect = document['rectDepthGizmo'].getBoundingClientRect()
-    y1RectDepth = rect.top
-    y2RectDepth = rect.bottom
-    print(y1RectDepth,y2RectDepth)
-    # print (rect.__dict__)
+        rect = document['rectDepthGizmo'].getBoundingClientRect()
+        y1RectDepth = rect.top
+        y2RectDepth = rect.bottom
+        # print (rect.__dict__)
+
+        document["DepthControl"]["visibility"] = "visible"
+
+    else: # if visible is False
+        document["DepthControl"]["visibility"] = "hidden"

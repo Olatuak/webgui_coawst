@@ -15,6 +15,7 @@ x2RectDate = -1
 
 onDateChange = None
 layer = None
+conf = None
 
 dates = []
 datePos = []
@@ -127,7 +128,7 @@ def updateDateText():
 
 
 def onGizmoDateUp(event):
-    global isDateGizmoDown, xPointer, selectedDateIdx, dates
+    global isDateGizmoDown, xPointer, selectedDateIdx, dates, layer
 
     if isDateGizmoDown:
         updateDateText()
@@ -187,21 +188,8 @@ def onGizmoDateMove(event):
 
         # Compute the location of the handle (as a value in [0,1]) and the date corresponding to this
         # location
+
         pos = (xGizmo) / (datePos[-1] - datePos[0])
-        # pos = max(min(pos, 1.0), 0.0)
-
-
-        # Check that the date handle is between the limits
-        # rect = document['gizmoDateHandle'].getBoundingClientRect()
-        # xHandle = rect.left + rect.width/2.0
-        # # l = float(document['rectDateGizmo']['x'])
-        # print('DDDDD', pos, xPointerSVG, datePos[0], datePos[-1])
-        # dx = xHandle - x1RectDate
-        # if dx < 0:
-        #     translate.setTranslate(-dx/mat.a, 0)
-        # dx = x2RectDate - xHandle
-        # if dx < 0:
-        #     translate.setTranslate(dx/mat.a, 0)
 
         # Consolidates the transforms.
         transformList = document['gizmoDateHandle'].transform.baseVal
@@ -212,6 +200,7 @@ def onGizmoDateMove(event):
         # # location
         # pos = (xHandle - x1RectDate)/(x2RectDate - x1RectDate)
         # pos = max(min(pos, 1.0), 0.0)
+        print(date1, date2)
         date = date1 + pos*(date2 - date1)
         idxDate = binSearchDateCloser(date, dates)  # Index of the existing date closer to the 'date'
         date = dates[idxDate]
@@ -221,7 +210,7 @@ def onGizmoDateMove(event):
         idxDate = binSearchDateCloser(date, dates)
         date = dates[idxDate]
 
-        strDate = '%.4i-%.2i-%.2iT%.2i:%.2i' % (date.year, date.month, date.day, date.hour, date.minute)
+        strDate = conf.datefmt % (date.year, date.month, date.day, date.hour, date.minute)
         gizmoDateText = document['gizmoDateText']
         gizmoDateText.text = strDate
         # dateText.text = '%.4i-%.2i-%.2iT%.2i:%.2i' % (date.year, date.month, date.day, date.hour, date.minute)
@@ -263,22 +252,23 @@ def setTicks(dates):
     widthDates = float(document['rectDateGizmo']['width']) - float(sampleTick['width'])
     # Creates all the ticks
     for idx, date in enumerate(dates):
-        newTick = sampleTick.cloneNode()
-
+        newTick = sampleTick.cloneNode(True)
         xSample = float(sampleTick['x'])
-
         xTick = xSample + widthDates * idx / (len(dates) - 1)
-        newTick['x'] = xTick
+        newTick['x'] = '%.4f' % xTick
         datePos += [xTick]
         sampleTick.parent.append(newTick)
 
 
-def setupDateGizmo(lyr, dat1, dat2, txtDates, onDateChng):
+def setupDateGizmo(lyr, dat1, dat2, txtDates, onDateChng, confFile):
     global x1RectDate, x2RectDate
     global date1, date2, dates, datePos, selectedDateIdx
     global onDateChange
     global layer
     global oldxPointerSVG, xGizmo
+    global conf
+
+    conf = confFile
 
     oldxPointerSVG = -1
     xGizmo = 0.0
@@ -303,11 +293,10 @@ def setupDateGizmo(lyr, dat1, dat2, txtDates, onDateChng):
 
         dates += [date]
 
-    print('>>>>>', date1, date2,dates, txtDates, idxDate1, idxDate2)
     setTicks(dates)
 
     # Starts the date labels with the first one
-    document['gizmoDateText'] = '%.4i-%.2i-%.2iT%.2i:%.2i' % (dates[0].year, dates[0].month, dates[0].day, dates[0].hour, dates[0].minute)
+    document['gizmoDateText'] =  conf.datefmt % (dates[0].year, dates[0].month, dates[0].day, dates[0].hour, dates[0].minute)
 
     document["gizmoDateHandle"].bind("mousedown", onGizmoDateDown)
     document["gizmoDateHandle"].bind("mouseup",   onGizmoDateUp)

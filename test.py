@@ -319,7 +319,7 @@ def navi(pos):
     setupDateGizmo(sapoWLLayer, dateStart, dateEnd, txtDates, onDateChange)
     setupDepthGizmo(0,10)
 
-    cmap = setupCMap(document, [0,0.5,1], ['#f0ff1a', '#ffffff', '#3370d7'])
+    cmap = newCMap(document, [0, 0.5, 1], ['#f0ff1a', '#ffffff', '#3370d7'])
 
     document["root"].bind("mousemove", onPointerMove)
     document["root"].bind("mousedown", onPointerDown)

@@ -34,6 +34,8 @@ leaflet = window.L
 crs = leaflet.CRS.EPSG4326
 
 
+
+
 def onDateChange(layer, date):
     global curDate
 

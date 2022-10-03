@@ -17,7 +17,7 @@
     </layer>
     <layer>
         <name>wave_height_of_swell_part</name>
-        <longname>L0- Hm0 xxxxxxxxxxxx</longname>
+        <longname>L0- Hm0</longname>
         <min>-0.5</min>
         <max>0.5</max>
         <abovemaxcol>extend</abovemaxcol>

@@ -1,4 +1,5 @@
 from browser import alert, document, window, html, svg, ajax, aio
+import struct
 import datetime
 import html as HTML
 
@@ -21,8 +22,8 @@ curDate = None
 dateStart = datetime.datetime(2019, 2, 16, 8, 0)
 dateEnd   = datetime.datetime(2019, 2, 22, 8, 0)
 
-dateStart = datetime.datetime(2022, 9, 21, 0, 0)
-dateEnd   = datetime.datetime(2022, 9, 26, 0, 0)
+dateStart = datetime.datetime(2022, 9, 30, 0, 0)
+dateEnd   = datetime.datetime(2022, 10, 6, 0, 0)
 
 
 world_map = document["mapid"]
@@ -69,8 +70,15 @@ def onPointerMove(event):
         crs = 'CRS:84'
 
 
-        fileFeatureInfo = open(conf.reqFeatureInfo.format(wmsURL=conf.wmsURL, layerName = layerName, crs=crs, strBBox=strBBox, mapSizeX=mapSize.x,
-                                                     mapSizeY=mapSize.y, x=round(x), y=round(y), time=curDate.strftime('%Y-%m-%dT%H:%M:00.0Z')))
+        server = conf.servers[0]
+
+        print(999, server['featureinforeq'])
+        print(9991, server['url'])
+        layerName = 'zeta'
+        featureReqUrl = server['featureinforeq'].format(wmsURL=server['url'], layerName = layerName, crs=crs, strBBox=strBBox, mapSizeX=mapSize.x,
+                                                        mapSizeY=mapSize.y, x=round(x), y=round(y), time=curDate.strftime('%Y-%m-%dT%H:%M:00.0Z'))
+        print(999333,featureReqUrl)
+        fileFeatureInfo = open(featureReqUrl)
         txtFeatureInfo = fileFeatureInfo.read()
 
         parser = window.DOMParser.new()
@@ -110,13 +118,16 @@ def onBtnPointClick(event):
 
 
 
-conf = Conf('conf.xml')
+conf = Conf('confTDS.xml')
+
+
+
+mapLayers = Maps(dateStart, crs, conf, leaflet)
+
 
 
 # Creates the menu with the available layers
-setupLayersMenu(conf)
-
-mapLayers = Maps(dateStart, crs, conf, leaflet)
+setupLayersMenu(conf, mapLayers)
 
 #
 # layerName = conf.layers[0]['name']
@@ -152,9 +163,13 @@ mapLayers = Maps(dateStart, crs, conf, leaflet)
 parser = window.DOMParser.new()
 
 try:
-    fileCapabilities = open(conf.reqCapabilities.format(wmsURL = sapoWMS, layerName = layerName, strTime = '2019-02-04T15:00:00.000Z'))
-
+    server = conf.servers[0]
+    print('dddd',server['capabilitiesreq'].format(wmsURL = server['url'], layerName = conf.layers[0]['name'], strTime = '2019-02-04T15:00:00.000Z'))
+    fileCapabilities = open(server['capabilitiesreq'].format(wmsURL = server['url'], layerName = conf.layers[0]['name'], strTime = '2019-02-04T15:00:00.000Z'))
+    print('ffffff',fileCapabilities)
     capabilities = fileCapabilities.read()
+
+    print('EYYYY', capabilities)
 
 
     tree = parser.parseFromString(capabilities, "application/xml")
@@ -167,6 +182,41 @@ try:
     txtDates = elemDimension[0].innerHTML.split(',')
 except:
     txtDates = '2022-09-22T00:00:00.000Z,2022-09-23T00:00:00.000Z,2022-09-24T00:00:00.000Z,2022-09-25T00:00:00.000Z,2022-09-26T00:00:00.000Z'.split(',')
+    txtDates = '2022-09-30T00:00:00.000Z,2022-10-01T00:00:00.000Z,2022-10-02T00:00:00.000Z,2022-10-03T00:00:00.000Z,2022-10-04T00:00:00.000Z'.split(',')
+
+
+print(1111111111, HTML.escape('https://icoast.rc.ufl.edu/thredds/dodsC/coawst/snb/forecast/runs/SNB_FORECAST_RUN_2022-10-27T06:00:00Z.ascii?ubar_eastward[0][0:1:2][0:1:2]'))
+# fileFeatureInfo = open(r'https://icoast.rc.ufl.edu/thredds/dodsC/coawst/L0/forecast_qck/runs/NHCI_L0_QCK_RUN_2022-11-09T00:00:00Z.ascii?u_sur_eastward%5B0%5D%5B0:1:839%5D%5B0:1:1059%5D,v_sur_northward%5B0%5D%5B0:1:839%5D%5B0:1:1059%5D')
+# fileFeatureInfo = open(r'https://icoast.rc.ufl.edu/thredds/dodsC/coawst/L0/forecast_qck/runs/NHCI_L0_QCK_RUN_2022-11-09T00:00:00Z.ascii?u_sur_eastward%5B0%5D%5B0:1:2%5D%5B0:1:2%5D,v_sur_northward%5B0%5D%5B0:1:2%5D%5B0:1:2%5D')
+# fileFeatureInfo = open('sample.bin', 'rb')
+# fileFeatureInfo = open('http://icoast.rc.ufl.edu/thredds/dodsC/coawst/L0/forecast_qck/runs/NHCI_L0_QCK_RUN_2022-11-09T00:00:00Z?u_sur_eastward[0][0:1:4][0:1:4],v_sur_northward[0][0:1:4][0:1:4]')
+# # Avoids the header
+# fileFeatureInfo.readline()
+# fileFeatureInfo.readline()
+# fileFeatureInfo.readline()
+# fileFeatureInfo.readline()
+# fileFeatureInfo.read(6)
+# for i in range(900):
+#     line = fileFeatureInfo.readline()
+#     a = [float(x) for x in (line.split(',')[1:])]
+#     print(i)
+
+# velocityLayer = leaflet.velocityLayer({
+#     'displayValues': True,
+#     'displayOptions': {
+#       'velocityType': "Global Wind",
+#       'position': "bottomleft",
+#       'emptyString': "No wind data"
+#     },
+#     'data': [[1,2,3,4,5], [1,2,3,4,5]],
+#     'maxVelocity': 15
+#   })
+# layerControl.addOverlay(velocityLayer, "Wind - Global");
+
+# data = fileFeatureInfo.read()
+# # data = struct.unpack("f"*(len(dat)//8), dat)
+# print(1111112222)
+# print(len(data)/4.0)
 
 
 

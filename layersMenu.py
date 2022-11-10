@@ -1,10 +1,33 @@
 from browser import alert, document, window, html, svg, ajax, aio
 
+checkBoxes = '◇◈'
+
+conf = None
+mapLayers = None
+
+listItemHighlightRect = []
+listItemText = []
+listItemText2 = []
 
 def onMenuClick(evt):
-    print('aaaaaaaaaaaaaaaaaaaa', evt.toElement[ 'Idx'])
+    global conf
 
-def setupLayersMenu(conf):
+    idx = int(evt.toElement['Idx'])
+
+    conf.layers[idx]['visible'] = not conf.layers[idx]['visible']
+
+    updateLayersMenu()
+
+    mapLayers.updateLayers()
+
+
+def setupLayersMenu(config, mapLyrs):
+
+    global conf, mapLayers
+    global listItemHighlightRect, listItemText, listItemText2
+
+    conf = config
+    mapLayers = mapLyrs
 
     # Populates the menu
     firstItemText          = document['txtLayer2']
@@ -15,17 +38,15 @@ def setupLayersMenu(conf):
     curItemText2 = curItemText.getElementsByTagName('tspan')[0]
     curItemHighlightRect = firstItemHighlightRect
     height = float(curItemHighlightRect['height'])
-    listItemHighlightRect = []
-    listItemText = []
-    listItemText2 = []
+
     maxWidth = 0
     # yMenuText = curItemText.y
-    # This loop makes the assumption that there is only at least one layer.
+    # This loop makes the assumption that there is at least one layer.
     for i, layer in enumerate(conf.layers):
         isLast = (i == len(conf.layers) - 1)
 
-        # print('}}}}',curItemText.getElementsByTagName('tspan').__dict__)
-        curItemText2.innerHTML = layer['longname']
+        visible = int((layer['visible']))
+        curItemText2.innerHTML = checkBoxes[visible] + '  ' + layer['longname']
 
         curItemHighlightRect['Idx'] = i
         curItemHighlightRect.bind("mousedown", onMenuClick)
@@ -39,7 +60,7 @@ def setupLayersMenu(conf):
         if not isLast:
             parent = curItemText.parent
 
-            # Finds the elements that conform each menu item (two for text, for svg reasons, one for the highlight rectangle).
+            # Finds the elements that conform each menu item (two for text (for svg reasons), one for the highlight rectangle).
             curItemHighlightRect = curItemHighlightRect.cloneNode()
             curItemText          = curItemText.cloneNode(True)
             curItemText2         = curItemText.getElementsByTagName('tspan')[0]
@@ -71,3 +92,12 @@ def setupLayersMenu(conf):
     rectMenuLayer['x'] = '%.3f' % (float(rectMenuLayer['x']) + oriWidth - maxWidth)
     rectMenuLayer['width'] = '%.3f' % (maxWidth*1.04)
     rectMenuLayer['height'] = '%.3f' % (((len(listItemText)+0.4) * height))
+
+
+def updateLayersMenu():
+    # Updates the text in the menus to reflect changes in the selected options
+    for layer, curItemText2 in zip(conf.layers, listItemText2):
+        visible = int((layer['visible']))
+        curItemText2.innerHTML = checkBoxes[visible] + '  ' + layer['longname']
+
+

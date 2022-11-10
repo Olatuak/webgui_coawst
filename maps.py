@@ -1,9 +1,15 @@
-from browser import document
+from browser import document, window
 from colorBar   import *
+# import velocityPythonAdaptor
 
-reloadTileOnError = True
+reloadTileOnError = False
 
 def onTileLoad(event):
+    # print(event.__dict__)
+    pass
+
+def onTileLoadStart(event):
+    # print(343243243,event.__dict__)
     pass
 
 def onError(event):
@@ -31,26 +37,28 @@ class Maps:
 
         # Creates all the maps.
         for layer in self.layers:
+            colorBarName = layer['colorbar']
+            colorbar = conf.colorbars[colorBarName]
             mapLayer = self.leaflet.tileLayer.wms(layer['server']['url'], {
                 'layers': layer['name'],
                 'format': 'image/png',
                 'transparent': True,
-                'colorscalerange': '0,1.4',
-                'abovemaxcolor': "extend",
-                'belowmincolor': "extend",
+                'colorscalerange': '%.4f,%.4f' % (colorbar['min'], colorbar['max']),
+                'abovemaxcolor': colorbar['abovemaxcol'],
+                'belowmincolor': colorbar['belowmincol'],
                 'time': self.date.strftime('%Y-%m-%dT%H:%M:00.0Z'),  # xxxxxxx
                 'crs': self.crs,  # leaflet.CRS.EPSG3395,  # 'CRS:84'
                 'version': '1.3.0',
-                'styles': layer['style'],
+                'styles': colorbar['style'],
             })
 
             mapLayer.on('tileload', onTileLoad)
             mapLayer.on('tileerror', onError)
+            mapLayer.on('tileloadstart', onTileLoadStart)
 
             self.listLayer +=[mapLayer]
-            print(8777, conf.colormaps.keys())
-            self.colorMaps += [newCMapFromConfig(conf.colormaps[layer['style']])]
-            self.colorBars += [createNewColorBar(self.colorMaps[-1], layer)]
+            self.colorMaps += [newCMapFromConfig(conf.colormaps[colorbar['style']])]
+            self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
 
         self.update()
 
@@ -63,8 +71,85 @@ class Maps:
         self.map = self.leaflet.map('mapid').setView(self.conf.viewcenter, self.conf.zoom)
         self.map.options.crs = self.crs
         baseLayer.addTo(self.map)
-        resetColorBars(self.colorBars) # Hide all color bars before visualizing only the ones that are visible.
-        for mapLayer, layer, colorBar in zip(self.listLayer, self.layers, self.colorBars):
+
+        aaa = window.addVelocityLayer()
+
+
+
+        aaa.addTo(self.map)
+
+        # self.leaflet.VelocityLayer.addOverlay(aaa)
+        # layerControl.addOverlay(aaa, "Ocean Current - Great Barrier Reef");
+        print(aaa.options.__dict__)
+        # print(88888, self.leaflet.control.layers(self.map).__dict__)
+
+        # self.leaflet.control.layers(self.map).addOverlay(aaa, 'fsdfdsfdsdfs')
+        # print (document.__dict__)
+        # class Uc:
+        #     def __init__(self):
+        #         self.header = {"parameterUnit": "m.s-1",
+        #                     "parameterNumber": 2,
+        #                     "dx": 1.0,
+        #                     "dy": 1.0,
+        #                     "parameterNumberName": "Eastward current",
+        #                     "la1": -7.5,
+        #                     "la2": -28.5,
+        #                     "parameterCategory": 2,
+        #                     "lo2": 156,
+        #                     "nx": 3,
+        #                     "ny": 3,
+        #                     "refTime": "2017-02-01 23:00:00",
+        #                     "lo1": 143},
+        #         self.data = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9]
+        #
+        # class Vc:
+        #     def __init__(self):
+        #         self.header = {"parameterUnit": "m.s-1",
+        #                     "parameterNumber": 2,
+        #                     "dx": 1.0,
+        #                     "dy": 1.0,
+        #                     "parameterNumberName": "Eastward current",
+        #                     "la1": -7.5,
+        #                     "la2": -28.5,
+        #                     "parameterCategory": 2,
+        #                     "lo2": 156,
+        #                     "nx": 3,
+        #                     "ny": 3,
+        #                     "refTime": "2017-02-01 23:00:00",
+        #                     "lo1": 143},
+        #         self.data = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9]
+        #
+        #
+        # data = [ Uc(), Vc()     ]
+        #
+        # velocityLayer = self.leaflet.velocityLayer({
+        #     'displayValues': True,
+        #     'displayOptions': {
+        #         'velocityType': "Global Wind",
+        #         'position': "bottomleft",
+        #         'emptyString': "No wind data"
+        #     },
+        #     'data': data,
+        #     'maxVelocity': 15
+        # })
+        # velocityLayer.addTo(self.map)
+
+        # self.updateLayers()
+
+        self.map.setView(self.conf.viewcenter, self.conf.zoom)
+
+
+    def updateLayers(self):
+
+        resetColorBarsInMap(self.colorBars)  # Hide all color bars before visualizing only the ones that are visible.
+
+        # Remove all previous layers.
+        for mapLayer in self.listLayer:
+            if self.map.hasLayer(mapLayer):
+                self.map.removeLayer(mapLayer)
+
+        # Reversed because the first layer in the menu is the one on top
+        for mapLayer, layer, colorBar in zip(reversed(self.listLayer), reversed(self.layers), reversed(self.colorBars)):
 
             if layer['visible']:
 
@@ -73,9 +158,11 @@ class Maps:
                 if self.mainLayer is None:
                     self.mainLayer = mapLayer
 
-                showColorBar(colorBar)
 
-        self.map.setView(self.conf.viewcenter, self.conf.zoom)
+
+                addColorBarToMap(colorBar)
+
+
 
 
 

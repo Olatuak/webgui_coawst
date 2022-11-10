@@ -254,6 +254,7 @@ def setTicks(dates):
     for idx, date in enumerate(dates):
         newTick = sampleTick.cloneNode(True)
         xSample = float(sampleTick['x'])
+        print(dates)
         xTick = xSample + widthDates * idx / (len(dates) - 1)
         newTick['x'] = '%.4f' % xTick
         datePos += [xTick]

@@ -6,34 +6,11 @@
    height="800px"
    width="1000px"
    style="pointer-events:none"
-   sodipodi:docname="svg.svg"
-   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:dc="http://purl.org/dc/elements/1.1/">
-  <sodipodi:namedview
-     id="namedview61"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     showgrid="false"
-     inkscape:zoom="16.94"
-     inkscape:cx="945.07084"
-     inkscape:cy="136.12751"
-     inkscape:window-width="1920"
-     inkscape:window-height="1027"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="root" />
   <metadata
      id="metadata3795">
     <rdf:RDF>
@@ -48,7 +25,7 @@
   <defs
      id="defs33">
     <linearGradient
-       gradientTransform="translate(-12.188635,45.709979)"
+       gradientTransform="translate(-375.50172,-368.20878)"
        id="cmapGrad"
        gradientUnits="userSpaceOnUse"
        y2="367.66486"
@@ -118,10 +95,10 @@
        class="play2" />
     <path
        onmouseover=""
-       transform="matrix(0.65068539,0,0,0.65068539,5.479179,240.84813)"
        d="m 32.756415,211.60548 -8.979319,5.18422 v -10.36843 z"
        id="path19"
-       style="fill-rule:evenodd;stroke:none;stroke-width:0.365001;stop-color:#000000" />
+       style="fill-rule:evenodd;stroke:none;stroke-width:0.365001;stop-color:#000000"
+       transform="matrix(0.65068539,0,0,0.65068539,5.479179,240.84813)" />
     <rect
        ry="0"
        rx="0"
@@ -138,101 +115,63 @@
        x="110">
       <path
          onmouseover=""
-         d="m 24.130302,359.9433 h 46.970454 c 2.39527,0 4.32359,1.95086 4.32359,4.37412 0,2.42326 -1.92832,4.37412 -4.32359,4.37412 H 49.345878 l -1.670273,9.15776 -1.714438,-9.15776 H 24.130302 c -2.39527,0 -4.323591,-1.95086 -4.323591,-4.37412 0,-2.42326 1.928321,-4.37412 4.323591,-4.37412 z"
-         style="pointer-events:all;stop-color:#000000;image-rendering:auto;stroke-width:0.365001;stroke:none;fill-rule:evenodd;fill:#ffcc00"
+         d="m 22.910302,359.9433 h 49.410454 c 2.39527,0 4.32359,1.95086 4.32359,4.37412 0,2.42326 -1.92832,4.37412 -4.32359,4.37412 H 49.345878 l -1.670273,9.15776 -1.714438,-9.15776 H 22.910302 c -2.39527,0 -4.323591,-1.95086 -4.323591,-4.37412 0,-2.42326 1.928321,-4.37412 4.323591,-4.37412 z"
+         style="fill:#ffcc00;fill-rule:evenodd;stroke:none;stroke-width:0.365001;image-rendering:auto;stop-color:#000000"
          id="gizmoDateBubble"
          class="gizmo" />
       <text
          id="gizmoDateText2"
          user-select="none"
-         y="366.12405"
+         y="366.32776"
          x="47.92844"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61615px;line-height:1.25;letter-spacing:0px;word-spacing:0px;fill:#554400;fill-opacity:1;stroke:none;stroke-width:0.234006"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.50667px;line-height:1.25;letter-spacing:0px;word-spacing:0px;fill:#554400;fill-opacity:1;stroke:none;stroke-width:0.234006"
          xml:space="preserve"
          class="svgtxt"><tspan
-           y="366.12405"
+           y="366.32776"
            x="47.92844"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;fill:#554400;fill-opacity:1;stroke-width:0.234006;stroke:none"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.50667px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;fill:#554400;fill-opacity:1;stroke:none;stroke-width:0.234006"
            id="gizmoDateText">Sat 16, 3 AM</tspan></text>
     </g>
   </g>
-  <rect
-     transform="rotate(90)"
-     ry="0"
-     rx="0"
-     y="-589.73187"
-     x="89.827507"
-     height="0.88159215"
-     width="116.1299"
-     id="rectDepthGizmo"
-     style="fill:#554400;fill-rule:evenodd;stroke:#554400;stroke-width:0.26595;stop-color:#000000"
-     class="play2" />
-  <rect
-     y="88.974625"
-     x="589.21533"
-     height="1.3081919"
-     width="2.9019623"
-     id="rect525"
-     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000" />
-  <rect
-     y="108.27399"
-     x="589.21533"
-     height="1.3081919"
-     width="2.9019623"
-     id="rect1745"
-     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000" />
-  <rect
-     y="127.57335"
-     x="589.21533"
-     height="1.3081919"
-     width="2.9019623"
-     id="rect1747"
-     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000" />
-  <rect
-     y="146.87271"
-     x="589.21533"
-     height="1.3081919"
-     width="2.9019623"
-     id="rect1749"
-     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000" />
-  <rect
-     y="166.17207"
-     x="589.21533"
-     height="1.3081919"
-     width="2.9019623"
-     id="rect1751"
-     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000" />
-  <rect
-     y="185.47144"
-     x="589.21533"
-     height="1.3081919"
-     width="2.9019623"
-     id="rect1753"
-     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000" />
-  <rect
-     y="204.7708"
-     x="589.21533"
-     height="1.3081919"
-     width="2.9019623"
-     id="rect1755"
-     style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000" />
   <g
-     id="gizmoDepthHandle">
-    <path
-       d="m 546.32994,84.470691 h 30.65138 c 1.92256,0 3.47033,1.470942 3.47033,3.298075 l 8.90745,1.538564 -8.90745,1.505089 c 0,1.827134 -1.54777,3.298075 -3.47033,3.298075 h -30.65138 c -1.92256,0 -3.47033,-1.470941 -3.47033,-3.298075 v -3.043653 c 0,-1.827133 1.54777,-3.298075 3.47033,-3.298075 z"
-       style="pointer-events:all;stop-color:#000000;stroke-width:0.689306;stroke:none;fill-rule:evenodd;fill:#ffcc00;opacity:1"
-       class="gizmo"
-       id="gizmoDepthBubble" />
-    <text
-       id="gizmoDepthText"
-       y="91.544289"
-       x="573.72479"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.43312px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.482484"
-       xml:space="preserve"><tspan
+     visibility="hidden"
+     id="DepthControl">
+    <rect
+       transform="rotate(90)"
+       ry="0"
+       rx="0"
+       y="-589.73187"
+       x="89.827507"
+       height="0.88159215"
+       width="116.1299"
+       id="rectDepthGizmo"
+       style="fill:#554400;fill-rule:evenodd;stroke:#554400;stroke-width:0.26595;stop-color:#000000"
+       class="play2" />
+    <rect
+       y="204.7708"
+       x="589.21533"
+       height="1.3081919"
+       width="2.9019623"
+       id="rect1755"
+       style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000" />
+    <g
+       id="gizmoDepthHandle">
+      <path
+         d="m 546.32994,84.470691 h 30.65138 c 1.92256,0 3.47033,1.470942 3.47033,3.298075 l 8.90745,1.538564 -8.90745,1.505089 c 0,1.827134 -1.54777,3.298075 -3.47033,3.298075 h -30.65138 c -1.92256,0 -3.47033,-1.470941 -3.47033,-3.298075 v -3.043653 c 0,-1.827133 1.54777,-3.298075 3.47033,-3.298075 z"
+         style="pointer-events:all;stop-color:#000000;stroke-width:0.689306;stroke:none;fill-rule:evenodd;fill:#ffcc00;opacity:1"
+         class="gizmo"
+         id="gizmoDepthBubble" />
+      <text
+         id="gizmoDepthText"
          y="91.544289"
-         x="561.85431"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.43312px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;stroke-width:0.482484"
-         id="gizmoDepthText2">Surface</tspan></text>
+         x="573.72479"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.43312px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.482484"
+         xml:space="preserve"><tspan
+           y="91.544289"
+           x="561.85431"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.43312px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;stroke-width:0.482484"
+           id="gizmoDepthText2">Surface</tspan></text>
+    </g>
   </g>
   <rect
      ry="4.1256037"
@@ -246,11 +185,11 @@
      id="textDate"
      y="1.6582582"
      x="282.46436"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.959px;line-height:1.25;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#222b00;fill-opacity:1;stroke:none;stroke-width:0.331625"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.959px;line-height:1.25;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#222b00;fill-opacity:1;stroke:none;stroke-width:0.331625;-inkscape-font-specification:'sans-serif Bold';font-family:sans-serif"
      xml:space="preserve"><tspan
        y="1.6582582"
        x="341.93777"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:center;text-anchor:middle;fill:#222b00;stroke-width:0.331625"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#222b00;stroke-width:0.331625"
        id="textDate2">       </tspan></text>
   <rect
      y="440.05548"
@@ -272,11 +211,11 @@
      id="textCoords"
      y="2.0617959"
      x="470.34454"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.959px;line-height:1.25;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#222b00;fill-opacity:1;stroke:none;stroke-width:0.331625"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.959px;line-height:1.25;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#222b00;fill-opacity:1;stroke:none;stroke-width:0.331625;-inkscape-font-specification:'sans-serif Bold';font-family:sans-serif"
      xml:space="preserve"><tspan
        y="2.0617959"
        x="529.8175"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:center;text-anchor:middle;fill:#222b00;stroke-width:0.331625"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#222b00;stroke-width:0.331625"
        id="textCoords2">   </tspan></text>
   <rect
      class="svgbutton"
@@ -337,76 +276,86 @@
      y="49.002697"
      ry="0"
      transform="matrix(1,0,0.60288906,0.79782503,0,0)" />
-  <text
-     id="txtUnits"
-     y="415.13077"
-     x="492.4183"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.25;letter-spacing:0px;word-spacing:0px;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-     xml:space="preserve"><tspan
-       y="415.13077"
-       x="477.29675"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:end;text-anchor:end;fill:#000000;stroke:none;stroke-width:0.264583"
-       id="tspan4288">MPH</tspan></text>
-  <text
-     id="textMinVal"
-     y="422.24289"
-     x="492.03687"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.88px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.136213"
-     xml:space="preserve"><tspan
-       y="422.24289"
-       x="481.4657"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.136213;font-size:4.88px"
-       id="textMinVal2">-10</tspan></text>
-  <text
-     id="textMaxVal"
-     y="422.24289"
-     x="587.19641"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.88px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.136213"
-     xml:space="preserve"><tspan
-       y="422.24289"
-       x="576.62524"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.88px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.136213"
-       id="textMaxVal2">10</tspan></text>
-  <rect
-     rx="4.6434426"
-     ry="4.4129586"
-     y="408.96185"
-     x="478.71506"
-     height="8.8259172"
-     width="99.231041"
-     id="rect5018"
-     style="fill:url(#cmapGrad);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.443491;stop-color:#000000" />
   <g
-     id="g1212"
-     class="svgLayersMenu"
-     transform="translate(0,-1.5080752)">
+     id="colorBar"
+     visibility="hidden"
+     translate="(100,100)">
+    <text
+       id="txtUnits"
+       y="2.6551161"
+       x="131.93886"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.3586px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial Bold';letter-spacing:0px;word-spacing:0px;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.348275"
+       xml:space="preserve"><tspan
+         class="txtUnits"
+         y="2.6551161"
+         x="112.03423"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:'Arial Bold';text-align:end;text-anchor:end;fill:#000000;stroke:none;stroke-width:0.348275"
+         id="tspan4288">MPH</tspan></text>
+    <text
+       id="textMinVal"
+       y="10.771124"
+       x="131.28908"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04729px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.196708"
+       xml:space="preserve"><tspan
+         class="textMinVal"
+         y="10.771124"
+         x="116.02306"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.04729px;font-family:Arial;-inkscape-font-specification:'Arial Bold';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.196708"
+         id="textMinVal2">-10</tspan></text>
+    <text
+       id="textMaxVal"
+       y="10.771124"
+       x="227.24391"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04729px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.196708"
+       xml:space="preserve"><tspan
+         class="textMaxVal"
+         y="10.771124"
+         x="211.97794"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.04729px;font-family:Arial;-inkscape-font-specification:'Arial Bold';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.196708"
+         id="textMaxVal2">10</tspan></text>
     <rect
-       style="opacity:0.340675;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stroke-dasharray:none;image-rendering:auto;stop-color:#000000"
+       rx="4.6434426"
+       ry="4.4129586"
+       y="-4.9569159"
+       x="115.40199"
+       height="8.8259172"
+       width="99.231041"
+       id="rectColorBar"
+       style="fill:url(#cmapGrad);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.443491;stop-color:#000000" />
+  </g>
+  <g
+     id="menuLayers"
+     class="svgLayersMenu">
+    <rect
+       style="pointer-events:all;opacity:0.940675;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stroke-dasharray:none;image-rendering:auto;stop-color:#000000"
        id="rectLayer"
        width="38.725239"
-       height="12.49524"
+       height="42.49524"
        x="555.44"
-       y="56.154789"
-       ry="4.3122425" />
+       y="53.154789"
+       ry="3.1959491" />
     <rect
-       style="fill:#d45500;stroke:none;stroke-width:4.99144"
+       style="pointer-events:all;fill:#d45500;stroke:none;stroke-width:4.99144"
        id="rectHighlightItem1"
        width="35.289227"
        height="9.7225504"
        x="557.42621"
-       y="57.673553"
-       ry="3.672962"
+       y="54.673553"
+       ry="1.6564345"
        class="svgMenuItemHighlight" />
     <text
        xml:space="preserve"
        style="font-size:8.13333px;opacity:1;fill:#ffcc00;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none;image-rendering:auto"
+       user-select="none"
        x="559.70013"
-       y="65.027611"
-       id="txtLayer1"
+       y="62.027611"
+       id="txtLayer2"
        class="svgMenuItem"><tspan
-         id="tspan1168"
-         style="font-size:8.13333px;fill:#000000;stroke:none;stroke-width:0;stroke-dasharray:none"
+         id="txtLayer1"
+         class="svgMenuItem"
+         user-select="none"
+         style="pointer-events:none;font-size:8.13333px;fill:#000000;stroke:none;stroke-width:0;stroke-dasharray:none"
          x="559.70013"
-         y="65.027611">Layer 1</tspan></text>
+         y="62.027611">Layer 1</tspan></text>
   </g>
 </svg>

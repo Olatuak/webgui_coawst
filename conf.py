@@ -35,6 +35,29 @@ class Conf:
             print('ERROR: reading colormaps section of configuration file. Please check.')
 
 
+        # Reads the colorbars section
+        try:
+            colorbarSection = (treeConf.getElementsByTagName('colorbars'))[0]
+            colorbars = colorbarSection.getElementsByTagName('colorbar')
+            self.colorbars = {}
+            for colorbar in colorbars:
+                tempColorbar = {'name':        colorbar.getElementsByTagName('name'       )[0].innerHTML,
+                                'longname':    colorbar.getElementsByTagName('longname'   )[0].innerHTML,
+                                'abovemaxcol': colorbar.getElementsByTagName('abovemaxcol')[0].innerHTML,
+                                'belowmincol': colorbar.getElementsByTagName('belowmincol')[0].innerHTML,
+                                'units':       colorbar.getElementsByTagName('units'      )[0].innerHTML,
+                                'style':       colorbar.getElementsByTagName('style'      )[0].innerHTML,
+                                'min':         float(colorbar.getElementsByTagName('min')[0].innerHTML),
+                                'max':         float(colorbar.getElementsByTagName('max')[0].innerHTML),
+                               }
+                name = colorbar.getElementsByTagName('name')[0].innerHTML
+                self.colorbars[name] = tempColorbar
+
+
+        except:
+            print('ERROR: reading colorbars section of configuration file. Please check.')
+
+
         # Reads the basemaps section
         try:
             basemapsSection = (treeConf.getElementsByTagName('basemaps'))[0]
@@ -62,9 +85,9 @@ class Conf:
 
             for server in servers:
                 tempBasemap = {'name':            server.getElementsByTagName('name'           )[0].innerHTML,
-                              'url':             HTML.unescape(server.getElementsByTagName('url'            )[0].innerHTML),
-                              'featureinforeq':  HTML.unescape(server.getElementsByTagName('featureinforeq' )[0].innerHTML),
-                              'capabilitiesreq': HTML.unescape(server.getElementsByTagName('capabilitiesreq')[0].innerHTML),
+                               'url':             HTML.unescape(server.getElementsByTagName('url'            )[0].innerHTML),
+                               'featureinforeq':  HTML.unescape(server.getElementsByTagName('featureinforeq' )[0].innerHTML),
+                               'capabilitiesreq': HTML.unescape(server.getElementsByTagName('capabilitiesreq')[0].innerHTML),
                               }
                 self.servers += [tempBasemap]
 
@@ -82,15 +105,9 @@ class Conf:
                 tempLayer = {'name':        layer.getElementsByTagName('name'       )[0].innerHTML,
                              'server':      layer.getElementsByTagName('server'     )[0].innerHTML,
                              'longname':    layer.getElementsByTagName('longname'   )[0].innerHTML,
-                             'abovemaxcol': layer.getElementsByTagName('abovemaxcol')[0].innerHTML,
-                             'belowmincol': layer.getElementsByTagName('belowmincol')[0].innerHTML,
-                             'units':       layer.getElementsByTagName('units'      )[0].innerHTML,
-                             'style':       layer.getElementsByTagName('style'      )[0].innerHTML,
+                             'colorbar':    layer.getElementsByTagName('colorbar'   )[0].innerHTML,
                              'visible':     layer.getElementsByTagName('visible'    )[0].innerHTML.lower() == 'true',
                              'transparent': layer.getElementsByTagName('transparent')[0].innerHTML.lower() == 'true',
-                             'min':         float(layer.getElementsByTagName('min')[0].innerHTML),
-                             'max':         float(layer.getElementsByTagName('max')[0].innerHTML),
-
                              }
 
                 # Updates the server with the actual server dictionary of that name.

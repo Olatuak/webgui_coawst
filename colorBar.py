@@ -2,48 +2,69 @@ from browser import svg, document
 
 idxCmap = 1
 idxColorBar = 1
+createdColorbars = []
+addedColorbarNames = []
 idxColorBarPos = 0
 
-def resetColorBars(colorBars):
-    global idxColorBarPos
+def resetColorBarsInMap(colorBars):
+    # Hides all the colorbars in the map. There is a version of each different colorbar already in the string.
+    global idxColorBarPos, addedColorbarNames, createdColorbars
 
-    for colorBar in colorBars:
+    for colorBar in createdColorbars:
         colorBar.style['visibility'] = 'hidden'
 
     idxColorBarPos = 0
+    addedColorbarNames = []
 
 
-def showColorBar(colorBar):
-    global idxColorBarPos
+
+def addColorBarToMap(colorBar):
+    # Shows and placesd in the right position the colorBar
+    global idxColorBarPos, addedColorbarNames
+
+    # Only one instance of each colorbar exists
+    print(5555, colorBar['colorbarname'], addedColorbarNames)
+    if colorBar['colorbarname'] in addedColorbarNames:
+        return
 
     colorBar.style['visibility'] = 'visible'
-    colorBar['transform'] = 'translate(0,%.2f)' % (-idxColorBarPos * float(colorBar.getBBox().height) * 1.3)
+    colorBar['transform'] = 'translate(0,%.2f)' % ( idxColorBarPos * float(colorBar.getBBox().height) * 1.3)
+
     idxColorBarPos += 1
+    addedColorbarNames += [colorBar['colorbarname']]
 
 
-def createNewColorBar(cmap, layer):
-    global idxColorBar
+def createNewColorBar(cmap, colorbar):
+    global idxColorBar, createdColorbars
+
+    # Only one instance of each colorbar is created
+    for cbar in createdColorbars:
+
+        if colorbar['name'] == cbar['colorbarname']:
+            return cbar
 
     # Clones the colorbar object, intially invisiblr
     templateColorBar = document["colorBar"]
-    colorBar = templateColorBar.clone(True)
-    colorBar['id'] = 'colorBar%i' % idxColorBar
-    colorBar.style['visibility'] = 'hide'
-    templateColorBar.parent.append(colorBar)
+    svgColorBar = templateColorBar.clone(True)
+    svgColorBar['id'] = 'colorBar%i' % idxColorBar
+    svgColorBar.style['visibility'] = 'hide'
+    svgColorBar['colorbarname'] = colorbar['name']
+    templateColorBar.parent.append(svgColorBar)
 
     # Set the new gradient.
-    rectColorBar = colorBar.getElementsByTagName('rect')[0]
+    rectColorBar = svgColorBar.getElementsByTagName('rect')[0]
     style = rectColorBar['style']
     style.replace('cmapGrad', cmap)
     rectColorBar['style'] = style.replace('cmapGrad', cmap)
 
-    colorBar.getElementsByClassName('txtUnits')[0].text = 'dasdas %s, %s' % (layer['longname'], layer['units'])
-    colorBar.getElementsByClassName('textMinVal')[0].text = '%.2f' % layer['min']
-    colorBar.getElementsByClassName('textMaxVal')[0].text = '%.2f' % layer['max']
+    svgColorBar.getElementsByClassName('txtUnits')[0].text = '%s, %s' % (colorbar['longname'], colorbar['units'])
+    svgColorBar.getElementsByClassName('textMinVal')[0].text = '%.2f' % colorbar['min']
+    svgColorBar.getElementsByClassName('textMaxVal')[0].text = '%.2f' % colorbar['max']
 
     idxColorBar += 1
+    createdColorbars += [svgColorBar]
 
-    return colorBar
+    return svgColorBar
 
 def newCMap(stops, colors):
     global idxCmap

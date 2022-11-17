@@ -95,23 +95,24 @@ function loadBinaryDODSFloat64(url)
     return res;
 }
 
-function test1(map, lat, lon, lat1, lat2, lon1, lon2, Nx, Ny, inputData)
+function test1(map, lat, lon, inputData)
 {
+    var Nx = lon.length
+    var Ny = lat.length
 
-
-    var ground = []; // Initialize array
+    var arr = []; // Initialize array
     var k = 0
     for (var j = 0 ; j < Ny; j++) {
-        ground[j] = []; // Initialize inner array
+        arr[j] = []; // Initialize inner array
         for (var i = 0; i < Nx; i++) {
-            ground[j][i] = inputData[k]
-//            (Math.random() * 5 | 0) + 6;
+            arr[j][i] = inputData[k]
             k++;
         }
     }
 
-    var trace1 = {
-      z: ground,
+
+    var data = [{
+      z: arr,
       x: lon,
       y: lat,
       zsmooth: 'best',
@@ -119,42 +120,34 @@ function test1(map, lat, lon, lat1, lat2, lon1, lon2, Nx, Ny, inputData)
       hoverongaps: false,
       connectgaps: false,
       showscale: false,
+              colorscale:  [
+    ['0.0', 'rgb(165,0,38)'],
+    ['0.111111111111', 'rgb(215,48,39)'],
+    ['0.222222222222', 'rgb(244,109,67)'],
+    ['0.333333333333', 'rgb(253,174,97)'],
+    ['0.444444444444', 'rgb(254,224,144)'],
+    ['0.555555555556', 'rgb(224,243,248)'],
+    ['0.666666666667', 'rgb(171,217,233)'],
+    ['0.777777777778', 'rgb(116,173,209)'],
+    ['0.888888888889', 'rgb(69,117,180)'],
+    ['1.0', 'rgb(49,54,149)']
+  ],
 
-      xaxis: 'x1',
-      yaxis: 'y1',
+    }];
 
-
-    };
-
-
-
-    var data = [trace1];
-
-    var latlng1 = new L.latLng(lat1, lon1);
-    var p1 = map.latLngToContainerPoint(latlng1);
-    var latlng2 = new L.latLng(lat2, lon2);
-    var p2 = map.latLngToContainerPoint(latlng2);
-    console.log(p1, p2, 33333);
+    console.log(map)
 
     var layout = {
 
-        xaxis: {range: [lon1, lon2], visible: false, fixedrange: true},
-        yaxis: {range: [lat1, lat2], visible: false, fixedrange: true},
+        xaxis: {range: [Math.min(...lon), Math.max(...lon)], visible: false, fixedrange: true},
+        yaxis: {range: [Math.min(...lat), Math.max(...lat)], visible: false, fixedrange: true},
 
-//        height: p1.y - p2.y,
-//        width: p2.x - p1.x,
-        height: 800,
-        width: 1000,
+        height: map._size.y,
+        width:  map._size.x,
         margin: {pad: 0, border:0,l:0, r:0, t:0, b:0, autoexpand:true},
         paper_bgcolor: "#00000000",
         plot_bgcolor: "#00000000",
-        colorscale: 'Viridis',
 
-
-
-//          Additional info
-          lat1: lat1, lat2: lat2,
-          lon1: lon1, lon2: lon2
 
 
     };
@@ -164,37 +157,10 @@ function test1(map, lat, lon, lat1, lat2, lon1, lon2, Nx, Ny, inputData)
     mapid = document.getElementById('mapid');
     mapid.childNodes[0].childNodes[0].id = 'baseMapId'  // Warning, assuming many things
 
-//    mapid.on('zoomend', function() {
-//    console.log('aaaa')
-//});
 
-    aaa= Plotly.newPlot('baseMapId', data, layout);
-    console.log(aaa)
-
-
-    return aaa
-
+    Plotly.newPlot('baseMapId', data, layout);
 
 }
-
-
-const reshapeArray = (arr, r, c) => {
-   if (r * c !== arr.length * arr[0].length) {
-      return arr
-   }
-   const res = []
-   let row = []
-   arr.forEach(items => items.forEach((num) => {
-      row.push(num)
-      if (row.length === c) {
-         res.push(row)
-         row = []
-      }
-   }))
-   return res
-};
-
-
 
 
 function getVelocityLayer(map)
@@ -221,23 +187,22 @@ function getVelocityLayer(map)
                       data: data.slice(-Nx*Ny)}]
 
     // Creates the leaflet velocity layer.
-//    var velocityLayer = L.velocityLayer({
-//        displayValues: true,
-//        displayOptions: {
-//          velocityType: "Global Wind",
-//          position: "bottomright",
-//          emptyString: "sss No wind data",
-//
-//        },
-//        data: layerData,
-//        maxVelocity: 0.25,
-//        velocityScale: 0.3,
-//        lineWidth: 2,
-//        visible: true
-//      });
-//
-//    test1(reshapeArray(data.slice(-Nx*Ny), Nx, Ny))
-    test1(map, lat, lon, Math.min(...lat), Math.max(...lat), Math.min(...lon), Math.max(...lon), Nx, Ny, data.slice(0, Nx*Ny))
+    var velocityLayer = L.velocityLayer({
+        displayValues: true,
+        displayOptions: {
+          velocityType: "Global Wind",
+          position: "bottomright",
+          emptyString: "sss No wind data",
+
+        },
+        data: layerData,
+        maxVelocity: 0.25,
+        velocityScale: 0.3,
+        lineWidth: 2,
+        visible: true
+      });
+
+    test1(map, lat, lon, data.slice(0, Nx*Ny))
 
 
     return velocityLayer

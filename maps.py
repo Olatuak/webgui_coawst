@@ -118,16 +118,9 @@ class Maps:
         # window.test1()
         aaa = window.getVelocityLayer(self.map)
 
-        # aaa.addTo(self.map)
+        aaa.addTo(self.map)
 
 
-        # bbbb = self.leaflet.map('mapid')
-        # print(bbbb)
-        # print(bbbb.__dict__)
-
-        # aaa2 = window.getVelocityLayer()
-        #
-        # aaa2.addTo(self.map)
 
 
 

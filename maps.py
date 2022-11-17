@@ -12,6 +12,44 @@ def onTileLoadStart(event):
     # print(343243243,event.__dict__)
     pass
 
+def onMapZoom(event):
+    # print(event.sourceTarget.__dict__)
+    lat1 = 6.037500000000399
+    lat2 = 45.7599999999984
+    lon1 = -98
+    lon2 = -55.63999999999942
+
+
+    curLayer = event.sourceTarget
+    # latlng1 = window.L.latLng(lat1, lon1)
+    # p1 = event.sourceTarget.containerPointToLayerPoint(curLayer.latLngToContainerPoint(latlng1))
+    # latlng2 = window.L.latLng(lat2, lon2)
+    # p2 = event.sourceTarget.containerPointToLayerPoint(curLayer.latLngToContainerPoint(latlng2))
+
+    # print(34333, window.L.point(0,0))
+    q1 = event.sourceTarget.layerPointToLatLng(window.L.point(0,0))
+    q2 = event.sourceTarget.layerPointToLatLng(window.L.point(1000, 800))
+    bounds = curLayer.getBounds()
+
+    pp = event.sourceTarget.containerPointToLayerPoint(window.L.point(0,0))
+    # print(pp,pp.__dict__, q2,909, curLayer.getCenter().__dict__)
+    update = {'xaxis': {'range': [bounds.getWest(),  bounds.getEast()],  'visible': False, 'fixedrange': True},
+              'yaxis': {'range': [bounds.getSouth(), bounds.getNorth()], 'visible': False, 'fixedrange': True}}
+
+
+    aa = document.getElementsByClassName('plot-container plotly')[0]
+    aa.left = pp.x
+    aa.top  = pp.y
+
+
+    # update= {'width': p2.x - p1.x, 'height': p1.y - p2.y}
+
+    window.Plotly.relayout('baseMapId', update)
+
+    print(343243243)
+
+    pass
+
 def onError(event):
     # If there is an error loading a tile, recreates it.
     if reloadTileOnError:
@@ -55,10 +93,10 @@ class Maps:
             mapLayer.on('tileload', onTileLoad)
             mapLayer.on('tileerror', onError)
             mapLayer.on('tileloadstart', onTileLoadStart)
-
             self.listLayer +=[mapLayer]
             self.colorMaps += [newCMapFromConfig(conf.colormaps[colorbar['style']])]
             self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
+
 
         self.update()
 
@@ -72,15 +110,31 @@ class Maps:
         self.map.options.crs = self.crs
         baseLayer.addTo(self.map)
 
-        aaa = window.addVelocityLayer()
+        print(111)
+        # self.map.on('zoomend', onMapZoom)
+        self.map.on('moveend', onMapZoom)
+        print(222)
+
+        # window.test1()
+        aaa = window.getVelocityLayer(self.map)
+
+        # aaa.addTo(self.map)
+
+
+        # bbbb = self.leaflet.map('mapid')
+        # print(bbbb)
+        # print(bbbb.__dict__)
+
+        # aaa2 = window.getVelocityLayer()
+        #
+        # aaa2.addTo(self.map)
 
 
 
-        aaa.addTo(self.map)
 
         # self.leaflet.VelocityLayer.addOverlay(aaa)
         # layerControl.addOverlay(aaa, "Ocean Current - Great Barrier Reef");
-        print(aaa.options.__dict__)
+        # print(aaa.options.__dict__)
         # print(88888, self.leaflet.control.layers(self.map).__dict__)
 
         # self.leaflet.control.layers(self.map).addOverlay(aaa, 'fsdfdsfdsdfs')

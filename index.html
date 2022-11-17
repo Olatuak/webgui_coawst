@@ -23,22 +23,26 @@
 
 
  <!-- Make sure you put this AFTER Leaflet's CSS -->
- <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
    crossorigin="anonymous"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/leaflet-velocity@2.1.2/dist/leaflet-velocity.js"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/leaflet-velocity@2.1.2/dist/leaflet-velocity.js"></script>-->
+  <script src="./leaflet-velocity-ex.js"></script>
 
 <!--<script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>-->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.8.0/proj4.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.8.0/proj4.js"></script>
 <!--<script src="https://unpkg.com/proj4leaflet@1.0.2/src/proj4leaflet.js"></script>-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.min.js"></script>
 
-<script src="velocityPythonAdaptor.js"></script>
-<script src="easy-button.js"></script>
-<script type="text/python" src="show_source.py"></script>
+  <script src="readBinaryData.js"></script>
+  <script src="easy-button.js"></script>
+  <script type="text/python" src="show_source.py"></script>
+
+  <script src='https://cdn.plot.ly/plotly-2.16.1.min.js'></script>
+
 <style>
 
 #container{
@@ -172,6 +176,15 @@
 }
 
 
+.cartesianlayer  {
+  z-index: 666;
+}
+
+.leaflet-control-velocity {
+  z-index: 6616;
+
+}
+
 
 .img-overlay-wrap test2 {
   position: absolute;
@@ -180,6 +193,17 @@
   z-index: 2;
 }
 
+.leaflet-overlay {
+ z-index: 29222;
+}
+
+.plotly {
+position: absolute;
+<!--top: 110px; left: 70px;-->
+ top: 0px; left: 0px;
+ z-index: 401;
+ opacity: 1.0;
+}
 
 }
 </style>

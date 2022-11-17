@@ -108,8 +108,11 @@
 .leaflet-tooltip-pane   { z-index: 650; }
 .leaflet-popup-pane   { z-index: 700; }
 
-.leaflet-map-pane canvas { z-index: 100; }
+.leaflet-map-pane canvas { z-index: 22200; }
 .leaflet-map-pane svg    { z-index: 200; }
+.leaflet-velocity     { z-index: 22200; !Important}
+.velocity-overlay     { z-index: 22200; !Important}
+.leaflet-zoom-animated { z-index: 22200; !Important}
 
 .leaflet-vml-shape {
 	width: 1px;

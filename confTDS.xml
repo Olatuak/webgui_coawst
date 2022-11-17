@@ -4,7 +4,7 @@
 
     <datefmt>%.4i-%.2i-%.2iT%.2i:%.2i</datefmt>
     <viewcenter>33.00, -78.975</viewcenter>
-    <viewzoom>8</viewzoom>
+    <viewzoom>4</viewzoom>
 
 
     <colormaps>

@@ -201,35 +201,6 @@ print(1111111111, HTML.escape('https://icoast.rc.ufl.edu/thredds/dodsC/coawst/sn
 #     a = [float(x) for x in (line.split(',')[1:])]
 #     print(i)
 
-# velocityLayer = leaflet.velocityLayer({
-#     'displayValues': True,
-#     'displayOptions': {
-#       'velocityType': "Global Wind",
-#       'position': "bottomleft",
-#       'emptyString': "No wind data"
-#     },
-#     'data': [[1,2,3,4,5], [1,2,3,4,5]],
-#     'maxVelocity': 15
-#   })
-# layerControl.addOverlay(velocityLayer, "Wind - Global");
-
-# data = fileFeatureInfo.read()
-# # data = struct.unpack("f"*(len(dat)//8), dat)
-# print(1111112222)
-# print(len(data)/4.0)
-
-
-
-# layer1 = leaflet.tileLayer.wms('https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?', {'layers': 'gebco_latest'})
-# # layer1 = leaflet.tileLayer.wms('http://ows.mundialis.de/services/service?', {'layers': 'SRTM30-Colored-Hillshade'})
-# map = leaflet.map('mapid').setView(conf.viewcenter, conf.zoom)
-#
-# map.options.crs = crs
-#
-# layer1.addTo(map)
-# sapoWLLayer.addTo(map)
-#
-# map.setView(conf.viewcenter, conf.zoom)
 
 
 # Put marker on map

@@ -95,10 +95,17 @@ function loadBinaryDODSFloat64(url)
     return res;
 }
 
-function test1(map, lat, lon, inputData)
+
+function addNewHeatMap(map)
 {
+    // Reads the files/urls
+    lon  = loadBinaryDODSFloat64('./lon.bin')
+    lat  = loadBinaryDODSFloat64('./lat.bin')
+
     var Nx = lon.length
     var Ny = lat.length
+
+    inputData = loadBinaryDODSFloat32('./sample2.bin').slice(0, Nx*Ny)
 
     var arr = []; // Initialize array
     var k = 0
@@ -110,7 +117,6 @@ function test1(map, lat, lon, inputData)
         }
     }
 
-
     var data = [{
       z: arr,
       x: lon,
@@ -121,7 +127,7 @@ function test1(map, lat, lon, inputData)
       connectgaps: false,
       showscale: false,
               colorscale:  [
-    ['0.0', 'rgb(165,0,38)'],
+    ['0.0',            'rgb(165,0,38)'],
     ['0.111111111111', 'rgb(215,48,39)'],
     ['0.222222222222', 'rgb(244,109,67)'],
     ['0.333333333333', 'rgb(253,174,97)'],
@@ -130,12 +136,17 @@ function test1(map, lat, lon, inputData)
     ['0.666666666667', 'rgb(171,217,233)'],
     ['0.777777777778', 'rgb(116,173,209)'],
     ['0.888888888889', 'rgb(69,117,180)'],
-    ['1.0', 'rgb(49,54,149)']
+    ['1.0',            'rgb(49,54,149)']
   ],
 
     }];
 
-    console.log(map)
+
+    // Gives an id to the basemap, so Plotly can create the plot on top
+    mapid = document.getElementById('mapid');
+    baseMap = mapid.childNodes[0].childNodes[0]
+    baseMap.id = 'baseMapId'  // Warning, assuming many things
+
 
     var layout = {
 
@@ -153,20 +164,38 @@ function test1(map, lat, lon, inputData)
     };
 
 
-    // Gives an id to the basemap, so Plotly can create the plot on top
-    mapid = document.getElementById('mapid');
-    mapid.childNodes[0].childNodes[0].id = 'baseMapId'  // Warning, assuming many things
-
 
     Plotly.newPlot('baseMapId', data, layout);
+
 
 }
 
 
-function getVelocityLayer(map)
+function clearHeatmap(heatmapId)
+{
+    Plotly.purge(heatmapId)
+}
+
+
+function updateHeatmap(heatmapId, mapLayer)
+// Ensures that a plotly layer is located in the right position
+{
+    try
+    {
+        bounds = mapLayer.getBounds()
+
+        update = {'xaxis': {'range': [bounds.getWest(),  bounds.getEast()],  'visible': false, 'fixedrange': true},
+                  'yaxis': {'range': [bounds.getSouth(), bounds.getNorth()], 'visible': false, 'fixedrange': true}}
+        window.Plotly.relayout(heatmapId, update)
+    }
+    catch(e)
+    {}
+}
+
+
+function addNewVelocityLayer(map)
 // Creates and returns a velocity layer based on the datafiles.
 {
-
     // Reads the files/urls
     lon  = loadBinaryDODSFloat64('./lon.bin')
     lat  = loadBinaryDODSFloat64('./lat.bin')
@@ -201,8 +230,6 @@ function getVelocityLayer(map)
         lineWidth: 2,
         visible: true
       });
-
-    test1(map, lat, lon, data.slice(0, Nx*Ny))
 
 
     return velocityLayer

@@ -6,6 +6,8 @@
  originally created and motivated by L.CanvasOverlay  available here: https://gist.github.com/Sumbera/11114288
 
  */
+
+
 // -- L.DomUtil.setTransform from leaflet 1.0.0 to work on 0.0.7
 //------------------------------------------------------------------------------
 if (!L.DomUtil.setTransform) {
@@ -43,9 +45,11 @@ L.CanvasLayer = (L.Layer ? L.Layer : L.Class).extend({
   },
   //-------------------------------------------------------------
   _onLayerDidMove: function _onLayerDidMove() {
+
     var topLeft = this._map.containerPointToLayerPoint([0, 0]);
 
     L.DomUtil.setPosition(this._canvas, topLeft);
+console.log('dasjkjdalkdjsaldjsaldkjsalkdjsaldjsakl111111')
     this.drawLayer();
   },
   //-------------------------------------------------------------
@@ -272,6 +276,7 @@ L.Control.Velocity = L.Control.extend({
 L.Map.mergeOptions({
   positionControl: false
 });
+
 L.Map.addInitHook(function () {
   if (this.options.positionControl) {
     this.positionControl = new L.Control.MousePosition();
@@ -370,6 +375,7 @@ L.VelocityLayer = (L.Layer ? L.Layer : L.Class).extend({
 
   /*------------------------------------ PRIVATE ------------------------------------------*/
   onDrawLayer: function onDrawLayer(overlay, params) {
+console.log('ssssssssssss2')
     var self = this;
 
     if (!this._windy) {
@@ -385,7 +391,7 @@ L.VelocityLayer = (L.Layer ? L.Layer : L.Class).extend({
     if (this._timer) clearTimeout(self._timer);
     this._timer = setTimeout(function () {
       self._startWindy();
-    }, 750); // showing velocity is delayed
+    }, 100); // showing velocity is delayed. JMG: why? (used to be 750)
   },
   _startWindy: function _startWindy() {
     var bounds = this._map.getBounds();
@@ -407,6 +413,7 @@ L.VelocityLayer = (L.Layer ? L.Layer : L.Class).extend({
 
     this._canvasLayer._canvas.classList.add("velocity-overlay");
     this.onDrawLayer();
+
 
     this._map.on("dragstart", self._windy.stop);
 
@@ -448,10 +455,10 @@ L.VelocityLayer = (L.Layer ? L.Layer : L.Class).extend({
     if (this._mouseControl) this._map.removeControl(this._mouseControl);
     this._mouseControl = null;
     this._windy = null;
-
     this._map.removeLayer(this._canvasLayer);
   }
 });
+
 
 L.velocityLayer = function (options) {
   return new L.VelocityLayer(options);
@@ -902,7 +909,10 @@ var Windy = function Windy(params) {
       return colorScale;
     }
 
+
+
     var colorStyles = windIntensityColorScale(MIN_VELOCITY_INTENSITY, MAX_VELOCITY_INTENSITY);
+
     var buckets = colorStyles.map(function () {
       return [];
     });
@@ -920,8 +930,10 @@ var Windy = function Windy(params) {
         age: Math.floor(Math.random() * MAX_PARTICLE_AGE) + 0
       }));
     }
+console.log('aaaaasssseeee 3')
 
     function evolve() {
+
       buckets.forEach(function (bucket) {
         bucket.length = 0;
       });
@@ -929,7 +941,6 @@ var Windy = function Windy(params) {
         if (particle.age > MAX_PARTICLE_AGE) {
           field.randomize(particle).age = 0;
         }
-
         var x = particle.x;
         var y = particle.y;
         var v = field(x, y); // vector at current position
@@ -957,6 +968,7 @@ var Windy = function Windy(params) {
         particle.age += 1;
       });
     }
+    console.log('ssssssssssss4444')
 
     var g = params.canvas.getContext("2d");
     g.lineWidth = PARTICLE_LINE_WIDTH;
@@ -964,6 +976,7 @@ var Windy = function Windy(params) {
     g.globalAlpha = 0.6;
 
     function draw() {
+
       // Fade existing particle trails.
       var prev = "lighter";
       g.globalCompositeOperation = "destination-in";
@@ -988,6 +1001,8 @@ var Windy = function Windy(params) {
 
     var then = Date.now();
 
+
+
     (function frame() {
       animationLoop = requestAnimationFrame(frame);
       var now = Date.now();
@@ -1002,6 +1017,7 @@ var Windy = function Windy(params) {
   };
 
   var start = function start(bounds, width, height, extent) {
+  console.log('dadasdsadsadsaddas')
     var mapBounds = {
       south: deg2rad(extent[0][1]),
       north: deg2rad(extent[1][1]),
@@ -1014,6 +1030,7 @@ var Windy = function Windy(params) {
 
     buildGrid(gridData, function (grid) {
       // interpolateField
+
       interpolateField(grid, buildBounds(bounds, width, height), mapBounds, function (bounds, field) {
         // animate the canvas with random points
         windy.field = field;

@@ -26,8 +26,6 @@ dateStart = datetime.datetime(2022, 9, 30, 0, 0)
 dateEnd   = datetime.datetime(2022, 10, 6, 0, 0)
 
 
-world_map = document["mapid"]
-
 # Access the leaflet.js API
 leaflet = window.L
 

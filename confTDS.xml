@@ -23,7 +23,6 @@
 
 
     <colorbars>
-        <!--    colors and stops should be lists as python code-->
         <colorbar>
             <name>zeta</name>
             <longname>Mean water level</longname>
@@ -94,9 +93,43 @@
     </wmsservers>
 
 
+    <opendapservers>
+        <server>
+            <name>icoastL0</name>
+            <url>https://icoast.rc.ufl.edu/thredds/dodsC/coawst/L0/forecast_qck/runs/NHCI_L0_QCK_RUN_{strTime}.dosd</url>
+        </server>
+    </opendapservers>
+
+
     <layers>
+
         <layer>
-            <server>icoastL1</server>
+            <server>icoastL0</server>
+            <servertype>dap</servertype>
+            <layertype>velocitymap</layertype>
+            <name>uv</name>
+            <longname>Circulation lines</longname>
+            <colorbar>zeta</colorbar>
+            <visible>True</visible>
+            <transparent>True</transparent>
+        </layer>
+
+        <layer>
+            <server>icoastL0</server>
+            <servertype>dap</servertype>
+            <layertype>colormap</layertype>
+            <name>zeta</name>
+            <longname>Circulation</longname>
+            <colorbar>zeta</colorbar>
+            <visible>True</visible>
+            <transparent>True</transparent>
+        </layer>
+
+
+        <layer>
+            <server>icoastL0</server>
+            <servertype>wms</servertype>
+            <layertype>colormap</layertype>
             <name>zeta</name>
             <longname>L1 - GOMSAB - water level</longname>
             <colorbar>zeta</colorbar>
@@ -105,6 +138,18 @@
         </layer>
         <layer>
             <server>icoastL1</server>
+            <servertype>wms</servertype>
+            <layertype>colormap</layertype>
+            <name>zeta</name>
+            <longname>L1 - GOMSAB - water level</longname>
+            <colorbar>zeta</colorbar>
+            <visible>True</visible>
+            <transparent>True</transparent>
+        </layer>
+        <layer>
+            <server>icoastL1</server>
+            <servertype>wms</servertype>
+            <layertype>colormap</layertype>
             <name>salt_sur</name>
             <longname>L1 - GOMSAB - SSS</longname>
             <colorbar>salt</colorbar>
@@ -113,6 +158,8 @@
         </layer>
         <layer>
             <server>icoastL1</server>
+            <servertype>wms</servertype>
+            <layertype>colormap</layertype>
             <name>temp_sur</name>
             <longname>L1 - GOMSAB - SST</longname>
             <colorbar>temp</colorbar>
@@ -122,6 +169,8 @@
 
         <layer>
             <server>icoastL0</server>
+            <servertype>wms</servertype>
+            <layertype>colormap</layertype>
             <name>zeta</name>
             <longname>L0 - water level</longname>
             <colorbar>zeta</colorbar>
@@ -130,6 +179,8 @@
         </layer>
         <layer>
             <server>icoastL0</server>
+            <servertype>wms</servertype>
+            <layertype>colormap</layertype>
             <name>salt_sur</name>
             <longname>L0 - SSS</longname>
             <colorbar>salt</colorbar>
@@ -138,6 +189,8 @@
         </layer>
         <layer>
             <server>icoastL0</server>
+            <servertype>wms</servertype>
+            <layertype>colormap</layertype>
             <name>temp_sur</name>
             <longname>L0 - SST</longname>
             <colorbar>temp</colorbar>

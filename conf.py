@@ -35,6 +35,7 @@ class Conf:
             print('ERROR: reading colormaps section of configuration file. Please check.')
 
 
+
         # Reads the colorbars section
         try:
             colorbarSection = (treeConf.getElementsByTagName('colorbars'))[0]
@@ -58,6 +59,7 @@ class Conf:
             print('ERROR: reading colorbars section of configuration file. Please check.')
 
 
+
         # Reads the basemaps section
         try:
             basemapsSection = (treeConf.getElementsByTagName('basemaps'))[0]
@@ -77,24 +79,45 @@ class Conf:
         except:
             print('ERROR: reading basemap section of configuration file. Please check.')
 
-        # Reads the server section
-        try:
-            serversSection = (treeConf.getElementsByTagName('wmsservers'))[0]
-            servers = serversSection.getElementsByTagName('server')
-            self.servers = []
 
-            for server in servers:
-                tempBasemap = {'name':            server.getElementsByTagName('name'           )[0].innerHTML,
+
+        # Reads the wms server section
+        try:
+            wmsServersSection = (treeConf.getElementsByTagName('wmsservers'))[0]
+            wmsServers = wmsServersSection.getElementsByTagName('server')
+            self.wmsServers = []
+
+            for server in wmsServers:
+                tempBasemap = {'name':            server.getElementsByTagName('name')[0].innerHTML,
                                'url':             HTML.unescape(server.getElementsByTagName('url'            )[0].innerHTML),
                                'featureinforeq':  HTML.unescape(server.getElementsByTagName('featureinforeq' )[0].innerHTML),
                                'capabilitiesreq': HTML.unescape(server.getElementsByTagName('capabilitiesreq')[0].innerHTML),
+                               'type':            'wms',
                               }
-                self.servers += [tempBasemap]
+                self.wmsServers += [tempBasemap]
 
-            self.wmsURL = self.servers[0]['url']
+            self.wmsURL = self.wmsServers[0]['url']
 
         except:
-            print('ERROR: reading servers section of configuration file. Please check.')
+            print('ERROR: reading wms servers section of configuration file. Please check.')
+
+
+        # Reads the opendap server section
+        try:
+            dapServersSection = (treeConf.getElementsByTagName('opendapservers'))[0]
+            dapServers = dapServersSection.getElementsByTagName('server')
+            self.dapServers = []
+
+            for server in dapServers:
+                tempBasemap = {'name':            server.getElementsByTagName('name')[0].innerHTML,
+                               'url':             HTML.unescape(server.getElementsByTagName('url')[0].innerHTML),
+                               'type':            'dap',
+                              }
+                self.dapServers += [tempBasemap]
+
+
+        except:
+            print('ERROR: reading opendap servers section of configuration file. Please check.')
 
         # Reads the layers section
         try:
@@ -104,6 +127,8 @@ class Conf:
             for layer in layers:
                 tempLayer = {'name':        layer.getElementsByTagName('name'       )[0].innerHTML,
                              'server':      layer.getElementsByTagName('server'     )[0].innerHTML,
+                             'servertype':  layer.getElementsByTagName('servertype' )[0].innerHTML,
+                             'layertype':   layer.getElementsByTagName('layertype'  )[0].innerHTML,
                              'longname':    layer.getElementsByTagName('longname'   )[0].innerHTML,
                              'colorbar':    layer.getElementsByTagName('colorbar'   )[0].innerHTML,
                              'visible':     layer.getElementsByTagName('visible'    )[0].innerHTML.lower() == 'true',
@@ -111,16 +136,25 @@ class Conf:
                              }
 
                 # Updates the server with the actual server dictionary of that name.
-                tempLayer['server'] = self.getServer(tempLayer['server'])
+                tempLayer['server'] = self.getServer(tempLayer['server'], tempLayer['servertype'])
 
                 self.layers += [tempLayer]
+
         except:
             print('ERROR: reading layers section of configuration file. Please check.')
 
-    def getServer(self, name):
-        for server in self.servers:
-            if (server['name'] == name):
-                return server
+
+
+    def getServer(self, name, serverType):
+
+        if (serverType=='wms'):
+            for server in self.wmsServers:
+                if (server['name'] == name):
+                    return server
+        elif (serverType=='dap'):
+            for server in self.dapServers:
+                if (server['name'] == name):
+                    return server
 
         print('Error: server %s not found' % name)
         return None

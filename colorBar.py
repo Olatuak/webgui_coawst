@@ -19,7 +19,7 @@ def resetColorBarsInMap(colorBars):
 
 
 def addColorBarToMap(colorBar):
-    # Shows and placesd in the right position the colorBar
+    # Shows and places in the right position the colorBar
     global idxColorBarPos, addedColorbarNames
 
     # Only one instance of each colorbar exists
@@ -66,7 +66,7 @@ def createNewColorBar(cmap, colorbar):
 
     return svgColorBar
 
-def newCMap(stops, colors):
+def newSVGCMap(stops, colors):
     global idxCmap
 
     cmapGrad = document['cmapGrad'].clone(True)
@@ -90,7 +90,9 @@ def newCMap(stops, colors):
 
     return cmapGrad['id']
 
-def newCMapFromConfig(confColormap):
+
+def newSVGCMapFromConfig(confColormap):
+# Creates a colormap for the SVG
 
     colors = confColormap['colors']
     stops  = confColormap['stops']
@@ -99,20 +101,20 @@ def newCMapFromConfig(confColormap):
     for i, color in enumerate(colors):
         strColors += ['#{:02X}{:02X}{:02X}'.format(round(color[0]*255), round(color[1]*255), round(color[2]*255))]
 
-    return newCMap(stops, strColors)
+    return newSVGCMap(stops, strColors)
 
-def newCMapFerret(minVal, maxVal):
 
-    colors = [[0.8,0.0,1.0],
-              [0.3,0.2,1.0],
-              [0.0,0.6,0.3],
-              [1.0,1.0,0.0],
-              [1.0,0.0,0.0],
-              [0.6,0.0,0.0]]
-    stops = [0.0/5, 1.0/5, 2.0/5, 3.0/5, 4.0/5, 5.0/5]
+def newPlotlyCMapFromConfig(confColormap):
+# Creates a colormap for Plotly
+
+    colors = confColormap['colors']
+    stops  = confColormap['stops']
 
     strColors = []
-    for i, color in enumerate(colors):
-        strColors += ['#{:02X}{:02X}{:02X}'.format(round(color[0]*255), round(color[1]*255), round(color[2]*255))]
+    for i, color, stop in enumerate(zip(colors, stops)):
+        strColors += [['%.8f' % stop,'rgb(%i,%i,%i)' % (round(color[0]*255), round(color[1]*255), round(color[2]*255))]]
 
-    return newCMap(stops, strColors, minVal, maxVal)
+    return strColors
+
+
+

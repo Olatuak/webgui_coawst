@@ -53,7 +53,7 @@ class Maps:
             colorbar = conf.colorbars[colorBarName]
             layerType  = layer['layertype']
             serverType = layer['servertype']
-            print(1111)
+
             if layerType == 'colormap':
                 if (serverType == 'wms'):
                     mapLayer = self.leaflet.tileLayer.wms(layer['server']['url'], {
@@ -85,6 +85,7 @@ class Maps:
             elif layerType == 'velocitymap':
                 mapLayer = self.map
                 velLayer = window.addNewVelocityLayer(mapLayer)
+                # velLayer = window.addNewHeatmapLayer(mapLayer)
                 velLayer.addTo(self.map)
                 self.listLayer += [mapLayer]
                 self.colorMaps += [None]
@@ -151,11 +152,11 @@ class Maps:
 
                     elif serverType == 'dap':
                         print('lllllllllll')
-                        try:
-                            window.addNewHeatMap(mapLayer)
-                            window.updateHeatmap('baseMapId', mapLayer)
-                        except:
-                            pass
+                        # try:
+                        #     window.addNewHeatMap(mapLayer)
+                        #     window.updateHeatmap('baseMapId', mapLayer)
+                        # except:
+                        #     pass
 
                     else:
                         print('ERROR, invalid server ', serverType)

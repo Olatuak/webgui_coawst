@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 /*
  Generic  Canvas Layer for leaflet 0.7 and 1.0-rc,
@@ -8,7 +8,7 @@
  */
 
 var areCoordinatesDirty = false;    // Coordinates are dirty after a zoom or a pan and before the new transformations are computed
-var context = null;                 // WARNING: This assumes that there is only one velocity layer, which is a reasonable assumption
+var context = null;                 // WARNING: This assumes that there is only one heatmap layer, which is an unreasonable assumption
 
 
 // -- L.DomUtil.setTransform from leaflet 1.0.0 to work on 0.0.7
@@ -150,7 +150,7 @@ L.canvasLayer = function (pane) {
   return new L.CanvasLayer(pane);
 };
 
-L.Control.Velocity = L.Control.extend({
+L.Control.Heatmap = L.Control.extend({
   options: {
     position: "bottomleft",
     emptyString: "Unavailable",
@@ -166,109 +166,31 @@ L.Control.Velocity = L.Control.extend({
     onRemove: null
   },
   onAdd: function onAdd(map) {
-    this._container = L.DomUtil.create("div", "leaflet-control-velocity");
+    this._container = L.DomUtil.create("div", "leaflet-control-heatmap");
     L.DomEvent.disableClickPropagation(this._container);
     map.on("mousemove", this._onMouseMove, this);
     this._container.innerHTML = this.options.emptyString;
-    if (this.options.leafletVelocity.options.onAdd) this.options.leafletVelocity.options.onAdd();
+    if (this.options.leafletHeatmap.options.onAdd) this.options.leafletHeatmap.options.onAdd();
     return this._container;
   },
   onRemove: function onRemove(map) {
     map.off("mousemove", this._onMouseMove, this);
-    if (this.options.leafletVelocity.options.onRemove) this.options.leafletVelocity.options.onRemove();
+    if (this.options.leafletHeatmap.options.onRemove) this.options.leafletHeatmap.options.onRemove();
   },
-  vectorToSpeed: function vectorToSpeed(uMs, vMs, unit) {
-    var velocityAbs = Math.sqrt(Math.pow(uMs, 2) + Math.pow(vMs, 2)); // Default is m/s
 
-    if (unit === "k/h") {
-      return this.meterSec2kilometerHour(velocityAbs);
-    } else if (unit === "kt") {
-      return this.meterSec2Knots(velocityAbs);
-    } else if (unit === "mph") {
-      return this.meterSec2milesHour(velocityAbs);
-    } else {
-      return velocityAbs;
-    }
-  },
-  vectorToDegrees: function vectorToDegrees(uMs, vMs, angleConvention) {
-    // Default angle convention is CW
-    if (angleConvention.endsWith("CCW")) {
-      // vMs comes out upside-down..
-      vMs = vMs > 0 ? vMs = -vMs : Math.abs(vMs);
-    }
-
-    var velocityAbs = Math.sqrt(Math.pow(uMs, 2) + Math.pow(vMs, 2));
-    var velocityDir = Math.atan2(uMs / velocityAbs, vMs / velocityAbs);
-    var velocityDirToDegrees = velocityDir * 180 / Math.PI + 180;
-
-    if (angleConvention === "bearingCW" || angleConvention === "meteoCCW") {
-      velocityDirToDegrees += 180;
-      if (velocityDirToDegrees >= 360) velocityDirToDegrees -= 360;
-    }
-
-    return velocityDirToDegrees;
-  },
-  degreesToCardinalDirection: function degreesToCardinalDirection(deg) {
-    var cardinalDirection = '';
-
-    if (deg >= 0 && deg < 11.25 || deg >= 348.75) {
-      cardinalDirection = 'N';
-    } else if (deg >= 11.25 && deg < 33.75) {
-      cardinalDirection = 'NNW';
-    } else if (deg >= 33.75 && deg < 56.25) {
-      cardinalDirection = 'NW';
-    } else if (deg >= 56.25 && deg < 78.75) {
-      cardinalDirection = 'WNW';
-    } else if (deg >= 78.25 && deg < 101.25) {
-      cardinalDirection = 'W';
-    } else if (deg >= 101.25 && deg < 123.75) {
-      cardinalDirection = 'WSW';
-    } else if (deg >= 123.75 && deg < 146.25) {
-      cardinalDirection = 'SW';
-    } else if (deg >= 146.25 && deg < 168.75) {
-      cardinalDirection = 'SSW';
-    } else if (deg >= 168.75 && deg < 191.25) {
-      cardinalDirection = 'S';
-    } else if (deg >= 191.25 && deg < 213.75) {
-      cardinalDirection = 'SSE';
-    } else if (deg >= 213.75 && deg < 236.25) {
-      cardinalDirection = 'SE';
-    } else if (deg >= 236.25 && deg < 258.75) {
-      cardinalDirection = 'ESE';
-    } else if (deg >= 258.75 && deg < 281.25) {
-      cardinalDirection = 'E';
-    } else if (deg >= 281.25 && deg < 303.75) {
-      cardinalDirection = 'ENE';
-    } else if (deg >= 303.75 && deg < 326.25) {
-      cardinalDirection = 'NE';
-    } else if (deg >= 326.25 && deg < 348.75) {
-      cardinalDirection = 'NNE';
-    }
-
-    return cardinalDirection;
-  },
-  meterSec2Knots: function meterSec2Knots(meters) {
-    return meters / 0.514;
-  },
-  meterSec2kilometerHour: function meterSec2kilometerHour(meters) {
-    return meters * 3.6;
-  },
-  meterSec2milesHour: function meterSec2milesHour(meters) {
-    return meters * 2.23694;
-  },
   _onMouseMove: function _onMouseMove(e) {
     var self = this;
 
-    var pos = this.options.leafletVelocity._map.containerPointToLatLng(L.point(e.containerPoint.x, e.containerPoint.y));
+    var pos = this.options.leafletHeatmap._map.containerPointToLatLng(L.point(e.containerPoint.x, e.containerPoint.y));
 
-    var gridValue = this.options.leafletVelocity._windy.interpolatePoint(pos.lng, pos.lat);
+    var gridValue = this.options.leafletHeatmap._heat.interpolatePoint(pos.lng, pos.lat);
 
     var htmlOut = "";
 
     if (gridValue && !isNaN(gridValue[0]) && !isNaN(gridValue[1]) && gridValue[2]) {
       var deg = self.vectorToDegrees(gridValue[0], gridValue[1], this.options.angleConvention);
       var cardinal = this.options.showCardinal ? " (".concat(self.degreesToCardinalDirection(deg), ") ") : '';
-      htmlOut = "<strong> ".concat(this.options.velocityType, " ").concat(this.options.directionString, ": </strong> ").concat(deg.toFixed(2), "\xB0").concat(cardinal, ", <strong> ").concat(this.options.velocityType, " ").concat(this.options.speedString, ": </strong> ").concat(self.vectorToSpeed(gridValue[0], gridValue[1], this.options.speedUnit).toFixed(2), " ").concat(this.options.speedUnit);
+      htmlOut = "<strong> ".concat(this.options.HeatmapType, " ").concat(this.options.directionString, ": </strong> ").concat(deg.toFixed(2), "\xB0").concat(cardinal, ", <strong> ").concat(this.options.HeatmapType, " ").concat(this.options.speedString, ": </strong> ").concat(self.vectorToSpeed(gridValue[0], gridValue[1], this.options.speedUnit).toFixed(2), " ").concat(this.options.speedUnit);
     } else {
       htmlOut = this.options.emptyString;
     }
@@ -276,6 +198,7 @@ L.Control.Velocity = L.Control.extend({
     self._container.innerHTML = htmlOut;
   }
 });
+
 L.Map.mergeOptions({
   positionControl: false
 });
@@ -287,26 +210,26 @@ L.Map.addInitHook(function () {
   }
 });
 
-L.control.velocity = function (options) {
-  return new L.Control.Velocity(options);
+L.control.Heatmap = function (options) {
+  return new L.Control.Heatmap(options);
 };
 
-L.VelocityLayer = (L.Layer ? L.Layer : L.Class).extend({
+L.HeatmapLayer = (L.Layer ? L.Layer : L.Class).extend({
   options: {
     displayValues: true,
     displayOptions: {
-      velocityType: "Velocity",
+      heatmapType: "heat",
       position: "bottomleft",
-      emptyString: "No velocity data"
+      emptyString: "No data"
     },
-    maxVelocity: 10,
+    maxValue: 10,
     // used to align color scale
     colorScale: null,
     data: null
   },
   _map: null,
   _canvasLayer: null,
-  _windy: null,
+  _heat: null,
   _context: null,
   _timer: 0,
   _mouseControl: null,
@@ -338,13 +261,13 @@ L.VelocityLayer = (L.Layer ? L.Layer : L.Class).extend({
     this._map = map;
   },
   onRemove: function onRemove(map) {
-    this._destroyWind();
+    this._destroyHeat();
   },
   setData: function setData(data) {
     this.options.data = data;
 
-    if (this._windy) {
-      this._windy.setData(data);
+    if (this._heat) {
+      this._heat.setData(data);
 
       this._clearAndRestart();
     }
@@ -365,10 +288,10 @@ L.VelocityLayer = (L.Layer ? L.Layer : L.Class).extend({
 
     if (options.hasOwnProperty("data")) this.options.data = options.data;
 
-    if (this._windy) {
-      this._windy.setOptions(options);
+    if (this._heat) {
+      this._heat.setOptions(options);
 
-      if (options.hasOwnProperty("data")) this._windy.setData(options.data);
+      if (options.hasOwnProperty("data")) this._heat.setData(options.data);
 
       this._clearAndRestart();
     }
@@ -380,8 +303,8 @@ L.VelocityLayer = (L.Layer ? L.Layer : L.Class).extend({
   onDrawLayer: function onDrawLayer(overlay, params) {
     var self = this;
 
-    if (!this._windy) {
-      this._initWindy(this);
+    if (!this._heat) {
+      this._initHeat(this);
 
       return;
     }
@@ -392,41 +315,41 @@ L.VelocityLayer = (L.Layer ? L.Layer : L.Class).extend({
 
     if (this._timer) clearTimeout(self._timer);
     this._timer = setTimeout(function () {
-      self._startWindy();
-    }, 10); // showing velocity is delayed. JMG: why? (used to be 750)
+      self._startHeat();
+    }, 10); // showing data is delayed. JMG: why? (used to be 750)
   },
-  _startWindy: function _startWindy() {
+  _startHeat: function _startHeat() {
     var bounds = this._map.getBounds();
 
     var size = this._map.getSize(); // bounds, width, height, extent
 
 
-    this._windy.start([[0, 0], [size.x, size.y]], size.x, size.y, [[bounds._southWest.lng, bounds._southWest.lat], [bounds._northEast.lng, bounds._northEast.lat]]);
+    this._heat.start([[0, 0], [size.x, size.y]], size.x, size.y, [[bounds._southWest.lng, bounds._southWest.lat], [bounds._northEast.lng, bounds._northEast.lat]]);
   },
-  _initWindy: function _initWindy(self) {
-    // windy object, copy options
+  _initHeat: function _initHeat(self) {
+    // heat object, copy options
     var options = Object.assign({
       canvas: self._canvasLayer._canvas,
       map: this._map
     }, self.options);
-    this._windy = new Windy(options); // prepare context global var, start drawing
+    this._heat = new Heat(options); // prepare context global var, start drawing
 
     this._context = this._canvasLayer._canvas.getContext("2d");
     context = this._canvasLayer._canvas.getContext("2d");
 
-    this._canvasLayer._canvas.classList.add("velocity-overlay");
+    this._canvasLayer._canvas.classList.add("heatmap-overlay");
     this.onDrawLayer();
 
 
-    this._map.on("dragstart", self._windy.stop);
+    this._map.on("dragstart", self._heat.stop);
 
     this._map.on("dragend", self._clearAndRestart);
 
-    this._map.on("zoomstart", self._windy.stop);
+    this._map.on("zoomstart", self._heat.stop);
 
     this._map.on("zoomend", self._clearAndRestart);
 
-    this._map.on("resize", self._clearWind);
+    this._map.on("resize", self._clearHeat);
 
     this._initMouseHandler(false);
   },
@@ -439,8 +362,8 @@ L.VelocityLayer = (L.Layer ? L.Layer : L.Class).extend({
 
     if (!this._mouseControl && this.options.displayValues) {
       var options = this.options.displayOptions || {};
-      options["leafletVelocity"] = this;
-      this._mouseControl = L.control.velocity(options).addTo(this._map);
+      options["leafletHeatmap"] = this;
+      this._mouseControl = L.control.heatmap(options).addTo(this._map);
     }
   },
   _clearAndRestart: function _clearAndRestart(event) {
@@ -451,19 +374,19 @@ L.VelocityLayer = (L.Layer ? L.Layer : L.Class).extend({
       context.globalAlpha = 1;
       context.clearRect(0, 0, 30000, 30000);
     }
-    if (this._windy) this._startWindy();
+    if (this._heat) this._startHeat();
   },
-  _clearWind: function _clearWind() {
-    if (this._windy) this._windy.stop();
+  _clearHeat: function _clearHeat() {
+    if (this._heat) this._heat.stop();
     if (context)
     {
       context.globalAlpha = 1;
       context.clearRect(0, 0, 30000, 30000);
     }
   },
-  _destroyWind: function _destroyWind() {
+  _destroyHeat: function _destroyHeat() {
     if (this._timer) clearTimeout(this._timer);
-    if (this._windy) this._windy.stop();
+    if (this._heat) this._heat.stop();
     if (context)
     {
       context.globalAlpha = 1;
@@ -471,50 +394,25 @@ L.VelocityLayer = (L.Layer ? L.Layer : L.Class).extend({
     }
     if (this._mouseControl) this._map.removeControl(this._mouseControl);
     this._mouseControl = null;
-    this._windy = null;
+    this._heat = null;
     this._map.removeLayer(this._canvasLayer);
   }
 });
 
 
-L.velocityLayer = function (options) {
-  return new L.VelocityLayer(options);
+L.heatmapLayer = function (options) {
+  return new L.HeatmapLayer(options);
 };
-/*  Global class for simulating the movement of particle through a 1km wind grid
-
- credit: All the credit for this work goes to: https://github.com/cambecc for creating the repo:
- https://github.com/cambecc/earth. The majority of this code is directly take nfrom there, since its awesome.
-
- This class takes a canvas element and an array of data (1km GFS from http://www.emc.ncep.noaa.gov/index.php?branch=GFS)
- and then uses a mercator (forward/reverse) projection to correctly map wind vectors in "map space".
-
- The "start" method takes the bounds of the map at its current extent and starts the whole gridding,
- interpolation and animation process.
- */
 
 
-var Windy = function Windy(params) {
-  var MIN_VELOCITY_INTENSITY = params.minVelocity || 0; // velocity at which particle intensity is minimum (m/s)
 
-  var MAX_VELOCITY_INTENSITY = params.maxVelocity || 10; // velocity at which particle intensity is maximum (m/s)
 
-  var VELOCITY_SCALE = (params.velocityScale || 0.005) * (Math.pow(window.devicePixelRatio, 1 / 3) || 1); // scale for wind velocity (completely arbitrary--this value looks nice)
 
-  var MAX_PARTICLE_AGE = params.particleAge || 90; // max number of frames a particle is drawn before regeneration
 
-  var PARTICLE_LINE_WIDTH = params.lineWidth || 1; // line width of a drawn particle
+var Heat = function Heat(params) {
+  var MIN_VALUE = params.minValue || 0;
+  var MAX_VALUE = params.maxValue || 10;
 
-  var PARTICLE_MULTIPLIER = params.particleMultiplier || 1 / 300; // particle count scalar (completely arbitrary--this values looks nice)
-
-  var PARTICLE_REDUCTION = Math.pow(window.devicePixelRatio, 1 / 3) || 1.6; // multiply particle count for mobiles by this amount
-
-  var FRAME_RATE = params.frameRate || 15;
-  var FRAME_TIME = 1000 / FRAME_RATE; // desired frames per second
-
-  var OPACITY = 0.97;
-  var defaulColorScale = ["rgb(36,104, 180)", "rgb(60,157, 194)", "rgb(128,205,193 )", "rgb(151,218,168 )", "rgb(198,231,181)", "rgb(238,247,217)", "rgb(255,238,159)", "rgb(252,217,125)", "rgb(255,182,100)", "rgb(252,150,75)", "rgb(250,112,52)", "rgb(245,64,32)", "rgb(237,45,28)", "rgb(220,24,32)", "rgb(180,0,35)"];
-  var colorScale = params.colorScale || defaulColorScale;
-  var NULL_WIND_VECTOR = [NaN, NaN, null]; // singleton for no wind in the form: [u, v, magnitude]
 
   var builder;
   var grid;
@@ -527,49 +425,43 @@ var Windy = function Windy(params) {
   };
 
   var setOptions = function setOptions(options) {
-    if (options.hasOwnProperty("minVelocity")) MIN_VELOCITY_INTENSITY = options.minVelocity;
-    if (options.hasOwnProperty("maxVelocity")) MAX_VELOCITY_INTENSITY = options.maxVelocity;
-    if (options.hasOwnProperty("velocityScale")) VELOCITY_SCALE = (options.velocityScale || 0.005) * (Math.pow(window.devicePixelRatio, 1 / 3) || 1);
-    if (options.hasOwnProperty("particleAge")) MAX_PARTICLE_AGE = options.particleAge;
-    if (options.hasOwnProperty("lineWidth")) PARTICLE_LINE_WIDTH = options.lineWidth;
-    if (options.hasOwnProperty("particleMultiplier")) PARTICLE_MULTIPLIER = options.particleMultiplier;
-    if (options.hasOwnProperty("opacity")) OPACITY = +options.opacity;
-    if (options.hasOwnProperty("frameRate")) FRAME_RATE = options.frameRate;
-    FRAME_TIME = 1000 / FRAME_RATE;
-  }; // interpolation for vectors like wind (u,v,m)
+    if (options.hasOwnProperty("minValue")) MIN_VALUE = options.minValue;
+    if (options.hasOwnProperty("maxValue")) MAX_VALUE = options.maxValue;
+  };
 
 
   var bilinearInterpolateVector = function bilinearInterpolateVector(x, y, g00, g10, g01, g11) {
+    // x, y are between 0 and 1.
     var rx = 1 - x;
     var ry = 1 - y;
+
     var a = rx * ry,
-        b = x * ry,
+        b = x  * ry,
         c = rx * y,
-        d = x * y;
-    var u = g00[0] * a + g10[0] * b + g01[0] * c + g11[0] * d;
-    var v = g00[1] * a + g10[1] * b + g01[1] * c + g11[1] * d;
-    return [u, v, Math.sqrt(u * u + v * v)];
+        d = x  * y;
+
+    var v = g00[1]*a + g10[1]*b + g01[1]*c + g11[1]*d;
+
+    return v;
   };
 
-  var createWindBuilder = function createWindBuilder(uComp, vComp) {
-    var uData = uComp.data,
-        vData = vComp.data;
+  var createHeatBuilder = function createHeatBuilder(v) {
+    var vData = v.data;
     return {
-      header: uComp.header,
-      //recipe: recipeFor("wind-" + uComp.header.surface1Value),
+      header: v.header,
+      //recipe: recipeFor("heat-" + uComp.header.surface1Value),
       data: function data(i) {
-        return [uData[i], vData[i]];
+        return vData[i];
       },
       interpolate: bilinearInterpolateVector
     };
   };
 
   var createBuilder = function createBuilder(data) {
-    var uComp = null,
-        vComp = null,
-        scalar = null;
+    var v = null;
     data.forEach(function (record) {
       switch (record.header.parameterCategory + "," + record.header.parameterNumber) {
+      AAAAAAAAAAAAAA
         case "1,2":
         case "2,2":
           uComp = record;
@@ -584,20 +476,20 @@ var Windy = function Windy(params) {
           scalar = record;
       }
     });
-    return createWindBuilder(uComp, vComp);
+    return createHeatBuilder(uComp, vComp);
   };
 
 
   var buildGrid = function buildGrid(data, callback) {
     var supported = true;
-    if (data.length < 2) supported = false;
-    if (!supported) console.log("Windy Error: data must have at least two components (u,v)");
+    if (data.length > 1) supported = false;
+    if (!supported) console.log("Heat Error: data must have only one component");
     builder = createBuilder(data);
     var header = builder.header;
     if (header.hasOwnProperty("gridDefinitionTemplate") && header.gridDefinitionTemplate != 0) supported = false;
 
     if (!supported) {
-      console.log("Windy Error: Only data with Latitude_Longitude coordinates is supported");
+      console.log("Heat Error: Only data with Latitude_Longitude coordinates is supported");
     }
 
     supported = true; // reset for futher checks
@@ -638,7 +530,7 @@ var Windy = function Windy(params) {
       if (scanModeMaskArray[5]) supported = false;
       if (scanModeMaskArray[6]) supported = false;
       if (scanModeMaskArray[7]) supported = false;
-      if (!supported) console.log("Windy Error: Data with scanMode: " + header.scanMode + " is not supported.");
+      if (!supported) console.log("Heat Error: Data with scanMode: " + header.scanMode + " is not supported.");
     }
 
     date = new Date(header.refTime);
@@ -710,7 +602,7 @@ var Windy = function Windy(params) {
         fj = binarySearch(φg, φ)
         ci = fi + 1;
         cj = fj + 1;
-        var i = (λ - λg[fi])/(λg[ci] - λg[fi]) + fi
+        var i = (λ - λg[fi])/(λg[ci] - λg[fi]) + fi   // i, j are not integers, no matter how innocent they look.
         var j = (φ - φg[fj])/(φg[cj] - φg[fj]) + fj
     }
 
@@ -736,83 +628,42 @@ var Windy = function Windy(params) {
   };
 
 
-  /**
-   * @returns {Boolean} true if the specified value is not null and not undefined.
-   */
-
-
   var isValue = function isValue(x) {
+  /// @returns {Boolean} true if the specified value is not null and not undefined.
     return x !== null && x !== undefined;
   };
-  /**
-   * @returns {Number} returns remainder of floored division, i.e., floor(a / n). Useful for consistent modulo
-   *          of negative numbers. See http://en.wikipedia.org/wiki/Modulo_operation.
-   */
 
 
   var floorMod = function floorMod(a, n) {
+  /// @returns {Number} returns remainder of floored division, i.e., floor(a / n). Useful for consistent modulo
+   *          of negative numbers. See http://en.wikipedia.org/wiki/Modulo_operation.
     return a - n * Math.floor(a / n);
   };
-  /**
-   * @returns {Number} the value x clamped to the range [low, high].
-   */
 
 
   var clamp = function clamp(x, range) {
+  /// @returns {Number} the value x clamped to the range [low, high].
     return Math.max(range[0], Math.min(x, range[1]));
   };
-  /**
-   * @returns {Boolean} true if agent is probably a mobile device. Don't really care if this is accurate.
-   */
 
 
   var isMobile = function isMobile() {
+  /// @returns {Boolean} true if agent is probably a mobile device. Don't really care if this is accurate.
     return /android|blackberry|iemobile|ipad|iphone|ipod|opera mini|webos/i.test(navigator.userAgent);
   };
-  /**
-   * Calculate distortion of the wind vector caused by the shape of the projection at point (x, y). The wind
-   * vector is modified in place and returned by this function.
-   */
 
-
-  var distort = function distort(projection, λ, φ, x, y, scale, wind) {
-    var u = wind[0] * scale;
-    var v = wind[1] * scale;
-    var d = distortion(projection, λ, φ, x, y); // Scale distortion vectors by u and v, then add.
-
-    wind[0] = d[0] * u + d[2] * v;
-    wind[1] = d[1] * u + d[3] * v;
-    return wind;
-  };
-
-  var distortion = function distortion(projection, λ, φ, x, y) {
-    var τ = 2 * Math.PI; //    var H = Math.pow(10, -5.2); // 0.00000630957344480193
-    //    var H = 0.0000360;          // 0.0000360°φ ~= 4m  (from https://github.com/cambecc/earth/blob/master/public/libs/earth/1.0.0/micro.js#L13)
-
-    var H = 5; // ToDo:   Why does this work?
-
-    var hλ = λ < 0 ? H : -H;
-    var hφ = φ < 0 ? H : -H;
-    var pλ = project(φ, λ + hλ);
-    var pφ = project(φ + hφ, λ); // Meridian scale factor (see Snyder, equation 4-3), where R = 1. This handles issue where length of 1º λ
-    // changes depending on φ. Without this, there is a pinching effect at the poles.
-
-    var k = Math.cos(φ / 360 * τ);
-    return [(pλ[0] - x) / hλ / k, (pλ[1] - y) / hλ / k, (pφ[0] - x) / hφ, (pφ[1] - y) / hφ];
-  };
 
   var createField = function createField(columns, bounds, callback) {
-    /**
-     * @returns {Array} wind vector [u, v, magnitude] at the point (x, y), or [NaN, NaN, null] if wind
-     *          is undefined at that point.
-     */
+
+
     function field(x, y) {
+    // @returns {Array} heat magnitude at the point (x, y), NaN if it doesn't exist
       var column = columns[Math.round(x)];
-      return column && column[Math.round(y)] || NULL_WIND_VECTOR;
-    } // Frees the massive "columns" array for GC. Without this, the array is leaked (in Chrome) each time a new
+      return column && column[Math.round(y)] || null;
+    }
+
+    // Frees the massive "columns" array for GC. Without this, the array is leaked (in Chrome) each time a new
     // field is interpolated because the field closure's context is leaked, for reasons that defy explanation.
-
-
     field.release = function () {
       columns = [];
     };
@@ -827,7 +678,8 @@ var Windy = function Windy(params) {
         x = Math.round(Math.floor(Math.random() * bounds.width ) + bounds.x);
         y = Math.round(Math.floor(Math.random() * bounds.height) + bounds.y);
 
-      } while (isValue(x, y)[2] === null && safetyNet++ < 30);
+        // if field(x, y)[2] is null it means that it is land, I'm not sure what NaN means
+      } while ((field(x, y)[2] === null || isNaN(field(x, y)[2])) && safetyNet++ < 30);
 
       o.x = x;
       o.y = y;
@@ -862,12 +714,12 @@ var Windy = function Windy(params) {
     return deg / 180 * Math.PI;
   };
 
-  var invert = function invert(x, y, windy) {
+  var invert = function invert(x, y, heat) {
     var latlon = params.map.containerPointToLatLng(L.point(x, y));
     return [latlon.lng, latlon.lat];
   };
 
-  var project = function project(lat, lon, windy) {
+  var project = function project(lat, lon, heat) {
     var xy = params.map.latLngToContainerPoint(L.latLng(lat, lon));
     return [xy.x, xy.y];
   };
@@ -876,7 +728,6 @@ var Windy = function Windy(params) {
     var projection = {}; // map.crs used instead
 
     var mapArea = (extent.south - extent.north) * (extent.west - extent.east);
-    var velocityScale = VELOCITY_SCALE * Math.pow(mapArea, 0.4);
     var columns = [];
     var x = bounds.x;
 
@@ -891,11 +742,10 @@ var Windy = function Windy(params) {
               φ = coord[1];
 
           if (isFinite(λ)) {
-            var wind = grid.interpolate(λ, φ);
+            var heat = grid.interpolate(λ, φ);
 
-            if (wind) {
-              wind = distort(projection, λ, φ, x, y, velocityScale, wind);
-              column[y + 1] = column[y] = wind;
+            if (heat) {
+              column[y + 1] = column[y] = heat;
             }
           }
         }
@@ -924,41 +774,11 @@ var Windy = function Windy(params) {
 
   };
 
-  var animationLoop;
 
-  var animate = function animate(bounds, field) {
-    function windIntensityColorScale(min, max) {
-      colorScale.indexFor = function (m) {
-        // map velocity speed to a style
-        return Math.max(0, Math.min(colorScale.length - 1, Math.round((m - min) / (max - min) * (colorScale.length - 1))));
-      };
-
-      return colorScale;
-    }
 
 
 
     var colorStyles = windIntensityColorScale(MIN_VELOCITY_INTENSITY, MAX_VELOCITY_INTENSITY);
-
-    var buckets = colorStyles.map(function () {
-      return [];
-    });
-    var particleCount = Math.round(bounds.width * bounds.height * PARTICLE_MULTIPLIER);
-
-    if (isMobile()) {
-      particleCount *= PARTICLE_REDUCTION;
-    }
-
-    var fadeFillStyle = "rgba(0, 0, 0, ".concat(OPACITY, ")");
-    var particles = [];
-
-    // Creates all particles with random age
-    for (var i = 0; i < particleCount; i++) {
-      particles.push(field.randomize({
-        age: Math.floor(Math.random() * MAX_PARTICLE_AGE) + 0
-      }));
-    }
-
 
 
     var g = params.canvas.getContext("2d");
@@ -968,40 +788,6 @@ var Windy = function Windy(params) {
     g.globalAlpha = 0.6;
 
 
-    function evolve() {
-
-      buckets.forEach(function (bucket) {
-        bucket.length = 0;
-      });
-      // When a particle reaches it's maximum age it is randomly located again.
-      particles.forEach(function (particle) {
-        if (particle.age > MAX_PARTICLE_AGE) {
-          field.randomize(particle).age = 0;
-        }
-        var x = particle.x;
-        var y = particle.y;
-        var v = field(x, y); // vector at current position
-
-        var m = v[2];
-
-        if (m === null) {
-          particle.age = MAX_PARTICLE_AGE; // particle has escaped the grid, never to return...
-        } else {
-          var xt = x + v[0];
-          var yt = y + v[1];
-
-          particle.xt = xt;
-          particle.yt = yt;
-
-          if (field(xt, yt)[2] !== null) {
-            // Path from (x,y) to (xt,yt) is visible, so add this particle to the appropriate draw bucket.
-            buckets[colorStyles.indexFor(m)].push(particle);
-          }
-        }
-
-        particle.age += 1;
-      });
-    }
 
     function draw() {
 
@@ -1044,17 +830,6 @@ var Windy = function Windy(params) {
 
 
 
-    (function frame() {
-      animationLoop = requestAnimationFrame(frame);
-      var now = Date.now();
-      var delta = now - then;
-
-      if (delta > FRAME_TIME) {
-        then = now - delta % FRAME_TIME;
-        evolve();
-        draw();
-      }
-    })();
   };
 
   var start = function start(bounds, width, height, extent) {
@@ -1073,18 +848,14 @@ var Windy = function Windy(params) {
 
       interpolateField(grid, buildBounds(bounds, width, height), mapBounds, function (bounds, field) {
         // animate the canvas with random points
-        windy.field = field;
-        animate(bounds, field);
+        heat.field = field;
+
       });
     });
   };
 
-  var stop = function stop() {
-    if (windy.field) windy.field.release();
-    if (animationLoop) cancelAnimationFrame(animationLoop);
-  };
 
-  var windy = {
+  var heat = {
     params: params,
     start: start,
     stop: stop,
@@ -1093,11 +864,6 @@ var Windy = function Windy(params) {
     setData: setData,
     setOptions: setOptions
   };
-  return windy;
+  return heat;
 };
 
-if (!window.cancelAnimationFrame) {
-  window.cancelAnimationFrame = function (id) {
-    clearTimeout(id);
-  };
-}

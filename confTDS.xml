@@ -114,16 +114,16 @@
             <transparent>True</transparent>
         </layer>
 
-        <layer>
-            <server>icoastL0</server>
-            <servertype>dap</servertype>
-            <layertype>colormap</layertype>
-            <name>zeta</name>
-            <longname>Circulation</longname>
-            <colorbar>zeta</colorbar>
-            <visible>True</visible>
-            <transparent>True</transparent>
-        </layer>
+<!--        <layer>-->
+<!--            <server>icoastL0</server>-->
+<!--            <servertype>dap</servertype>-->
+<!--            <layertype>colormap</layertype>-->
+<!--            <name>zeta</name>-->
+<!--            <longname>Circulation</longname>-->
+<!--            <colorbar>zeta</colorbar>-->
+<!--            <visible>True</visible>-->
+<!--            <transparent>True</transparent>-->
+<!--        </layer>-->
 
 
         <layer>

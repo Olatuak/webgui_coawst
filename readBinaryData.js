@@ -216,7 +216,7 @@ function addNewVelocityLayer(map)
                       data: data.slice(-Nx*Ny)}]
 
     // Creates the leaflet velocity layer.
-    var velocityLayer = L.velocityLayer({
+    var velocityLayer = L.pcolorLayer({
         displayValues: true,
         displayOptions: {
           velocityType: "Global Wind",
@@ -233,4 +233,43 @@ function addNewVelocityLayer(map)
 
 
     return velocityLayer
+}
+
+
+function addNewHeatmapLayer(map)
+// Creates and returns a velocity layer based on the datafiles.
+{
+    // Reads the files/urls
+    lon  = loadBinaryDODSFloat64('./lon.bin')
+    lat  = loadBinaryDODSFloat64('./lat.bin')
+    data = loadBinaryDODSFloat32('./sample2.bin')
+
+    // Creates the data structure.
+    var Nx = lon.length
+    var Ny = lat.length
+    var layerData = {header: {parameterUnit: "m.s-1", parameterNumber: 2,
+                      parameterNumberName: "Eastward current", parameterCategory: 2,
+                      lat: lat, lon: lon,
+                      refTime: "2022-09-30 00:00:00"},
+                      data: data.slice(0, Nx*Ny)}
+
+
+    // Creates the leaflet velocity layer.
+    var heatmapLayer = L.heatmapLayer({
+        displayValues: true,
+        displayOptions: {
+          velocityType: "Global Wind",
+          position: "bottomright",
+          emptyString: "sss No wind data",
+
+        },
+        data: layerData,
+        maxVelocity: 0.25,
+        velocityScale: 0.3,
+        lineWidth: 2,
+        visible: true
+      });
+
+
+    return heatmapLayer
 }

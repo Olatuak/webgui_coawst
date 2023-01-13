@@ -34,6 +34,16 @@
             <style>boxfill/ferret</style>
         </colorbar>
         <colorbar>
+            <name>velocity</name>
+            <longname>Velocity</longname>
+            <min>-3.0</min>
+            <max>3.0</max>
+            <abovemaxcol>extend</abovemaxcol>
+            <belowmincol>extend</belowmincol>
+            <units></units>
+            <style>boxfill/ferret</style>
+        </colorbar>
+        <colorbar>
             <name>salt</name>
             <longname>Salt</longname>
             <min>15.0</min>
@@ -109,7 +119,7 @@
             <layertype>velocitymap</layertype>
             <name>uv</name>
             <longname>Circulation lines</longname>
-            <colorbar>zeta</colorbar>
+            <colorbar>velocity</colorbar>
             <visible>True</visible>
             <transparent>True</transparent>
         </layer>

@@ -43,7 +43,7 @@ def createNewColorBar(cmap, colorbar):
         if colorbar['name'] == cbar['colorbarname']:
             return cbar
 
-    # Clones the colorbar object, intially invisiblr
+    # Clones the colorbar object, intially invisible
     templateColorBar = document["colorBar"]
     svgColorBar = templateColorBar.clone(True)
     svgColorBar['id'] = 'colorBar%i' % idxColorBar

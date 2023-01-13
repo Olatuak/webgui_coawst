@@ -29,7 +29,27 @@ function readDODSHeader(url)
       return -1
     }
 
-    return req.responseText.slice(idx, -1)
+    var dims = {'names': [], 'sizes': []};
+
+    // obtains the dimensions
+    var header = req.responseText.slice(1, idx)
+    while (header.indexOf('[') > -1)
+    {
+        var i1 = header.indexOf('[');
+        var i2 = header.indexOf('=');
+        var i3 = header.indexOf(']');
+        var dimName = header.slice(i1+1, i2).trim();
+        var dimSize = parseInt(header.slice(i2+1, i3).trim());
+
+        dims['names'].push(dimName);
+        dims['sizes'].push(dimSize);
+
+        header = header.slice(i3+1, 1000000);
+
+
+    }
+
+    return [dims, req.responseText.slice(idx, -1)]
 }
 
 
@@ -37,7 +57,7 @@ function loadBinaryDODSFloat32(url)
 // Read a Thredds dods binary file of float32 as an array of bytes
 // WARNING: Assumes little endian IEEE754
 {
-    responseText = readDODSHeader(url)
+    [dims, responseText] = readDODSHeader(url)
     res = []
 
     // This is like a "union", fourU8 and oneF32 are two different views of the same buffer.
@@ -62,14 +82,14 @@ function loadBinaryDODSFloat32(url)
         }
     }
 
-    return new Float32Array(res);
+    return [dims, new Float32Array(res)];
 }
 
 function loadBinaryDODSFloat64(url)
 // Read a Thredds dods binary of float64 file as an array of bytes.
 // WARNING: Assumes little endian IEEE754
 {
-    responseText = readDODSHeader(url)
+    [dims, responseText] = readDODSHeader(url)
 
     res = []
 
@@ -92,7 +112,7 @@ function loadBinaryDODSFloat64(url)
         res.push(oneF64*1.0)
     }
 
-    return res;
+    return [dims, res];
 }
 
 
@@ -236,26 +256,33 @@ function addNewVelocityLayer(map)
 }
 
 
-function addNewHeatmapLayer(map)
+function addNewHeatmapLayer(map, cmap, cbar)
 // Creates and returns a velocity layer based on the datafiles.
 {
     // Reads the files/urls
-    lon  = loadBinaryDODSFloat64('./lon.bin')
-    lat  = loadBinaryDODSFloat64('./lat.bin')
-    data = loadBinaryDODSFloat32('./sample2.bin')
+    [dimsLon,  lon ] = loadBinaryDODSFloat64('./lon.bin');
+    [dimsLat,  lat ] = loadBinaryDODSFloat64('./lat.bin');
+    [dimsData, data] = loadBinaryDODSFloat32('./sample2.bin');
+
+//    // Reads the files/urls
+//    [dimsLon,  lon ] = loadBinaryDODSFloat64('./lon2.bin');
+//    [dimsLat,  lat ] = loadBinaryDODSFloat64('./lat2.bin');
+//    [dimsData, data] = loadBinaryDODSFloat32('./zeta2.bin');
+
 
     // Creates the data structure.
-    var Nx = lon.length
-    var Ny = lat.length
+    var Nx = lon.length;
+    var Ny = lat.length;
     var layerData = {header: {parameterUnit: "m.s-1", parameterNumber: 2,
-                      parameterNumberName: "Eastward current", parameterCategory: 2,
-                      lat: lat, lon: lon,
-                      refTime: "2022-09-30 00:00:00"},
-                      data: data.slice(0, Nx*Ny)}
+                     parameterNumberName: "Eastward current", parameterCategory: 2,
+                     lat: lat, dimsLat: dimsLat,
+                     lon: lon, dimsLon: dimsLat,
+                     refTime: "2022-09-30 00:00:00"},
+                     data: data.slice(0, Nx*Ny)};
 
 
     // Creates the leaflet velocity layer.
-    var heatmapLayer = L.heatmapLayer({
+    var heatmapLayer = L.createHeatmapLayer({
         displayValues: true,
         displayOptions: {
           velocityType: "Global Wind",
@@ -267,7 +294,9 @@ function addNewHeatmapLayer(map)
         maxVelocity: 0.25,
         velocityScale: 0.3,
         lineWidth: 2,
-        visible: true
+        visible: true,
+        cmap: cmap,
+        cbar: cbar,
       });
 
 

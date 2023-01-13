@@ -83,13 +83,15 @@ class Maps:
                 self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
                 self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
             elif layerType == 'velocitymap':
+                colorBarName = layer['colorbar']
+                colorbar = conf.colorbars[colorBarName]
                 mapLayer = self.map
-                velLayer = window.addNewVelocityLayer(mapLayer)
-                # velLayer = window.addNewHeatmapLayer(mapLayer)
+                # velLayer = window.addNewVelocityLayer(mapLayer)
+                velLayer = window.addNewHeatmapLayer(mapLayer, conf.colormaps[colorbar['style']], colorbar)
                 velLayer.addTo(self.map)
                 self.listLayer += [mapLayer]
-                self.colorMaps += [None]
-                self.colorBars += [None]
+                self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
+                self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
 
             else:
                 pass

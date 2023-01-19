@@ -136,77 +136,77 @@
 <!--        </layer>-->
 
 
-        <layer>
-            <server>icoastL0</server>
-            <servertype>wms</servertype>
-            <layertype>colormap</layertype>
-            <name>zeta</name>
-            <longname>L1 - GOMSAB - water level</longname>
-            <colorbar>zeta</colorbar>
-            <visible>True</visible>
-            <transparent>True</transparent>
-        </layer>
-        <layer>
-            <server>icoastL1</server>
-            <servertype>wms</servertype>
-            <layertype>colormap</layertype>
-            <name>zeta</name>
-            <longname>L1 - GOMSAB - water level</longname>
-            <colorbar>zeta</colorbar>
-            <visible>True</visible>
-            <transparent>True</transparent>
-        </layer>
-        <layer>
-            <server>icoastL1</server>
-            <servertype>wms</servertype>
-            <layertype>colormap</layertype>
-            <name>salt_sur</name>
-            <longname>L1 - GOMSAB - SSS</longname>
-            <colorbar>salt</colorbar>
-            <visible>True</visible>
-            <transparent>True</transparent>
-        </layer>
-        <layer>
-            <server>icoastL1</server>
-            <servertype>wms</servertype>
-            <layertype>colormap</layertype>
-            <name>temp_sur</name>
-            <longname>L1 - GOMSAB - SST</longname>
-            <colorbar>temp</colorbar>
-            <visible>True</visible>
-            <transparent>True</transparent>
-        </layer>
+<!--        <layer>-->
+<!--            <server>icoastL0</server>-->
+<!--            <servertype>wms</servertype>-->
+<!--            <layertype>colormap</layertype>-->
+<!--            <name>zeta</name>-->
+<!--            <longname>L1 - GOMSAB - water level</longname>-->
+<!--            <colorbar>zeta</colorbar>-->
+<!--            <visible>False</visible>-->
+<!--            <transparent>True</transparent>-->
+<!--        </layer>-->
+<!--        <layer>-->
+<!--            <server>icoastL1</server>-->
+<!--            <servertype>wms</servertype>-->
+<!--            <layertype>colormap</layertype>-->
+<!--            <name>zeta</name>-->
+<!--            <longname>L1 - GOMSAB - water level</longname>-->
+<!--            <colorbar>zeta</colorbar>-->
+<!--            <visible>False</visible>-->
+<!--            <transparent>True</transparent>-->
+<!--        </layer>-->
+<!--        <layer>-->
+<!--            <server>icoastL1</server>-->
+<!--            <servertype>wms</servertype>-->
+<!--            <layertype>colormap</layertype>-->
+<!--            <name>salt_sur</name>-->
+<!--            <longname>L1 - GOMSAB - SSS</longname>-->
+<!--            <colorbar>salt</colorbar>-->
+<!--            <visible>False</visible>-->
+<!--            <transparent>True</transparent>-->
+<!--        </layer>-->
+<!--        <layer>-->
+<!--            <server>icoastL1</server>-->
+<!--            <servertype>wms</servertype>-->
+<!--            <layertype>colormap</layertype>-->
+<!--            <name>temp_sur</name>-->
+<!--            <longname>L1 - GOMSAB - SST</longname>-->
+<!--            <colorbar>temp</colorbar>-->
+<!--            <visible>False</visible>-->
+<!--            <transparent>True</transparent>-->
+<!--        </layer>-->
 
-        <layer>
-            <server>icoastL0</server>
-            <servertype>wms</servertype>
-            <layertype>colormap</layertype>
-            <name>zeta</name>
-            <longname>L0 - water level</longname>
-            <colorbar>zeta</colorbar>
-            <visible>True</visible>
-            <transparent>True</transparent>
-        </layer>
-        <layer>
-            <server>icoastL0</server>
-            <servertype>wms</servertype>
-            <layertype>colormap</layertype>
-            <name>salt_sur</name>
-            <longname>L0 - SSS</longname>
-            <colorbar>salt</colorbar>
-            <visible>True</visible>
-            <transparent>True</transparent>
-        </layer>
-        <layer>
-            <server>icoastL0</server>
-            <servertype>wms</servertype>
-            <layertype>colormap</layertype>
-            <name>temp_sur</name>
-            <longname>L0 - SST</longname>
-            <colorbar>temp</colorbar>
-            <visible>True</visible>
-            <transparent>True</transparent>
-        </layer>
+<!--        <layer>-->
+<!--            <server>icoastL0</server>-->
+<!--            <servertype>wms</servertype>-->
+<!--            <layertype>colormap</layertype>-->
+<!--            <name>zeta</name>-->
+<!--            <longname>L0 - water level</longname>-->
+<!--            <colorbar>zeta</colorbar>-->
+<!--            <visible>False</visible>-->
+<!--            <transparent>True</transparent>-->
+<!--        </layer>-->
+<!--        <layer>-->
+<!--            <server>icoastL0</server>-->
+<!--            <servertype>wms</servertype>-->
+<!--            <layertype>colormap</layertype>-->
+<!--            <name>salt_sur</name>-->
+<!--            <longname>L0 - SSS</longname>-->
+<!--            <colorbar>salt</colorbar>-->
+<!--            <visible>False</visible>-->
+<!--            <transparent>True</transparent>-->
+<!--        </layer>-->
+<!--        <layer>-->
+<!--            <server>icoastL0</server>-->
+<!--            <servertype>wms</servertype>-->
+<!--            <layertype>colormap</layertype>-->
+<!--            <name>temp_sur</name>-->
+<!--            <longname>L0 - SST</longname>-->
+<!--            <colorbar>temp</colorbar>-->
+<!--            <visible>False</visible>-->
+<!--            <transparent>True</transparent>-->
+<!--        </layer>-->
 
     </layers>
 

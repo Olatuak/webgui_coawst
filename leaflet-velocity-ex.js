@@ -76,7 +76,7 @@ console.log('dasjkjdalkdjsaldjsaldkjsalkdjsaldjsakl111111')
 
     var size = this._map.getSize();
 
-    this._canvas.width = size.x;
+    this._canvas.width  = size.x;
     this._canvas.height = size.y;
     var animated = this._map.options.zoomAnimation && L.Browser.any3d;
     L.DomUtil.addClass(this._canvas, "leaflet-zoom-" + (animated ? "animated" : "hide"));
@@ -314,6 +314,7 @@ L.VelocityLayer = (L.Layer ? L.Layer : L.Class).extend({
     L.setOptions(this, options);
   },
   onAdd: function onAdd(map) {
+
     // determine where to add the layer
     this._paneName = this.options.paneName || "overlayPane"; // fall back to overlayPane for leaflet < 1
 

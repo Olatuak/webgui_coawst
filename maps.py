@@ -69,7 +69,7 @@ class Maps:
                         'styles': colorbar['style'],
                     })
 
-                    print(333, mapLayer)
+                    print(333, mapLayer.__dict__)
 
                     mapLayer.on('tileload', onTileLoad)
                     mapLayer.on('tileerror', onError)
@@ -86,10 +86,13 @@ class Maps:
                 colorBarName = layer['colorbar']
                 colorbar = conf.colorbars[colorBarName]
                 mapLayer = self.map
-                # velLayer = window.addNewVelocityLayer(mapLayer)
+#                 velLayer = window.addNewVelocityLayer(mapLayer)
                 velLayer = window.addNewHeatmapLayer(mapLayer, conf.colormaps[colorbar['style']], colorbar)
-                velLayer.addTo(self.map)
-                self.listLayer += [mapLayer]
+                x = velLayer.addTo(self.map)
+                print('tstststststs', self.map.hasLayer(x))
+#                 print('tstststststs', x._canvasLayer.__dict__)
+                print(mapLayer)
+                self.listLayer += [x]
                 self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
                 self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
 
@@ -119,13 +122,19 @@ class Maps:
         self.map.setView(self.conf.viewcenter, self.conf.zoom)
 
 
+
     def updateLayers(self):
         resetColorBarsInMap(self.colorBars)  # Hide all color bars before visualizing only the ones that are visible.
 
         # Remove all previous layers.
         for mapLayer in self.listLayer:
+            print('dadadsa12121', mapLayer._map)
             if self.map.hasLayer(mapLayer):
-                self.map.removeLayer(mapLayer)
+                try:
+                    print('WWWW', mapLayer)
+                    self.map.removeLayer(mapLayer)
+                except:
+                    pass
         try:
             window.clearHeatmap('baseMapId')
         except:
@@ -159,6 +168,7 @@ class Maps:
                         #     window.updateHeatmap('baseMapId', mapLayer)
                         # except:
                         #     pass
+                        mapLayer.addTo(self.map)
 
                     else:
                         print('ERROR, invalid server ', serverType)
@@ -166,6 +176,7 @@ class Maps:
                 elif layerType == 'velocitymap':
                     if serverType == 'dap':
                         print('kkkkkkk')
+                        mapLayer.addTo(self.map)
 
 
                     else:

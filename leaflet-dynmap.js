@@ -14,9 +14,9 @@ var binSearch = function (arr, x) {
         let M = (L + R) >> 1;
 
         if (arr[M] < x)
-             L = M;
+            L = M;
         else
-             R = M;
+            R = M;
     }
 
     return L;
@@ -38,7 +38,7 @@ var destination = function(latlng, heading, distance) {
         lat2 = Math.asin(sinLat1 * cosDistR + cosLat1 *
             sinDistR * Math.cos(rheading))
     let lon2 = lon1 + Math.atan2(Math.sin(rheading) * sinDistR *
-            cosLat1, cosDistR - sinLat1 * Math.sin(lat2));
+        cosLat1, cosDistR - sinLat1 * Math.sin(lat2));
     lon2 = lon2 * radInv;
     lon2 = lon2 > 180 ? lon2 - 360 : lon2 < -180 ? lon2 + 360 : lon2;
     return L.latLng([lat2 * radInv, lon2]);
@@ -89,7 +89,7 @@ const Cmap = class
 
 
 L.createHeatmapLayer = function (options) {
-  return new L.HeatmapLayer(options);
+    return new L.HeatmapLayer(options);
 };
 
 L.HeatmapLayer = L.Layer.extend({
@@ -315,7 +315,7 @@ L.HeatmapLayer = L.Layer.extend({
 
     },
 
-   _onLayerDidMove: function _onLayerDidMove(event) {
+    _onLayerDidMove: function _onLayerDidMove(event) {
 
         // Resets the location of the layer (this avoids some strange bugs).
         let map = event.target;

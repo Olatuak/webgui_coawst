@@ -265,9 +265,9 @@ function addNewHeatmapLayer(map, cmap, cbar)
     [dimsData, data] = loadBinaryDODSFloat32('./sample2.bin');
 
 //    // Reads the files/urls
-//    [dimsLon,  lon ] = loadBinaryDODSFloat64('./lon2.bin');
-//    [dimsLat,  lat ] = loadBinaryDODSFloat64('./lat2.bin');
-//    [dimsData, data] = loadBinaryDODSFloat32('./zeta2.bin');
+   [dimsLon,  lon ] = loadBinaryDODSFloat64('./lon2.bin');
+   [dimsLat,  lat ] = loadBinaryDODSFloat64('./lat2.bin');
+   [dimsData, data] = loadBinaryDODSFloat32('./zeta2.bin');
 
 
     // Creates the data structure.

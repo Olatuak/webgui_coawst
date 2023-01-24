@@ -265,9 +265,9 @@ function addNewHeatmapLayer(map, cmap, cbar)
     [dimsData, data] = loadBinaryDODSFloat32('./sample2.bin');
 
 //    // Reads the files/urls
-   [dimsLon,  lon ] = loadBinaryDODSFloat64('./lon2.bin');
-   [dimsLat,  lat ] = loadBinaryDODSFloat64('./lat2.bin');
-   [dimsData, data] = loadBinaryDODSFloat32('./zeta2.bin');
+//    [dimsLon,  lon ] = loadBinaryDODSFloat64('./lat2.bin');
+//    [dimsLat,  lat ] = loadBinaryDODSFloat64('./lon2.bin');
+//    [dimsData, data] = loadBinaryDODSFloat32('./zeta2.bin');
 
 
     // Creates the data structure.
@@ -277,7 +277,9 @@ function addNewHeatmapLayer(map, cmap, cbar)
                      parameterNumberName: "Eastward current", parameterCategory: 2,
                      lat: lat, dimsLat: dimsLat,
                      lon: lon, dimsLon: dimsLat,
-                     refTime: "2022-09-30 00:00:00"},
+                     refTime: "2022-09-30 00:00:00",
+                     latLonDims: dimsLon.sizes.length,
+                     latLonSize: dimsLon.sizes,},
                      data: data.slice(0, Nx*Ny)};
 
 
@@ -288,7 +290,6 @@ function addNewHeatmapLayer(map, cmap, cbar)
           velocityType: "Global Wind",
           position: "bottomright",
           emptyString: "sss No wind data",
-
         },
         data: layerData,
         maxVelocity: 0.25,

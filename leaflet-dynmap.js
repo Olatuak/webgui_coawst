@@ -219,7 +219,7 @@ L.HeatmapLayer = L.Layer.extend({
 
         // Draws all the pixels one by one
         let idx = 0;
-        const isT = 0, isnT = 1;
+        const isT = 1, isnT = 0;
         for (let j = yB; j<=yT; j++)
         {
             for (let i = xL; i<=xR; i++)
@@ -237,7 +237,7 @@ L.HeatmapLayer = L.Layer.extend({
                     const iLat = binSearch(lat, p1.lat);
                     const iLon = binSearch(lon, p1.lng);
 
-                    // const val = dat[];
+                    // isT and isnT decide if the array is transposed or not.
                     const val = dat[isT*(iLat + iLon*ni) + isnT*(iLat*nj + iLon)];
 
                     if (!isNaN(val) && val != 0) {
@@ -260,7 +260,7 @@ L.HeatmapLayer = L.Layer.extend({
         const arrowGridYSize = 14;
         const arrowGridXSize = 14;
 
-        if (false) {
+        if (true) {
 
             for (let j = yB; j <= yT; j += arrowGridYSize) {
                 for (let i = xL; i <= xR; i += arrowGridXSize) {
@@ -277,7 +277,8 @@ L.HeatmapLayer = L.Layer.extend({
                     const iLat = binSearch(lat, p1.lat);
                     const iLon = binSearch(lon, p1.lng);
 
-                    const val = dat[iLat + iLon * ni];
+                    // isT and isnT decide if the array is transposed or not.
+                    const val = dat[isT*(iLat + iLon*ni) + isnT*(iLat*nj + iLon)];
                     const u = val;
                     const v = 1 - val;
 

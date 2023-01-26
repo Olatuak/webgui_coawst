@@ -88,16 +88,68 @@ const Cmap = class
 }
 
 
-L.createHeatmapLayer = function (options) {
-    return new L.HeatmapLayer(options);
+function addNewDynmapLayer(map, cmap, cbar)
+// Creates and returns a dynamic map layer (CCS) based on the datafiles.
+{
+    // Reads the files/urls
+    let [dimsLon,  lon ] = loadBinaryDODSFloat64('./lon.bin');
+    let [dimsLat,  lat ] = loadBinaryDODSFloat64('./lat.bin');
+    let [dimsData, data] = loadBinaryDODSFloat32('./sample2.bin');
+
+//    // Reads the files/urls
+    [dimsLon,  lon ] = loadBinaryDODSFloat64('./lat2.bin');
+    [dimsLat,  lat ] = loadBinaryDODSFloat64('./lon2.bin');
+    [dimsData, data] = loadBinaryDODSFloat32('./zeta2.bin');
+
+
+    // Creates the data structure.
+    var Nx = lon.length;
+    var Ny = lat.length;
+    var layerData = {header: {parameterUnit: "m.s-1", parameterNumber: 2,
+            parameterNumberName: "Eastward current", parameterCategory: 2,
+            lat: lat, dimsLat: dimsLat,
+            lon: lon, dimsLon: dimsLat,
+            refTime: "2022-09-30 00:00:00",
+            latLonDims: dimsLon.sizes.length,
+            latLonSize: dimsLon.sizes,},
+        data: data.slice(0, Nx*Ny)};
+
+
+    // Creates the leaflet velocity layer.
+    var heatmapLayer = L.createDynmapLayer({
+        displayValues: true,
+        displayOptions: {
+            velocityType: "Global Wind",
+            position: "bottomright",
+            emptyString: "sss No wind data",
+        },
+        data: layerData,
+        maxVelocity: 0.25,
+        velocityScale: 0.3,
+        lineWidth: 2,
+        visible: true,
+        cmap: cmap,
+        cbar: cbar,
+    });
+
+
+
+
+    return heatmapLayer
+}
+
+
+L.createDynmapLayer = function (options) {
+    return new L.DynmapLayer(options);
 };
 
-L.HeatmapLayer = L.Layer.extend({
+L.DynmapLayer = L.Layer.extend({
     initialize: function initialize(options)
     {
         L.setOptions(this, options);
 
-        this.isGeneralMesh = options.data.header.latLonDims > 1 && options.data.header.latLonSize[0] > 1 && options.data.header.latLonSize[1] > 1; // A general mesh is one that has different lat lon pairs for each node, i.e. lat and lon arrays are bidimensional.
+        // A general mesh is one that has different lat lon pairs for each node, i.e. lat and lon arrays are bidimensional.
+        this.isGeneralMesh = options.data.header.latLonDims > 1 && options.data.header.latLonSize[0] > 1 && options.data.header.latLonSize[1] > 1;
 
         if (this.isGeneralMesh) {
             this.ni = options.data.header.latLonSize[1];
@@ -111,70 +163,7 @@ L.HeatmapLayer = L.Layer.extend({
 
     },
 
-    drawMap: function drawMap()
-    {
-        const ni = this.ni;
-        const nj = this.nj;
-
-        const pTL = [this.options.data.header.lat[0],    this.options.data.header.lon[0]];
-        const pBR = [this.options.data.header.lat[nj-1], this.options.data.header.lon[ni-1]];
-
-        const TL = this._map.latLngToContainerPoint(L.latLng(pTL[0], pTL[1]));
-        const BR = this._map.latLngToContainerPoint(L.latLng(pBR[0], pBR[1]));
-
-
-        const xL = Math.max(0, TL.x);
-        const yB = Math.max(0, BR.y);
-        const xR = Math.min(this._container.width,  BR.x);
-        const yT = Math.min(this._container.height, TL.y);
-
-
-        const data = this.options.data;
-        const lat = data.header.lat;
-        const lon = data.header.lon;
-        const dat = data.data;
-
-        let g = this._container.getContext("2d");
-        g.clearRect(0, 0, this._container.width, this._container.height);
-
-        const W = xR - xL + 1;
-        const H = yT - yB + 1
-        if (W<=0 || H<=0) return;
-
-        const arr = new Uint8ClampedArray(4*W*H);
-        let image = new ImageData(arr, W, H);
-
-        // Draws all the pixels one by one
-        let idx = 0;
-        for (let j = yB; j<=yT; j++)
-        {
-            for (let i = xL; i<=xR; i++)
-            {
-                const p = this._map.containerPointToLatLng(L.point(i, j));
-
-                const iLat = binSearch(lat, p.lat);
-                const iLon = binSearch(lon, p.lng);
-
-                const val = dat[iLat*data.header.lon.length + iLon];
-
-                if (!isNaN(val))
-                {
-                    const [R, G, B] = this.cmap.colors(val);
-
-                    image.data[idx  ] = R; //200*Math.abs(val); //j % 256;
-                    image.data[idx+1] = G;//i % 256;
-                    image.data[idx+2] = B;
-                    image.data[idx+3] = 255;
-                }
-
-                idx += 4;
-            }
-        }
-
-        g.putImageData(image, xL, yB);
-    },
-
-    drawQuiver: function drawQuiver()
+    draw: function draw()
     {
         const ni = this.ni;
         const nj = this.nj;
@@ -203,7 +192,7 @@ L.HeatmapLayer = L.Layer.extend({
 
 
         const W = xR - xL + 1;
-        const H = yT - yB + 1
+        const H = yT - yB + 1;
         if (W<=0 || H<=0) return;
 
 
@@ -320,13 +309,13 @@ L.HeatmapLayer = L.Layer.extend({
 
 
                         g.closePath();
-                        // g.lineTo(i + scale*(u*vU[0] + v*vV[0]), j + scale*(u*vU[1] + v*vV[1]));
                         g.fill();
                     }
                 }
             }
         }
 
+        // Draw rectangle
         g.beginPath();
         const aTL = this._map.latLngToContainerPoint(this.pTL);
         const aTR = this._map.latLngToContainerPoint(this.pTR);
@@ -428,8 +417,10 @@ L.HeatmapLayer = L.Layer.extend({
 
         this.g = this._container.getContext("2d");
 
+        let topLeft = map.containerPointToLayerPoint([0, 0]);
+        L.DomUtil.setPosition(this._container, topLeft);
 
-        this.drawQuiver();
+        this.draw();
     },
 
     onRemove: function(map) {
@@ -457,7 +448,7 @@ L.HeatmapLayer = L.Layer.extend({
         L.DomUtil.setPosition(this._container, topLeft);
 
         // map.addLayer(this);
-        this.drawQuiver();
+        this.draw();
 
     },
 

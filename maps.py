@@ -87,7 +87,7 @@ class Maps:
                 colorbar = conf.colorbars[colorBarName]
                 mapLayer = self.map
 #                 velLayer = window.addNewVelocityLayer(mapLayer)
-                velLayer = window.addNewHeatmapLayer(mapLayer, conf.colormaps[colorbar['style']], colorbar)
+                velLayer = window.addNewDynmapLayer(mapLayer, conf.colormaps[colorbar['style']], colorbar)
                 x = velLayer.addTo(self.map)
                 print('tstststststs', self.map.hasLayer(x))
 #                 print('tstststststs', x._canvasLayer.__dict__)

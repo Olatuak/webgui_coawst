@@ -1,9 +1,9 @@
 function readDODSHeader(url)
 // Read the ASCII header of the otherwise binary dods file.
 {
-    var res = [];
-    var str  = [];
-    var req = new XMLHttpRequest();
+    let res = [];
+    let str  = [];
+    let req = new XMLHttpRequest();
     req.open('GET', url, false);
     req.overrideMimeType('text\/plain; charset=x-user-defined');
     req.send(null);
@@ -11,8 +11,8 @@ function readDODSHeader(url)
     if (req.status != 200) return byteArray;
 
     // The binary data starts after some ascii data that ends in 'Data:'
-    foundData = false;
-    for (var i = 0; i < req.responseText.length-5; ++i)
+    let foundData = false;
+    for (let i = 0; i < req.responseText.length-5; ++i)
     {
         if (req.responseText.slice(i,i+5) == 'Data:')
         {
@@ -29,10 +29,10 @@ function readDODSHeader(url)
       return -1
     }
 
-    var dims = {'names': [], 'sizes': []};
+    let dims = {'names': [], 'sizes': []};
 
     // obtains the dimensions
-    var header = req.responseText.slice(1, idx)
+    let header = req.responseText.slice(1, idx)
     while (header.indexOf('[') > -1)
     {
         var i1 = header.indexOf('[');

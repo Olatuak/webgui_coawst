@@ -92,7 +92,7 @@ function addNewDynmapLayer(map, cmap, cbar)
 // Creates and returns a dynamic map layer (CCS) based on the datafiles.
 {
     // Reads the files/urls
-    let [dimsLon,  lon ] = loadBinaryDODSFloat64('./lon.bin');
+    let [dimsLon,  lon ] = loadBinaryDODSFloat64('https://icoast.rc.ufl.edu/thredds/dodsC/coawst/L1/GOMSAB_2km/qck/runs/GOMSAB_2km_qck_RUN_2022-09-30T00:00:00Z.ascii?lon_rho%5B0:1:544%5D%5B0:1:689%5D');
     let [dimsLat,  lat ] = loadBinaryDODSFloat64('./lat.bin');
     let [dimsData, data] = loadBinaryDODSFloat32('./sample2.bin');
 

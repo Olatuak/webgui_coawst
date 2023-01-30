@@ -92,14 +92,16 @@ function addNewDynmapLayer(map, cmap, cbar)
 // Creates and returns a dynamic map layer (CCS) based on the datafiles.
 {
     // Reads the files/urls
-    let [dimsLon,  lon ] = loadBinaryDODSFloat64('https://icoast.rc.ufl.edu/thredds/dodsC/coawst/L1/GOMSAB_2km/qck/runs/GOMSAB_2km_qck_RUN_2022-09-30T00:00:00Z.ascii?lon_rho%5B0:1:544%5D%5B0:1:689%5D');
-    let [dimsLat,  lat ] = loadBinaryDODSFloat64('https://icoast.rc.ufl.edu/thredds/dodsC/coawst/L1/GOMSAB_2km/qck/runs/GOMSAB_2km_qck_RUN_2022-09-30T00:00:00Z.ascii?lon_rho%5B0:1:544%5D%5B0:1:689%5D');
-    let [dimsData, data] = loadBinaryDODSFloat32('./sample2.bin');
+    let [dimsLon,  lon ] = loadBinaryDODSFloat64('https://icoast.rc.ufl.edu/thredds/dodsC/matthew/L1_qck_20220926.nc.dods?lon_rho%5B0:1:544%5D%5B0:1:689%5D');
+    let [dimsLat,  lat ] = loadBinaryDODSFloat64('https://icoast.rc.ufl.edu/thredds/dodsC/matthew/L1_qck_20220926.nc.dods?lat_rho%5B0:1:544%5D%5B0:1:689%5D');
+    let [dimsTime, time] = loadBinaryDODSFloat64('https://icoast.rc.ufl.edu/thredds/dodsC/matthew/L1_qck_20220926.nc.dods?ocean_time%5B0:1:120%5D');
+    let [dimsData, data] = loadBinaryDODSFloat32('https://icoast.rc.ufl.edu/thredds/dodsC/matthew/L1_qck_20220926.nc.dods?zeta%5B1%5D%5B0:1:544%5D%5B0:1:689%5D');
+    // let [dimsData, data] = loadBinaryDODSFloat32('./sample2.bin');
 
 //    // Reads the files/urls
-    [dimsLon,  lon ] = loadBinaryDODSFloat64('./lat2.bin');
-    [dimsLat,  lat ] = loadBinaryDODSFloat64('./lon2.bin');
-    [dimsData, data] = loadBinaryDODSFloat32('./zeta2.bin');
+//     [dimsLon,  lon ] = loadBinaryDODSFloat64('./lat2.bin');
+//     [dimsLat,  lat ] = loadBinaryDODSFloat64('./lon2.bin');
+//     [dimsData, data] = loadBinaryDODSFloat32('./zeta2.bin');
 
 
     // Creates the data structure.

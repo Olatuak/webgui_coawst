@@ -10,6 +10,8 @@ function readDODSHeader(url)
 
     if (req.status != 200) return byteArray;
 
+
+
     // The binary data starts after some ascii data that ends in 'Data:'
     let foundData = false;
     for (let i = 0; i < req.responseText.length-5; ++i)
@@ -89,27 +91,27 @@ function loadBinaryDODSFloat64(url)
 // Read a Thredds dods binary of float64 file as an array of bytes.
 // WARNING: Assumes little endian IEEE754
 {
-    [dims, responseText] = readDODSHeader(url)
+    let [dims, responseText] = readDODSHeader(url);
 
-    res = []
+    res = [];
 
     // This is like a "union", eightU8 and oneF64 are two different views of the same buffer.
     buf = new ArrayBuffer(8);
-    eightU8 = new Uint8Array(buf)
-    oneF64 = new Float64Array(buf)
+    eightU8 = new Uint8Array(buf);
+    oneF64 = new Float64Array(buf);
 
     // Reads the rest of bytes as Float64
     for (var i = 0; i < responseText.length; i+=8)
     {
-        eightU8[0] = responseText.charCodeAt(i+7) & 0xff
-        eightU8[1] = responseText.charCodeAt(i+6) & 0xff
-        eightU8[2] = responseText.charCodeAt(i+5) & 0xff
-        eightU8[3] = responseText.charCodeAt(i+4) & 0xff
-        eightU8[4] = responseText.charCodeAt(i+3) & 0xff
-        eightU8[5] = responseText.charCodeAt(i+2) & 0xff
-        eightU8[6] = responseText.charCodeAt(i+1) & 0xff
-        eightU8[7] = responseText.charCodeAt(i  ) & 0xff
-        res.push(oneF64*1.0)
+        eightU8[0] = responseText.charCodeAt(i+7) & 0xff;
+        eightU8[1] = responseText.charCodeAt(i+6) & 0xff;
+        eightU8[2] = responseText.charCodeAt(i+5) & 0xff;
+        eightU8[3] = responseText.charCodeAt(i+4) & 0xff;
+        eightU8[4] = responseText.charCodeAt(i+3) & 0xff;
+        eightU8[5] = responseText.charCodeAt(i+2) & 0xff;
+        eightU8[6] = responseText.charCodeAt(i+1) & 0xff;
+        eightU8[7] = responseText.charCodeAt(i  ) & 0xff;
+        res.push(oneF64*1.0);
     }
 
     return [dims, res];

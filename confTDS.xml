@@ -104,9 +104,19 @@
 
 
     <opendapservers>
+<!--        <server>-->
+<!--            <name>icoastL0</name>-->
+<!--            <url>https://icoast.rc.ufl.edu/thredds/dodsC/coawst/L0/forecast_qck/runs/NHCI_L0_QCK_RUN_{strTime}.dods</url>-->
+<!--            <time>ocean_time</time>-->
+<!--        </server>-->
+
         <server>
-            <name>icoastL0</name>
-            <url>https://icoast.rc.ufl.edu/thredds/dodsC/coawst/L0/forecast_qck/runs/NHCI_L0_QCK_RUN_{strTime}.dosd</url>
+            <name>icoastL1</name>
+            <url>https://icoast.rc.ufl.edu/thredds/dodsC/matthew/L1_qck_{strTime}.nc.dods</url>
+            <grid name="rho">lat_rho, lon_rho</grid>
+            <grid name="u"  >lat_u,   lon_u  </grid>
+            <grid name="v"  >lat_u,   lon_v  </grid>
+            <time>ocean_time</time>
         </server>
     </opendapservers>
 
@@ -123,6 +133,8 @@
             <visible>True</visible>
             <transparent>True</transparent>
         </layer>
+
+
 
 <!--        <layer>-->
 <!--            <server>icoastL0</server>-->

@@ -109,9 +109,19 @@ class Conf:
             self.dapServers = []
 
             for server in dapServers:
+                times = server.getElementsByTagName('time')[0].innerHTML
+                url = HTML.unescape(server.getElementsByTagName('url')[0].innerHTML)
+
+                print ('djssadjkldajklsjklsdajkl   ', HTML.unescape(url.format(strTime = 20220926) + '?' + times))
+                aa = window.loadBinaryDODSFloat64(HTML.unescape(url.format(strTime = 20220926) + '?' + times))
+
+                print('888888888888888', times, aa)
+
+
                 tempBasemap = {'name':            server.getElementsByTagName('name')[0].innerHTML,
-                               'url':             HTML.unescape(server.getElementsByTagName('url')[0].innerHTML),
+                               'url':             url,
                                'type':            'dap',
+
                               }
                 self.dapServers += [tempBasemap]
 

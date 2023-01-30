@@ -158,6 +158,7 @@ setupLayersMenu(conf, mapLayers)
 
 # cmap = setupCMapFerret(document, -0.0, 1.5)
 
+
 parser = window.DOMParser.new()
 
 try:

@@ -124,7 +124,7 @@
     <layers>
 
         <layer>
-            <server>icoastL0</server>
+            <server>icoastL1</server>
             <servertype>dap</servertype>
             <layertype>velocitymap</layertype>
             <name>uv</name>

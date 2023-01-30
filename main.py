@@ -1,4 +1,4 @@
-from browser import alert, document, window, html, svg, ajax, aio
+from browser import alert, document, window, html, svg, ajax
 import struct
 import datetime
 import html as HTML
@@ -16,7 +16,6 @@ isPeeking = False
 request = None
 
 curDate = None
-
 
 
 dateStart = datetime.datetime(2019, 2, 16, 8, 0)
@@ -157,7 +156,6 @@ setupLayersMenu(conf, mapLayers)
 # })
 
 # cmap = setupCMapFerret(document, -0.0, 1.5)
-
 
 parser = window.DOMParser.new()
 

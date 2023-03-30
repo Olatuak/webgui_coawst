@@ -23,7 +23,6 @@ def addColorBarToMap(colorBar):
     global idxColorBarPos, addedColorbarNames
 
     # Only one instance of each colorbar exists
-    print(5555, colorBar['colorbarname'], addedColorbarNames)
     if colorBar['colorbarname'] in addedColorbarNames:
         return
 

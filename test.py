@@ -313,8 +313,8 @@ def navi(pos):
     map.addLayer(date)
 
     # setupDateGizmo(datetime.datetime(2022,1,1,0,0,0), datetime.datetime(2022,3,1,0,0,0))
-    dateStart = datetime.datetime(2019, 2, 16, 8, 0)
-    dateEnd   = datetime.datetime(2019, 2, 22, 8, 0)
+    dateStart = datetime.datetime(2019, 2, 16, 8, 0, 0, 0, datetime.timezone.utc)
+    dateEnd   = datetime.datetime(2019, 2, 22, 8, 0, 0, 0, datetime.timezone.utc)
 
     setupDateGizmo(sapoWLLayer, dateStart, dateEnd, txtDates, onDateChange)
     setupDepthGizmo(0,10)

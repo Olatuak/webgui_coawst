@@ -1,3 +1,20 @@
+let cache = new Map();
+let keyCount = 0;
+
+
+// function createUniqueKey()
+// {
+//     keyCount++;
+//
+//     return 'k' + keyCount;
+// }
+
+function getCachedVar(key)
+{
+    return cache.get(key);
+}
+
+
 function readDODSHeader(url)
 // Read the ASCII header of the otherwise binary dods file.
 {
@@ -8,7 +25,8 @@ function readDODSHeader(url)
     req.overrideMimeType('text\/plain; charset=x-user-defined');
     req.send(null);
 
-    if (req.status != 200) return byteArray;
+    console.debug(url)
+    if (req.status > 299) return byteArray;
 
 
 
@@ -54,6 +72,43 @@ function readDODSHeader(url)
     return [dims, req.responseText.slice(idx, -1)]
 }
 
+
+function loadBinaryDODSFloat32Cached(url)
+{
+    let res = getCachedVar(url);
+
+    if (res == undefined) res = loadBinaryDODSFloat32ToCache(url);
+
+    return res;
+
+}
+
+function loadBinaryDODSFloat64Cached(url)
+{
+    let res = getCachedVar(url);
+
+    if (res == undefined) res = loadBinaryDODSFloat64ToCache(url);
+
+    return res;
+}
+
+function loadBinaryDODSFloat32ToCache(url)
+{
+    let data = loadBinaryDODSFloat32(url);
+
+    cache.set(url, data);
+
+    return data;
+}
+
+function loadBinaryDODSFloat64ToCache(url)
+{
+    let data = loadBinaryDODSFloat64(url);
+
+    cache.set(url, data);
+
+    return data;
+}
 
 function loadBinaryDODSFloat32(url)
 // Read a Thredds dods binary file of float32 as an array of bytes

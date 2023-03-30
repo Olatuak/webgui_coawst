@@ -1,5 +1,24 @@
 from browser import window
 import html as HTML
+import datetime
+
+
+JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
+
+def convertDate(strDate):
+    # WARNING: This function is fast, but not very flexible.
+    # datetime.datetime.strptime(d.strip(), '%Y-%m-%dT%H:%M:%S.000Z')
+    return datetime.datetime(int(strDate[:4]), int(strDate[5:7]), int(strDate[8:10]),
+                             int(strDate[11:13]), int(strDate[14:16]), int(strDate[17:19]), 0, datetime.timezone.utc)
+
+def convertPythonDateToJS(date):
+    return (date - JSDateOrig).total_seconds()*1000
+
+def convertJSDateToPython(JSDate):
+    days = int(JSDate/86400000)
+    milliseconds = (JSDate - days*86400000)
+    return JSDateOrig + datetime.timedelta(days = days, milliseconds = milliseconds)
+
 
 class Conf:
     def __init__(self, confFilename):
@@ -67,7 +86,6 @@ class Conf:
             self.basemaps = []
 
             for basemap in basemaps:
-                print(basemap)
                 tempBasemap = {'name': basemap.getElementsByTagName('name')[0].innerHTML,
                                'url':  HTML.unescape(basemap.getElementsByTagName('url')[0].innerHTML),
                                'layer':HTML.unescape(basemap.getElementsByTagName('layer')[0].innerHTML),
@@ -109,19 +127,48 @@ class Conf:
             self.dapServers = []
 
             for server in dapServers:
-                times = server.getElementsByTagName('time')[0].innerHTML
+                timesVarName = server.getElementsByTagName('time')[0].innerHTML
                 url = HTML.unescape(server.getElementsByTagName('url')[0].innerHTML)
 
-                print ('djssadjkldajklsjklsdajkl   ', HTML.unescape(url.format(strTime = 20220926) + '?' + times))
-                aa = window.loadBinaryDODSFloat64(HTML.unescape(url.format(strTime = 20220926) + '?' + times))
 
-                print('888888888888888', times, aa)
+                # Read the meshes.
+                grids = {}
+                for grid in server.getElementsByTagName('grid'):
+                    gridName = grid.getAttribute('name')
+                    gridLat, gridLon = grid.innerHTML.split(',')
+#                     keyLon  = window.loadBinaryDODSFloat64ToCache(HTML.unescape(url.format(strTime = srtTime) + '?' + gridLat.strip() ))
+#                     keyLat  = window.loadBinaryDODSFloat64ToCache(HTML.unescape(url.format(strTime = srtTime) + '?' + gridLon.strip() ))
+                    grids[gridName] = [gridLat, gridLon]
+
+#                 # Parameters to convert the netCDF times into standard times.
+#                 timeOffset        = float(server.getElementsByTagName('time')['0'].getAttribute('offset'))
+#                 timeUnitsMillisec = float(server.getElementsByTagName('time')['0'].getAttribute('unitsToMilliseconds'))
+                timeOffset = convertDate(server.getElementsByTagName('time')['0'].getAttribute('offset'))
+                timeUnits = server.getElementsByTagName('time')['0'].getAttribute('units')
+                if timeUnits == 'seconds':
+                    timeUnitsInSeconds = 1
+                elif timeUnits == 'minutes':
+                    timeUnitsInSeconds = 60
+                elif timeUnits == 'hours':
+                    timeUnitsInSeconds = 3600
+                elif timeUnits == 'days':
+                    timeUnitsInSeconds = 86400
 
 
-                tempBasemap = {'name':            server.getElementsByTagName('name')[0].innerHTML,
-                               'url':             url,
-                               'type':            'dap',
+#
+#                 # Converts the time into Date objects
+#                 timeArray = []
+#                 for i in range(dimsTime.sizes[0]):
+#
+#                     timeArray[i] = timeOffset + time[i]*timeUnitsInSeconds*1000
 
+                tempBasemap = {'name':  server.getElementsByTagName('name')[0].innerHTML,
+                               'url':   url,
+                               'type':  'dap',
+                               'grids': grids,
+                               'time': timesVarName,
+                               'timeOffset': timeOffset,
+                               'timeUnitsInSeconds': timeUnitsInSeconds,
                               }
                 self.dapServers += [tempBasemap]
 
@@ -134,21 +181,27 @@ class Conf:
             layersSection = (treeConf.getElementsByTagName('layers'))[0]
             layers = layersSection.getElementsByTagName('layer')
             self.layers = []
+            print('111112222', self.layers)
             for layer in layers:
-                tempLayer = {'name':        layer.getElementsByTagName('name'       )[0].innerHTML,
-                             'server':      layer.getElementsByTagName('server'     )[0].innerHTML,
-                             'servertype':  layer.getElementsByTagName('servertype' )[0].innerHTML,
-                             'layertype':   layer.getElementsByTagName('layertype'  )[0].innerHTML,
-                             'longname':    layer.getElementsByTagName('longname'   )[0].innerHTML,
-                             'colorbar':    layer.getElementsByTagName('colorbar'   )[0].innerHTML,
-                             'visible':     layer.getElementsByTagName('visible'    )[0].innerHTML.lower() == 'true',
-                             'transparent': layer.getElementsByTagName('transparent')[0].innerHTML.lower() == 'true',
+                tempLayer = {'name':        layer.getElementsByTagName('name'        )[0].innerHTML,
+                             'server':      layer.getElementsByTagName('server'      )[0].innerHTML,
+                             'servertype':  layer.getElementsByTagName('servertype'  )[0].innerHTML,
+                             'layertype':   layer.getElementsByTagName('layertype'   )[0].innerHTML,
+                             'gridtype':    layer.getElementsByTagName('gridtype'    )[0].innerHTML,
+                             'varthreshold':layer.getElementsByTagName('varthreshold')[0].innerHTML,
+                             'varscale':    layer.getElementsByTagName('varscale'    )[0].innerHTML,
+                             'longname':    layer.getElementsByTagName('longname'    )[0].innerHTML,
+                             'colorbar':    layer.getElementsByTagName('colorbar'    )[0].innerHTML,
+                             'visible':     layer.getElementsByTagName('visible'     )[0].innerHTML.lower() == 'true',
+                             'transparent': layer.getElementsByTagName('transparent' )[0].innerHTML.lower() == 'true',
                              }
 
                 # Updates the server with the actual server dictionary of that name.
                 tempLayer['server'] = self.getServer(tempLayer['server'], tempLayer['servertype'])
 
                 self.layers += [tempLayer]
+
+            print('11111', self.layers)
 
         except:
             print('ERROR: reading layers section of configuration file. Please check.')

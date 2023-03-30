@@ -19,64 +19,31 @@ conf = None
 
 dates = []
 datePos = []
+date1 = 0
+date2 = 0
 
+JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
 
 def convertDate(strDate):
     # WARNING: This function is fast, but not very flexible.
     # datetime.datetime.strptime(d.strip(), '%Y-%m-%dT%H:%M:%S.000Z')
     return datetime.datetime(int(strDate[:4]), int(strDate[5:7]), int(strDate[8:10]),
-                             int(strDate[11:13]), int(strDate[14:16]), int(strDate[17:19]))
+                             int(strDate[11:13]), int(strDate[14:16]), int(strDate[17:19]), 0, datetime.timezone.utc)
 
-def binSearchDateLess(date, strDates):
+def convertPythonDateToJS(date):
+    global JSDateOrig
+    return (date - JSDateOrig).total_seconds()*1000
+
+
+def convertJSDateToPython(JSDate):
+    days = int(JSDate/86400000)
+    milliseconds = (JSDate - days*86400000)
+    print ('LLLL  ', days, JSDate, milliseconds)
+    return JSDateOrig + datetime.timedelta(days = days, milliseconds = milliseconds)
+
+
+def _binSearchDate(date, dates):
     # Performs a binary search for the closest date in 'dates' less than 'date'. WARNING: assumes 'dates' is ordered.
-
-    iL = 0
-    iR = len(strDates) - 1
-    iM = int(iR / 2)
-
-    L = convertDate(strDates[iL].strip())
-    R = convertDate(strDates[iR].strip())
-    M = convertDate(strDates[iM].strip())
-    while (iR - iL > 1):
-        if (date < M):
-            R = M
-            iR = iM
-        else:
-            L = M
-            iL = iM
-
-        iM = iL + int((iR - iL) / 2)
-        M = convertDate(strDates[iM].strip())
-
-    return iM
-
-
-def binSearchDateLarger(date, strDates):
-    # Performs a binary search for the closest date in 'dates' larger than 'date'. WARNING: assumes 'dates' is ordered.
-
-    iL = 0
-    iR = len(strDates) - 1
-    iM = int(iR / 2)
-
-    L = convertDate(strDates[iL].strip())
-    R = convertDate(strDates[iR].strip())
-    M = convertDate(strDates[iM].strip())
-    while (iR - iL > 1):
-        if (date <= M):
-            R = M
-            iR = iM
-        else:
-            L = M
-            iL = iM
-
-        iM = iL + int((iR - iL) / 2)
-        M = convertDate(strDates[iM].strip())
-
-    return iM
-
-
-def binSearchDateCloser(date, dates):
-    # Performs a binary search for the closest date in 'dates'. WARNING: assumes 'dates' is ordered.
 
     iL = 0
     iR = len(dates) - 1
@@ -86,7 +53,7 @@ def binSearchDateCloser(date, dates):
     R = dates[iR]
     M = dates[iM]
     while (iR - iL > 1):
-        if (date <= M):
+        if (date < M):
             R = M
             iR = iM
         else:
@@ -95,6 +62,30 @@ def binSearchDateCloser(date, dates):
 
         iM = iL + int((iR - iL) / 2)
         M = dates[iM]
+
+    return L, M, R, iL, iM, iR
+
+
+def binSearchDateLess(date, dates):
+    # Performs a binary search for the closest date in 'dates' less than 'date'. WARNING: assumes 'dates' is ordered.
+
+    L, M, R, iL, iM, iR = _binSearchDate(date, dates)
+
+    return iL
+
+
+def binSearchDateLarger(date, dates):
+    # Performs a binary search for the closest date in 'dates' larger than 'date'. WARNING: assumes 'dates' is ordered.
+
+    L, M, R, iL, iM, iR = _binSearchDate(date, dates)
+
+    return iR
+
+
+def binSearchIdxDateCloser(date, dates):
+    # Performs a binary search for the closest date in 'dates'. WARNING: assumes 'dates' is ordered.
+
+    L, M, R, iL, iM, iR = _binSearchDate(date, dates)
 
     if date-L > R-date:
         return iR
@@ -121,7 +112,9 @@ def onGizmoDateDown(event):
 def updateDateText():
     global isDateGizmoDown, xPointer, selectedDateIdx, dates
 
-    selectDate = dates[selectedDateIdx]
+
+    selectDate = convertJSDateToPython(dates[selectedDateIdx])
+    print(8888, selectDate, selectedDateIdx, convertJSDateToPython(dates[0]), convertJSDateToPython(dates[-1]))
     strDate = '%s' % selectDate.strftime('%Y-%m-%dT%H:%M')
     document['textDate2'].text = strDate
     document['gizmoDateText'].text = strDate
@@ -132,9 +125,8 @@ def onGizmoDateUp(event):
 
     if isDateGizmoDown:
         updateDateText()
-
         if onDateChange is not None:
-            onDateChange(layer, dates[selectedDateIdx])
+            onDateChange(layer, selectedDateIdx)
 
         isDateGizmoDown = False
         xPointer = -1
@@ -150,7 +142,7 @@ def onGizmoDateUp(event):
 
 
 def onGizmoDateMove(event):
-    global isDateGizmoDown, xPointer, pos, layer, datePos, oldxPointerSVG, dates, xGizmo, selectedDateIdx
+    global isDateGizmoDown, xPointer, pos, layer, datePos, oldxPointerSVG, dates, xGizmo, selectedDateIdx, date1, date2
     
     
     if isDateGizmoDown:
@@ -167,13 +159,11 @@ def onGizmoDateMove(event):
         # mat = svgroot.getScreenCTM() # This is to convert screen coordinates into SVG units.
         # translate.setTranslate(dx/mat.a, 0) # Hack: mat.a is the x scale of the document
 
-        xPointerSVG = (xPointer-mat.e) / mat.a  # x position in SVG coordinates
-        # print('EEEEE ',xPointerSVG, mat.a, mat.b, mat.c, mat.d, mat.e, mat.f)
+        xPointerSVG = (xPointer - mat.e) / mat.a  # x position in SVG coordinates
 
         # xPointerSVG = max(datePos[0],  xPointerSVG)
         # xPointerSVG = min(datePos[-1], xPointerSVG)
 
-        # print('>><<>> ', xPointerSVG, oldxPointerSVG)
         dx = (xPointerSVG - oldxPointerSVG)
         xnewGizmo = xGizmo + dx
         xnewGizmo = max(xnewGizmo, 0)
@@ -200,22 +190,20 @@ def onGizmoDateMove(event):
         # # location
         # pos = (xHandle - x1RectDate)/(x2RectDate - x1RectDate)
         # pos = max(min(pos, 1.0), 0.0)
-        print(date1, date2)
         date = date1 + pos*(date2 - date1)
-        idxDate = binSearchDateCloser(date, dates)  # Index of the existing date closer to the 'date'
+        print(100012345,  date, date1, date2, pos)
+        idxDate = binSearchIdxDateCloser(date, dates)  # Index of the existing date closer to the 'date'
         date = dates[idxDate]
         selectedDateIdx = idxDate
         # dateText = document['textDate']
 
-        idxDate = binSearchDateCloser(date, dates)
-        date = dates[idxDate]
+        print(12345, idxDate, date, dates[0], dates[-1])
+        date = convertJSDateToPython(dates[idxDate])
 
         strDate = conf.datefmt % (date.year, date.month, date.day, date.hour, date.minute)
         gizmoDateText = document['gizmoDateText']
         gizmoDateText.text = strDate
-        # dateText.text = '%.4i-%.2i-%.2iT%.2i:%.2i' % (date.year, date.month, date.day, date.hour, date.minute)
-
-        # print('JJJJJ', pos, dates[idxDate])
+#         # dateText.text = '%.4i-%.2i-%.2iT%.2i:%.2i' % (date.year, date.month, date.day, date.hour, date.minute)
 
         if onDateChange is not None:
             # onDateChange(layer, date)
@@ -225,13 +213,10 @@ def onGizmoDateMove(event):
 
 
 
-        # print(document['gizmoDateBubble'].getBoundingClientRect().__dict__)
 
 
 def setTicks(dates):
 # Puts ticks along the dates line.
-
-    print('>>>>>', dates)
 
     global datePos
 
@@ -254,14 +239,13 @@ def setTicks(dates):
     for idx, date in enumerate(dates):
         newTick = sampleTick.cloneNode(True)
         xSample = float(sampleTick['x'])
-        print(dates)
         xTick = xSample + widthDates * idx / (len(dates) - 1)
         newTick['x'] = '%.4f' % xTick
         datePos += [xTick]
         sampleTick.parent.append(newTick)
 
 
-def setupDateGizmo(lyr, dat1, dat2, txtDates, onDateChng, confFile):
+def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
     global x1RectDate, x2RectDate
     global date1, date2, dates, datePos, selectedDateIdx
     global onDateChange
@@ -271,33 +255,39 @@ def setupDateGizmo(lyr, dat1, dat2, txtDates, onDateChng, confFile):
 
     conf = confFile
 
+
+
+
     oldxPointerSVG = -1
     xGizmo = 0.0
     selectedDateIdx = 0
 
     dates = []
 
-    date1 = dat1
-    date2 = dat2
+    date1 = convertPythonDateToJS(dat1)
+    date2 = convertPythonDateToJS(dat2)
     onDateChange = onDateChng
     layer = lyr
 
     # Computers the indices of the dates in 'dates' od the minimum set that contains dateStart-dateEnd
-    idxDate1 = binSearchDateLess  (date1, txtDates)
-    idxDate2 = binSearchDateLarger(date2, txtDates)
+    idxDate1 = binSearchDateLess  (date1, JSdates)
+    idxDate2 = binSearchDateLarger(date2, JSdates)
+
+    print(2222, idxDate1, idxDate2)
+
 
     # Creates the set of datetime objects with the available dates
-    for i in range(idxDate1, idxDate2):
-        txtDate = txtDates[i]
-        txtDate = txtDate.strip()
-        date = convertDate(txtDate)
-
+    for i in range(idxDate1, idxDate2+1):
+        date = JSdates[i]
         dates += [date]
+
+    print(1111, dates)
 
     setTicks(dates)
 
     # Starts the date labels with the first one
-    document['gizmoDateText'] =  conf.datefmt % (dates[0].year, dates[0].month, dates[0].day, dates[0].hour, dates[0].minute)
+    date = convertJSDateToPython(dates[0])
+    document['gizmoDateText'] =  conf.datefmt % (date.year, date.month, date.day, date.hour, date.minute)
 
     document["gizmoDateHandle"].bind("mousedown", onGizmoDateDown)
     document["gizmoDateHandle"].bind("mouseup",   onGizmoDateUp)

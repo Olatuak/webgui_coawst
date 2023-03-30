@@ -1,11 +1,12 @@
-from browser import document, window
+from browser import document, window, timer
+import dateGizmo
 from colorBar   import *
+import datetime
 # import velocityPythonAdaptor
 
 reloadTileOnError = False
 
 def onTileLoad(event):
-    # print(event.__dict__)
     pass
 
 def onTileLoadStart(event):
@@ -33,6 +34,21 @@ def onError(event):
 
 class Maps:
 
+    def onDateChange(self, idxDate):
+
+        for mapLayer, layer in zip(reversed(self.listLayer), reversed(self.layers)):
+
+            if layer['visible']:
+
+                layerType =  layer['layertype']
+                serverType = layer['servertype']
+                if serverType == 'dap':
+                    mapLayer.onDateChange(idxDate)
+
+#         self.update()
+        self.redrawLayers()
+
+
     def __init__(self, date, crs, conf, leaflet):
 
         self.crs = crs
@@ -54,6 +70,7 @@ class Maps:
             layerType  = layer['layertype']
             serverType = layer['servertype']
 
+
             if layerType == 'colormap':
                 if (serverType == 'wms'):
                     mapLayer = self.leaflet.tileLayer.wms(layer['server']['url'], {
@@ -68,8 +85,6 @@ class Maps:
                         'version': '1.3.0',
                         'styles': colorbar['style'],
                     })
-
-                    print(333, mapLayer.__dict__)
 
                     mapLayer.on('tileload', onTileLoad)
                     mapLayer.on('tileerror', onError)
@@ -86,21 +101,54 @@ class Maps:
                 colorBarName = layer['colorbar']
                 colorbar = conf.colorbars[colorBarName]
                 mapLayer = self.map
-#                 velLayer = window.addNewVelocityLayer(mapLayer)
-                velLayer = window.addNewDynmapLayer(mapLayer, conf.colormaps[colorbar['style']], colorbar)
+                velLayer = window.addNewVelocityLayer(mapLayer)
                 x = velLayer.addTo(self.map)
-                print('tstststststs', self.map.hasLayer(x))
-#                 print('tstststststs', x._canvasLayer.__dict__)
-                print(mapLayer)
                 self.listLayer += [x]
                 self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
                 self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
+            elif layerType == 'dynmap':
+                gridType   = layer['gridtype']
+                colorBarName = layer['colorbar']
+                colorbar = conf.colorbars[colorBarName]
+                mapLayer = self.map
+
+#                 fileName = 'https://icoast.rc.ufl.edu/thredds/dodsC/matthew/L1_qck_20220928.nc.dods'
+                fileName = layer['server']['url']
+                JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
+                timeOffset = layer['server']['timeOffset']
+                fileName = fileName.format(year = 2022, month = 11, day = 18)
+                print(333444, fileName)
+                print(layer['gridtype'].split(','),128383)
+                gridType = layer['gridtype'].split(',')
+                if len(gridType) == 1:
+                    dynLayer, times = window.addNewDynHeatmapLayer(mapLayer, fileName,
+                                                    layer['name'], layer['server']['grids'][gridType[0]], layer['server']['time'],
+                                                    (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
+                                                    conf.colormaps[colorbar['style']], colorbar)
+                elif len(gridType) == 2:
+                    print(layer.keys())
+                    dynLayer, times = window.addNewDynVectormapLayer(mapLayer, fileName,
+                                                    layer['name'].split(','), layer['server']['grids'][gridType[0]], layer['server']['grids'][gridType[1]],
+                                                    layer['server']['time'],
+                                                    (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
+                                                    conf.colormaps[colorbar['style']], colorbar, layer['varscale'], layer['varthreshold'])
+                else:
+                    print('ERROR, too many layers')
+                dynLayer.addTo(self.map)
+                self.listLayer += [dynLayer]
+                self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
+                self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
+
+                self.dates = times
 
             else:
                 pass
 
+        self.onDateChange(0)
 
-        self.update()
+#         self.update()
+
+
 
 
 
@@ -123,15 +171,63 @@ class Maps:
 
 
 
+    def redrawLayers(self):
+
+        print('HERE')
+        try:
+            self.mainLayer
+
+        except:
+            self.update()
+            return
+
+
+        # Reversed because the first layer in the menu is the one on top
+        for mapLayer, layer, colorBar in zip(reversed(self.listLayer), reversed(self.layers), reversed(self.colorBars)):
+
+            if layer['visible']:
+
+                layerType =  layer['layertype']
+                serverType = layer['servertype']
+                if layerType == 'colormap':
+#                     if serverType == 'wms':
+#                         mapLayer.addTo(self.map)
+#
+#                     elif serverType == 'dap':
+#                         # try:
+#                         #     window.addNewHeatMap(mapLayer)
+#                         #     window.updateHeatmap('baseMapId', mapLayer)
+#                         # except:
+#                         #     pass
+#                         mapLayer.addTo(self.map)
+#
+#                     else:
+#                         print('ERROR, invalid server ', serverType)
+                    pass
+
+#                 elif layerType == 'velocitymap':
+#                     if serverType == 'dap':
+#                         mapLayer.addTo(self.map)
+
+                elif layerType == 'dynmap':
+                    if serverType == 'dap':
+                        mapLayer.draw()
+
+                    else:
+                        print('ERROR, invalid server ', serverType)
+
+#         timer.set_timeout(self.redrawLayers, 10)
+
+
+
+
     def updateLayers(self):
         resetColorBarsInMap(self.colorBars)  # Hide all color bars before visualizing only the ones that are visible.
 
         # Remove all previous layers.
         for mapLayer in self.listLayer:
-            print('dadadsa12121', mapLayer._map)
             if self.map.hasLayer(mapLayer):
                 try:
-                    print('WWWW', mapLayer)
                     self.map.removeLayer(mapLayer)
                 except:
                     pass
@@ -149,20 +245,14 @@ class Maps:
         for mapLayer, layer, colorBar in zip(reversed(self.listLayer), reversed(self.layers), reversed(self.colorBars)):
 
             if layer['visible']:
-                print(555777, mapLayer, layer)
 
                 layerType =  layer['layertype']
                 serverType = layer['servertype']
-                print(555777, mapLayer, layer)
-                print('------')
-                print('aaaaaaaaaaaaa', serverType, layerType)
-                print('------')
                 if layerType == 'colormap':
                     if serverType == 'wms':
                         mapLayer.addTo(self.map)
 
                     elif serverType == 'dap':
-                        print('lllllllllll')
                         # try:
                         #     window.addNewHeatMap(mapLayer)
                         #     window.updateHeatmap('baseMapId', mapLayer)
@@ -175,9 +265,11 @@ class Maps:
 
                 elif layerType == 'velocitymap':
                     if serverType == 'dap':
-                        print('kkkkkkk')
                         mapLayer.addTo(self.map)
 
+                elif layerType == 'dynmap':
+                    if serverType == 'dap':
+                        mapLayer.addTo(self.map)
 
                     else:
                         print('ERROR, invalid server ', serverType)
@@ -194,6 +286,11 @@ class Maps:
                         addColorBarToMap(colorBar)
                     except:
                         pass
+
+        self.redrawLayers()
+
+
+
 
 
 

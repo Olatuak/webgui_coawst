@@ -1,8 +1,15 @@
 "use strict";
 
 
+const pad = function(num, digits)
+// Converts an integer number into a string with the specified digits, pading with zeros from the left if necessary
+{
+  return ('00000000000000000' + num).slice(-digits);
+}
+
+
 // Binary Search of the interval that contains x
-var binSearch = function (arr, x) {
+var binSearch = function(arr, x) {
 
     let L = 0
     let R = arr.length-1;
@@ -45,6 +52,131 @@ var destination = function(latlng, heading, distance) {
 }
 
 
+var UtoR = function(dims, data, isT)
+// Interpolates an array of values defined on a U mesh into an R mesh
+{
+
+    if (isT) {
+        const ndi = dims.sizes[1] - 1;
+        const ndj = dims.sizes[2];
+        const nsi = dims.sizes[1];
+        const nsj = dims.sizes[2];
+        let res = new Array(ndi * ndj);
+        for (let i = 0; i < nsi - 1; i++) {
+            for (let j = 0; j < nsj; j++) {
+                // isT and isnT decide if the array is transposed or not.
+                const idxSrc = (i*nsj + j);
+                const idxDst = (i*ndj + j);
+                // res[idxDst] = 0.5*(data[idxSrc] + data[idxSrc+1])
+                res[idxDst] = data[idxSrc]
+            }
+            // const idxDst0   = (i + 0*ndi);
+            // const idxDst1   = (i + 1*ndi);
+            // const idxDstNm1 = (i + (nsj-1)*ndi);
+            // const idxDstN   = (i + nsj*ndi);
+            // res[idxDst0] = data[idxDst1]
+            // res[idxDstN] = data[idxDstNm1]
+
+        }
+        return [ndi, ndj, res];
+    }
+    else
+    {
+
+
+    }
+}
+
+var VtoR = function(dims, data, isT)
+// Interpolates an array of values defined on a U mesh into an R mesh
+{
+    if (isT) {
+        const ndi = dims.sizes[1];
+        const ndj = dims.sizes[2] - 1;
+        const nsi = dims.sizes[1];
+        const nsj = dims.sizes[2];
+        let res = new Array(ndi * ndj);
+        for (let j = 0; j < nsj; j++) {
+            for (let i = 1; i < nsi; i++) {
+                // isT and isnT decide if the array is transposed or not.
+                const idxSrc = (i*nsj + j);
+                const idxDst = (i*ndj + j);
+                // res[idxDst] = 0.5*(data[idxSrc] + data[idxSrc+1])
+                res[idxDst] = data[idxSrc]
+            }
+            // const idxDst0   = (j + 0*ndj);
+            // const idxDst1   = (j + 1*ndj);
+            // const idxDstNm1 = (j + (nsi-1)*ndj);
+            // const idxDstN   = (j + nsi*ndj);
+            // res[idxDst0] = data[idxDst1]
+            // res[idxDstN] = data[idxDstNm1]
+
+        }
+        return [ndi, ndj, res];
+    }
+    else
+    {
+
+
+    }
+    // const isNotT = 1 - isT
+    // const ndi = dims.sizes[1] - isT;
+    // const ndj = dims.sizes[2] - isNotT;
+    // const nsi = dims.sizes[1];
+    // const nsj = dims.sizes[2];
+    // let res = new Array(ndi*ndj);
+    // for (let i=0; i<ndi; i++)
+    // {
+    //     for (let j=0; j<ndj; j++)
+    //     {
+    //         // isT and isnT decide if the array is transposed or not.
+    //         const idxSrc = isT*(i + j*nsi) + isNotT*(i*nsj + j);
+    //         const idxDst = isT*(i + j*ndi) + isNotT*(i*ndj + j);
+    //         // res[idxDst] = 0.5*(data[idxSrc] + data[idxSrc + isT*nsi + isNotT*nsj])
+    //         res[idxDst] = data[idxSrc]
+    //     }
+    // }
+    // return [ndi, ndj, res];
+}
+    // [dims, dataV] = VtoR(dimsDataV, dataV)
+
+
+let loadGridData = function loadGridData(fileName, idxDate, gridType, timeVar, timeOffsettime, UnitsInSeconds) {
+    // let fileName = `https://icoast.rc.ufl.edu/thredds/dodsC/matthew/L1_qck_${pad(year,4)}${pad(month,2)}${pad(day,2)}.nc.dods`;
+
+    // Read the time dimension
+    let [dimsTime, times] = window.loadBinaryDODSFloat64Cached(fileName + '?' + timeVar);
+
+    // Converts the time into JavaScript
+    for (let i = 0; i< times.length; i++) {
+        const time = (times[i] + timeOffsettime)*UnitsInSeconds*1000;
+        times[i] = time
+
+    }
+
+    // Converts the time into 
+
+    // Read the mesh.
+    let [dimsLat, lat] = window.loadBinaryDODSFloat64Cached(fileName + '?' + gridType[0]);
+    let [dimsLon, lon] = window.loadBinaryDODSFloat64Cached(fileName + '?' + gridType[1]);
+
+    return [dimsTime, times, dimsLat, lat, dimsLon, lon];
+}
+
+let loadVarData = function loadVarData(fileName, idxDate, varName, dims) {
+    let data = Array(1);
+    let dimsData = 0;
+
+
+    const fullFileName = fileName + '?' + varName + '%5B' + (idxDate + 1) + '%5D%5B0:1:' + (dims[1] -1) + '%5D%5B0:1:' + (dims[0] -1) + '%5D';
+    [dimsData, data] = window.loadBinaryDODSFloat32Cached(fullFileName);
+
+
+    return [dimsData, data];
+}
+
+
+
 const Cmap = class
 {
     constructor(options, nLevels)
@@ -61,7 +193,7 @@ const Cmap = class
         this.cbar = cbar;
 
 
-        for (var i = 0; i < nLevels; i++)
+        for (let i = 0; i < nLevels; i++)
         {
             const x = i/nLevels;
 
@@ -87,38 +219,47 @@ const Cmap = class
 
 }
 
-
-function addNewDynmapLayer(map, cmap, cbar)
-// Creates and returns a dynamic map layer (CCS) based on the datafiles.
+function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOffset, timeUnitsInSeconds, cmap, cbar)
+// Creates and returns a dynamic heatmap map layer (CCS) based on the datafiles.
 {
-    // Reads the files/urls
-    let [dimsLon,  lon ] = loadBinaryDODSFloat64('https://icoast.rc.ufl.edu/thredds/dodsC/matthew/L1_qck_20220926.nc.dods?lon_rho%5B0:1:544%5D%5B0:1:689%5D');
-    let [dimsLat,  lat ] = loadBinaryDODSFloat64('https://icoast.rc.ufl.edu/thredds/dodsC/matthew/L1_qck_20220926.nc.dods?lat_rho%5B0:1:544%5D%5B0:1:689%5D');
-    let [dimsTime, time] = loadBinaryDODSFloat64('https://icoast.rc.ufl.edu/thredds/dodsC/matthew/L1_qck_20220926.nc.dods?ocean_time%5B0:1:120%5D');
-    let [dimsData, data] = loadBinaryDODSFloat32('https://icoast.rc.ufl.edu/thredds/dodsC/matthew/L1_qck_20220926.nc.dods?zeta%5B1%5D%5B0:1:544%5D%5B0:1:689%5D');
-    // let [dimsData, data] = loadBinaryDODSFloat32('./sample2.bin');
+    const  [dimsTime, times, dimsLat, lat, dimsLon, lon] = loadGridData(fileName, 0, gridType, timeVar, timeOffset, timeUnitsInSeconds)
 
-//    // Reads the files/urls
-//     [dimsLon,  lon ] = loadBinaryDODSFloat64('./lat2.bin');
-//     [dimsLat,  lat ] = loadBinaryDODSFloat64('./lon2.bin');
-//     [dimsData, data] = loadBinaryDODSFloat32('./zeta2.bin');
+
+    // A general mesh is one that has different lat lon pairs for each node, i.e. lat and lon arrays are bidimensional.
+    const isGeneralMesh = dimsLon.sizes.length > 1 && dimsLon.sizes[0] > 1 && dimsLon.sizes[1] > 1;
+    let ni, nj = 0;
+    if (isGeneralMesh) {
+        ni = dimsLat.sizes[1];
+        nj = dimsLat.sizes[0];
+    }
+    else {
+        ni = lat.length;
+        nj = lon.length;
+    }
+    const nt = times.length;
+
+    const dims = [ni, nj, nt];
+    let [dimsData, data] = loadVarData(fileName, 0, varName, dims)
 
 
     // Creates the data structure.
-    var Nx = lon.length;
-    var Ny = lat.length;
-    var layerData = {header: {parameterUnit: "m.s-1", parameterNumber: 2,
+    let layerData = {header: {parameterUnit: "m.s-1", parameterNumber: 2,
             parameterNumberName: "Eastward current", parameterCategory: 2,
             lat: lat, dimsLat: dimsLat,
             lon: lon, dimsLon: dimsLat,
+            times: times, dimsTime: dimsTime,
             refTime: "2022-09-30 00:00:00",
             latLonDims: dimsLon.sizes.length,
             latLonSize: dimsLon.sizes,},
-        data: data.slice(0, Nx*Ny)};
+            data: data.slice(0, ni*nj),
+            varName: varName,
+            fileName: fileName,
+            dims: dims,
+            isGeneralMesh: isGeneralMesh};
 
 
     // Creates the leaflet velocity layer.
-    var heatmapLayer = L.createDynmapLayer({
+    let heatmapLayer = L.createDynmapLayer({
         displayValues: true,
         displayOptions: {
             velocityType: "Global Wind",
@@ -126,18 +267,90 @@ function addNewDynmapLayer(map, cmap, cbar)
             emptyString: "sss No wind data",
         },
         data: layerData,
-        maxVelocity: 0.25,
-        velocityScale: 0.3,
-        lineWidth: 2,
         visible: true,
         cmap: cmap,
         cbar: cbar,
     });
 
+    return [heatmapLayer, times]
+}
 
 
 
-    return heatmapLayer
+function addNewDynVectormapLayer(map, fileName, varNames, gridTypeU, gridTypeV, timeVar, timeOffset, timeUnitsInSeconds, cmap, cbar, varScale, varThreshold)
+// Creates and returns a dynamic heatmap map layer (CCS) based on the datafiles.
+{
+    if (gridTypeU[0] !== gridTypeV[0]) {
+        console.log('ERROR: gridTypes different from Rho are not yet supported.')
+    }
+    const  [dimsTime, times, dimsLat, lat, dimsLon, lon] = loadGridData(fileName, 0, gridTypeU, timeVar, timeOffset, timeUnitsInSeconds)
+
+    // A general mesh is one that has different lat lon pairs for each node, i.e. lat and lon arrays are bidimensional.
+    const isGeneralMesh = dimsLon.sizes.length > 1 && dimsLon.sizes[0] > 1 && dimsLon.sizes[1] > 1;
+    let ni, nj = 0;
+    if (isGeneralMesh) {
+        ni = dimsLat.sizes[1];
+        nj = dimsLat.sizes[0];
+    }
+    else {
+        ni = lat.length;
+        nj = lon.length;
+    }
+    const nt = times.length;
+
+    const dims = [ni, nj, nt];
+
+    let [dimsDataU, dataU] = loadVarData(fileName, 0, varNames[0], dims)
+    let [dimsDataV, dataV] = loadVarData(fileName, 0, varNames[1], dims)
+
+    // let ndi = 0,  ndj = 0;
+    // let dataUR, dataVR, latR, lonR;
+    // const isT = 1;
+    // [ndi, ndj, dataUR] = UtoR(dimsDataU, dataU, isT);
+    // [ndi, ndj, dataVR] = VtoR(dimsDataV, dataV, isT);
+    // [ndi, ndj, latR]   = UtoR(dimsDataU, latU,  isT);  // Chose U to get the R latitude and longitude. Could've chosen V.
+    // [ndi, ndj, lonR]   = UtoR(dimsDataU, lonU,  isT);
+    // [ndi, ndj, latR]   = VtoR(dimsDataV, latV,  isT);  // Chose U to get the R latitude and longitude. Could've chosen V.
+    // [ndi, ndj, lonR]   = VtoR(dimsDataV, lonV,  isT);
+    // const dimsR = {names: dimsDataU.names, sizes: [ndi, ndj]};
+    // const dims = [ndi, ndj, nt];
+
+    // Creates the data structure.
+    let layerData = {header: {parameterUnit: "m.s-1", parameterNumber: 2,
+            parameterNumberName: "Eastward current", parameterCategory: 2,
+            lat: lat, dimsLat: dims,
+            lon: lon, dimsLon: dims,
+            times: times, dimsTime: dimsTime,
+            refTime: "2022-09-30 00:00:00",
+            latLonDims: dimsLon.sizes.length,
+            latLonSize: dimsLon.sizes,},
+        dataU: dataU.slice(0, ni*nj),
+        dataV: dataV.slice(0, ni*nj),
+        varName: varNames,
+        fileName: fileName,
+        dims: dims,
+        // dimsU: dimsU,
+        // dimsV: dimsV,
+        isGeneralMesh: isGeneralMesh};
+
+
+    // Creates the leaflet velocity layer.
+    let heatmapLayer = L.createDynmapLayer({
+        displayValues: true,
+        displayOptions: {
+            velocityType: "Global Wind",
+            position: "bottomright",
+            emptyString: "sss No wind data",
+        },
+        data: layerData,
+        varThreshold: varThreshold,
+        varScale: varScale,
+        visible: true,
+        cmap: cmap,
+        cbar: cbar,
+    });
+
+    return [heatmapLayer, times]
 }
 
 
@@ -151,16 +364,50 @@ L.DynmapLayer = L.Layer.extend({
         L.setOptions(this, options);
 
         // A general mesh is one that has different lat lon pairs for each node, i.e. lat and lon arrays are bidimensional.
-        this.isGeneralMesh = options.data.header.latLonDims > 1 && options.data.header.latLonSize[0] > 1 && options.data.header.latLonSize[1] > 1;
+        // this.isGeneralMesh = options.data.header.latLonDims > 1 && options.data.header.latLonSize[0] > 1 && options.data.header.latLonSize[1] > 1;
+        //
+        // if (this.isGeneralMesh) {
+        //     this.ni = options.data.header.latLonSize[1];
+        //     this.nj = options.data.header.latLonSize[0];
+        // }
+        // else {
+        //     this.ni = this.options.data.header.lat.length;
+        //     this.nj = this.options.data.header.lon.length;
+        // }
+        //
+        // this.nt = this.options.data.header.dimsTime.size[0];
 
-        if (this.isGeneralMesh) {
-            this.ni = options.data.header.latLonSize[1];
-            this.nj = options.data.header.latLonSize[0];
+        this.isGeneralMesh = options.data.isGeneralMesh;
+        [this.ni, this.nj, this.nt] = options.data.dims;
+
+        this.fileName = options.data.fileName;
+        this.varName  = options.data.varName;
+        this.dims     = options.data.dims;
+        this.dimsU    = options.data.dimsU;  // These two might not exist if it is a scalar var
+        this.dimsV    = options.data.dimsV;
+
+
+
+    },
+
+    onDateChange: function(idxDate)
+    {
+        this.idxDate = idxDate
+        console.log(4444, idxDate)
+        if (typeof this.varName === 'string') {
+            let [dimsData, data] = loadVarData(this.fileName, idxDate, this.varName, this.dims);
+
+            this.options.data.data = data.slice(0, this.ni*this.nj);
+        } else
+        {
+            let [dimsDataU, dataU] = loadVarData(this.fileName, idxDate, this.varName[0], this.dims);
+            let [dimsDataV, dataV] = loadVarData(this.fileName, idxDate, this.varName[1], this.dims);
+
+            this.options.data.dataU = dataU.slice(0, dimsDataU.sizes[1]*dimsDataU.sizes[2]);
+            this.options.data.dataV = dataV.slice(0, dimsDataV.sizes[1]*dimsDataV.sizes[2]);
         }
-        else {
-            this.ni = this.options.data.header.lat.length;
-            this.nj = this.options.data.header.lon.length;
-        }
+
+
 
 
     },
@@ -173,9 +420,9 @@ L.DynmapLayer = L.Layer.extend({
         const data = this.options.data;
         const lat = this.lat1d;
         const lon = this.lon1d;
-        const dat = data.data;
-
-        const scale = this.scale;
+        const dat  = data.data;
+        const datU = data.dataU;
+        const datV = data.dataV;
 
         const g = this.g;
 
@@ -204,54 +451,62 @@ L.DynmapLayer = L.Layer.extend({
         const M22 = this.M22;
         const O = this.O;
 
+        const isT = 1, isnT = 0;
+
 
         const arr = new Uint8ClampedArray(4*W*H);
         let image = new ImageData(arr, W, H);
 
+        const Slat = isT + (1 - isT)*nj;
+        const Slon = isT*ni + (1 - isT);
+
         // Draws all the pixels one by one
-        let idx = 0;
-        const isT = 1, isnT = 0;
-        for (let j = yB; j<=yT; j++)
-        {
-            for (let i = xL; i<=xR; i++)
-            {
-                const p = this._map.containerPointToLatLng(L.point(i, j));
+        if (dat != undefined) {
 
-                const p1 = L.latLng(M11*(p.lat - O.lat) + M21*(p.lng - O.lng), M12*(p.lat - O.lat) + M22*(p.lng - O.lng));
+            let idx = 0;
+            for (let j = yB; j <= yT; j++) {
+                for (let i = xL; i <= xR; i++) {
+                    const p = this._map.containerPointToLatLng(L.point(i, j));
 
-                if (p1.lat >= 0 && p1.lng >= 0 && p1.lat <= 1 && p1.lng <= 1) {
+                    const p1 = L.latLng(M11 * (p.lat - O.lat) + M21 * (p.lng - O.lng), M12 * (p.lat - O.lat) + M22 * (p.lng - O.lng));
 
-                    // transforms the point from the unit box to a rectangle of the proper size.
-                    p1.lat *= lat[ni - 1];
-                    p1.lng *= lon[nj - 1];
+                    if (p1.lat >= 0 && p1.lng >= 0 && p1.lat <= 1 && p1.lng <= 1) {
 
-                    const iLat = binSearch(lat, p1.lat);
-                    const iLon = binSearch(lon, p1.lng);
+                        // transforms the point from the unit box to a rectangle of the proper size.
+                        p1.lat *= lat[ni - 1];
+                        p1.lng *= lon[nj - 1];
 
-                    // isT and isnT decide if the array is transposed or not.
-                    const val = dat[isT*(iLat + iLon*ni) + isnT*(iLat*nj + iLon)];
+                        const iLat = binSearch(lat, p1.lat);
+                        const iLon = binSearch(lon, p1.lng);
 
-                    if (!isNaN(val) && val != 0) {
-                        const [R, G, B] = this.cmap.colors(val);
+                        // isT and isnT decide if the array is transposed or not.
+                        const val = dat[Slat*iLat + Slon*iLon];
 
-                        image.data[idx    ] = R;
-                        image.data[idx + 1] = G;
-                        image.data[idx + 2] = B;
-                        image.data[idx + 3] = 255;
+                        if (!isNaN(val) && val != 0 && val>-1.8 && val<1.8) {
+                            const [R, G, B] = this.cmap.colors(val);
+
+                            image.data[idx    ] = R;
+                            image.data[idx + 1] = G;
+                            image.data[idx + 2] = B;
+                            image.data[idx + 3] = 255;
+                        }
                     }
-                }
 
-                idx += 4;
+                    idx += 4;
+                }
             }
+
+            g.putImageData(image, xL, yB);
+
+
         }
 
-        g.putImageData(image, xL, yB);
+        if (datU != undefined) {
 
+            const arrowGridYSize = 14;
+            const arrowGridXSize = 14;
 
-        const arrowGridYSize = 14;
-        const arrowGridXSize = 14;
-
-        if (true) {
+            const scale = this.varScale;
 
             for (let j = yB; j <= yT; j += arrowGridYSize) {
                 for (let i = xL; i <= xR; i += arrowGridXSize) {
@@ -269,12 +524,12 @@ L.DynmapLayer = L.Layer.extend({
                     const iLon = binSearch(lon, p1.lng);
 
                     // isT and isnT decide if the array is transposed or not.
-                    const val = dat[isT*(iLat + iLon*ni) + isnT*(iLat*nj + iLon)];
-                    const u = val;
-                    const v = 1 - val;
+                    const u = datU[Slat*iLat + Slon*iLon];
+                    const v = datV[Slat*iLat + Slon*iLon];
+                    const val = Math.sqrt(u*u + v*v);
 
 
-                    if (!isNaN(val) && val != 0) {
+                    if (!isNaN(val) && val != 0 && val<1) {
                         const [R, G, B] = this.cmap.colors(val);
 
                         const decColor = B + 0x100 * G + 0x10000 * R;
@@ -282,8 +537,8 @@ L.DynmapLayer = L.Layer.extend({
                         g.fillStyle = color;
 
                         // Finds unitary vector in the directions of U and V.
-                        const pU = destination(p, 90, 0.01);
-                        const pV = destination(p, 0, 0.01);
+                        const pU = destination(p,  0, 0.01);
+                        const pV = destination(p, 90, 0.01);
 
                         // const dV = p.distanceTo(pV);
                         // const dU = p.distanceTo(pU);
@@ -330,6 +585,14 @@ L.DynmapLayer = L.Layer.extend({
         g.lineTo(aTL.x, aTL.y);
         g.stroke();
 
+
+        // if (this._timer) clearTimeout(self._timer);
+        // this._timer = setTimeout((function  () {
+        //     this.onDateChange(this.idxDate+1)
+        //     this.draw();
+        //
+        // }).bind(this), 10); // showing velocity is delayed. JMG: why? (used to be 750)
+
     },
 
 
@@ -362,10 +625,20 @@ L.DynmapLayer = L.Layer.extend({
         this.dat = data.data;
 
         if (this.isGeneralMesh) {
-            const iTL = 0*ni + 0;
-            const iTR = 0*ni + (ni-1);
-            const iBL = (nj-1)*ni + 0;
-            const iBR = (nj-1)*ni + (ni-1);
+            let Si = 1, Sj = 1;
+            const isT = 1;
+            if (isT == 0) Si = nj;
+            else          Sj = ni;
+
+            // const iTL = 0*ni + 0;
+            // const iTR = 0*ni + (ni-1);
+            // const iBL = (nj-1)*ni + 0;
+            // const iBR = (nj-1)*ni + (ni-1);
+            const iTL = 0*Sj + 0*Si;
+            const iTR = 0*Sj + (ni-1)*Si;
+            const iBL = (nj-1)*Sj + 0*Si;
+            const iBR = (nj-1)*Sj + (ni-1)*Si;
+
 
             this.pTL = L.latLng(this.lat[iTL], this.lon[iTL]);
             this.pTR = L.latLng(this.lat[iTR], this.lon[iTR]);
@@ -379,7 +652,7 @@ L.DynmapLayer = L.Layer.extend({
             {
                 const idx = 0*ni + i;
                 this.lat1d[i] = Math.sqrt((this.pTL.lat - this.lat[idx])*(this.pTL.lat - this.lat[idx]) +
-                                             (this.pTL.lng - this.lon[idx])*(this.pTL.lng - this.lon[idx]));
+                                          (this.pTL.lng - this.lon[idx])*(this.pTL.lng - this.lon[idx]));
             }
             for (let j = 0; j<nj; j++)
             {
@@ -415,7 +688,9 @@ L.DynmapLayer = L.Layer.extend({
         this.M22 =   invDet*vX.lat;
 
 
-        this.scale = 12;
+        // this.scale = 12;
+        this.varScale = this.options.varScale;
+        this.varThreshold = this.options.varThreshold;
 
         this.g = this._container.getContext("2d");
 
@@ -423,6 +698,12 @@ L.DynmapLayer = L.Layer.extend({
         L.DomUtil.setPosition(this._container, topLeft);
 
         this.draw();
+
+        // var self = this;
+        // setTimeout(function () {
+        //     self._onLayerDidMove();
+        // }, 0);
+
     },
 
     onRemove: function(map) {
@@ -451,6 +732,8 @@ L.DynmapLayer = L.Layer.extend({
 
         // map.addLayer(this);
         this.draw();
+
+
 
     },
 

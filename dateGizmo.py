@@ -108,6 +108,15 @@ def onGizmoDateDown(event):
     svgroot = document['root']
     svgroot.style['pointer-events'] = 'all'
 
+def onGizmoPlay(event):
+    global selectedDateIdx
+    selectedDateIdx += 1
+    updateDateText()
+    if onDateChange is not None:
+        onDateChange(layer, selectedDateIdx)
+    print(12345)
+
+
 
 def updateDateText():
     global isDateGizmoDown, xPointer, selectedDateIdx, dates
@@ -131,12 +140,12 @@ def onGizmoDateUp(event):
         isDateGizmoDown = False
         xPointer = -1
 
-        # Makes the document unresponsive again (except for the normally avtive elements in the gizmo).
+        # Makes the document unresponsive again (except for the normally active elements in the gizmo).
         # This allows leaflet to handle the rest of events.
         svgroot = document['root']
         svgroot.style['pointer-events'] = 'none'
 
-        # Consolidates the transforms. This is to avoid having a long lst of transformations.
+        # Consolidates the transforms. This is to avoid having a long list of transformations.
         transformList = document['gizmoDateHandle'].transform.baseVal
         transformList.consolidate()
 
@@ -269,19 +278,19 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
     onDateChange = onDateChng
     layer = lyr
 
-    # Computers the indices of the dates in 'dates' od the minimum set that contains dateStart-dateEnd
+    # Computes the indices of the dates in 'dates' of the minimum set that contains dateStart-dateEnd
     idxDate1 = binSearchDateLess  (date1, JSdates)
     idxDate2 = binSearchDateLarger(date2, JSdates)
 
-    print(2222, idxDate1, idxDate2)
+    idxDate1 = 0
+    idxDate2 = len(JSdates)-1
+
 
 
     # Creates the set of datetime objects with the available dates
     for i in range(idxDate1, idxDate2+1):
         date = JSdates[i]
         dates += [date]
-
-    print(1111, dates)
 
     setTicks(dates)
 
@@ -294,6 +303,7 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
     document["gizmoDateHandle"].bind("mousemove", onGizmoDateMove)
     document["root"           ].bind("mousemove", onGizmoDateMove)
     document["root"           ].bind("mouseup",   onGizmoDateUp)
+    document["play2"          ].bind("mousedown", onGizmoPlay)
 
     rect = document['rectDateGizmo'].getBoundingClientRect()
     x1RectDate = rect.left

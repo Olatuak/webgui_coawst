@@ -49,6 +49,22 @@ class Maps:
         self.redrawLayers()
 
 
+    def peekValues(self, lat, lon):
+
+        values = []
+        for mapLayer, layer in zip(reversed(self.listLayer), reversed(self.layers)):
+
+            if layer['visible']:
+
+                layerType =  layer['layertype']
+                serverType = layer['servertype']
+                if serverType == 'dap':
+                    values += [mapLayer.peekValue(lat, lon)]
+
+        return values
+
+
+
     def __init__(self, date, crs, conf, leaflet):
 
         self.crs = crs
@@ -140,6 +156,7 @@ class Maps:
                 self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
 
                 self.dates = times
+                print(444444444, times)
 
             else:
                 pass

@@ -145,13 +145,13 @@ let loadGridData = function loadGridData(fileName, idxDate, gridType, timeVar, t
     // let fileName = `https://icoast.rc.ufl.edu/thredds/dodsC/matthew/L1_qck_${pad(year,4)}${pad(month,2)}${pad(day,2)}.nc.dods`;
 
     // Read the time dimension
-    let [dimsTime, times] = window.loadBinaryDODSFloat64Cached(fileName + '?' + timeVar);
+    let [dimsTime, timesNC] = window.loadBinaryDODSFloat64Cached(fileName + '?' + timeVar);
+    let times = [];
 
     // Converts the time into JavaScript
-    for (let i = 0; i< times.length; i++) {
-        const time = (times[i] + timeOffsettime)*UnitsInSeconds*1000;
-        times[i] = time
-
+    for (let i = 0; i< timesNC.length; i++) {
+        const time = (timesNC[i] + timeOffsettime)*UnitsInSeconds*1000;
+        times.push(time);
     }
 
     // Converts the time into 
@@ -349,7 +349,6 @@ function addNewDynVectormapLayer(map, fileName, varNames, gridTypeU, gridTypeV, 
         cmap: cmap,
         cbar: cbar,
     });
-
     return [heatmapLayer, times]
 }
 
@@ -388,6 +387,59 @@ L.DynmapLayer = L.Layer.extend({
 
 
 
+    },
+
+    peekValue: function peekValue(lat, lon) {
+        const isT = 1, isnT = 0;
+        const ni = this.ni;
+        const nj = this.nj;
+
+        const TL = this._map.latLngToContainerPoint(this.pTL);
+        const TR = this._map.latLngToContainerPoint(this.pTR);
+        const BL = this._map.latLngToContainerPoint(this.pBL);
+        const BR = this._map.latLngToContainerPoint(this.pBR);
+
+        const xL = Math.max(0, Math.min(TL.x, TR.x, BL.x, BR.x));
+        const yB = Math.max(0, Math.min(TL.y, TR.y, BL.y, BR.y));
+        const xR = Math.min(this._container.width,  Math.max(TL.x, TR.x, BL.x, BR.x));
+        const yT = Math.min(this._container.height, Math.max(TL.y, TR.y, BL.y, BR.y));
+
+
+        const W = xR - xL + 1;
+        const H = yT - yB + 1;
+        if (W<=0 || H<=0) return;
+
+
+        const M11 = this.M11;
+        const M12 = this.M12;
+        const M21 = this.M21;
+        const M22 = this.M22;
+        const O = this.O;
+
+        const p = L.latLng(lat, lon);
+
+        const p1 = L.latLng(M11 * (p.lat - O.lat) + M21 * (p.lng - O.lng), M12 * (p.lat - O.lat) + M22 * (p.lng - O.lng));
+
+        if (p1.lat >= 0 && p1.lng >= 0 && p1.lat <= 1 && p1.lng <= 1 && this.options.data.data != undefined) {
+
+            // transforms the point from the unit box to a rectangle of the proper size.
+            p1.lat *= this.lat1d[ni - 1];
+            p1.lng *= this.lon1d[nj - 1];
+
+            const isT = 1, isnT = 0;
+
+            const Slat = isT + (1 - isT) * nj;
+            const Slon = isT * ni + (1 - isT);
+
+            const iLat = binSearch(this.lat1d, p1.lat);
+            const iLon = binSearch(this.lon1d, p1.lng);
+            // console.log('eeee', iLat, iLon, lat, lon);
+            // console.log(this.lat1d)
+            // console.log(this.lon1d)
+            // console.log('val: ', this.options.data.data[Slat * iLat + Slon * iLon]);
+            return this.options.data.data[Slat * iLat + Slon * iLon];
+        }
+        else return NaN;
     },
 
     onDateChange: function(idxDate)
@@ -479,7 +531,6 @@ L.DynmapLayer = L.Layer.extend({
                         const iLat = binSearch(lat, p1.lat);
                         const iLon = binSearch(lon, p1.lng);
 
-                        // isT and isnT decide if the array is transposed or not.
                         const val = dat[Slat*iLat + Slon*iLon];
 
                         if (!isNaN(val) && val != 0 && val>-1.8 && val<1.8) {
@@ -536,22 +587,24 @@ L.DynmapLayer = L.Layer.extend({
                         const color = '#' + decColor.toString(16);
                         g.fillStyle = color;
 
-                        // Finds unitary vector in the directions of U and V.
-                        const pU = destination(p,  0, 0.01);
-                        const pV = destination(p, 90, 0.01);
+                        // // Finds unitary vector in the directions of U and V.
+                        // const pU = destination(p,  0, 0.01);
+                        // const pV = destination(p, 90, 0.01);
+                        //
+                        // // const dV = p.distanceTo(pV);
+                        // // const dU = p.distanceTo(pU);
+                        // const dU = Math.sqrt((pU.lat - p.lat) * (pU.lat - p.lat) + (pU.lng - p.lng) * (pU.lng - p.lng));
+                        // const dV = Math.sqrt((pV.lat - p.lat) * (pV.lat - p.lat) + (pV.lng - p.lng) * (pV.lng - p.lng));
+                        //
+                        // const vU = [(pU.lat - p.lat) / dU, (pU.lng - p.lng) / dU];
+                        // const vV = [(pV.lat - p.lat) / dV, (pV.lng - p.lng) / dV];
+                        // // const a = Math.atan2(p2.lat - p.lat, p2.lng - p.lng)
+                        //
+                        // const ux = u * vU[0] + v * vV[0];
+                        // const uy = u * vU[1] + v * vV[1];
 
-                        // const dV = p.distanceTo(pV);
-                        // const dU = p.distanceTo(pU);
-                        const dU = Math.sqrt((pU.lat - p.lat) * (pU.lat - p.lat) + (pU.lng - p.lng) * (pU.lng - p.lng));
-                        const dV = Math.sqrt((pV.lat - p.lat) * (pV.lat - p.lat) + (pV.lng - p.lng) * (pV.lng - p.lng));
-
-                        const vU = [(pU.lat - p.lat) / dU, (pU.lng - p.lng) / dU];
-                        const vV = [(pV.lat - p.lat) / dV, (pV.lng - p.lng) / dV];
-                        // const a = Math.atan2(p2.lat - p.lat, p2.lng - p.lng)
-
-                        const ux = u * vU[0] + v * vV[0];
-                        const uy = u * vU[1] + v * vV[1];
-
+                        const ux = u;
+                        const uy = v;
 
                         // Draw the vectors.
                         g.beginPath();

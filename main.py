@@ -22,7 +22,7 @@ curDate = None
 # dateEnd   = datetime.datetime(2019, 2, 22, 8, 0)
 
 dateStart = datetime.datetime(2017, 1,  2, 0, 0, 0, 0, datetime.timezone.utc)
-dateEnd   = datetime.datetime(2017, 4,  2, 0, 0, 0, 0, datetime.timezone.utc)
+dateEnd   = datetime.datetime(2037, 4,  2, 0, 0, 0, 0, datetime.timezone.utc)
 dateFile  = datetime.datetime(2022, 9, 28, 0, 0, 0, 0, datetime.timezone.utc)
 
 
@@ -53,6 +53,7 @@ def onPointerMove(event):
     y = xy2.y
 
     if isPeeking:
+        values = mapLayers.peekValues(latlngPointer.lat, latlngPointer.lng)
 
 
 #         mapSize = map.getSize()
@@ -76,9 +77,10 @@ def onPointerMove(event):
 #         elemDimension = tree.getElementsByTagName('value')
 #         val = elemDimension[0].innerHTML
 
-        val = 1.0
-
-        document['textCoords2'].text = '%.3f, %.3f  =  %s' % (latlngPointer.lat, latlngPointer.lng, val)
+        try:
+            document['textCoords2'].text = '%.3f, %.3f  =  %.3f' % (latlngPointer.lat, latlngPointer.lng, values[0])
+        except:
+            document['textCoords2'].text = '%.3f, %.3f' % (latlngPointer.lat, latlngPointer.lng)
         document['rectCoords'].attributeStyleMap.set('opacity', 1)
 
 

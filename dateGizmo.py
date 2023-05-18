@@ -38,7 +38,7 @@ def convertPythonDateToJS(date):
 def convertJSDateToPython(JSDate):
     days = int(JSDate/86400000)
     milliseconds = (JSDate - days*86400000)
-    print ('LLLL  ', days, JSDate, milliseconds)
+    print ('LLLL  ', JSDate, days, JSDate, milliseconds)
     return JSDateOrig + datetime.timedelta(days = days, milliseconds = milliseconds)
 
 
@@ -294,6 +294,7 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
 
     setTicks(dates)
 
+    print('KKKK', dates[0])
     # Starts the date labels with the first one
     date = convertJSDateToPython(dates[0])
     document['gizmoDateText'] =  conf.datefmt % (date.year, date.month, date.day, date.hour, date.minute)

@@ -26,7 +26,7 @@ function readDODSHeader(url)
     req.overrideMimeType('text\/plain; charset=x-user-defined');
     req.send(null);
 
-    console.debug(url)
+    console.debug('1111', url)
     if (req.status > 299) return byteArray;
 
 
@@ -42,6 +42,7 @@ function readDODSHeader(url)
             break;
         }
     }
+    console.debug('2222', url)
 
     // Error condition
     if (!foundData)

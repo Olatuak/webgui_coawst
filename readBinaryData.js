@@ -121,7 +121,7 @@ function loadBinaryDODSFloat32(url)
 {
     console.log('%%%%', url)
     let [dims, responseText] = readDODSHeader(url)
-    console.log('%%%%', dims, responseText)
+    console.log('%%%%', dims)
     res = []
 
     // This is like a "union", fourU8 and oneF32 are two different views of the same buffer.

@@ -730,6 +730,8 @@ L.DynmapLayer = L.Layer.extend({
         }
 
         // Base vectors and origin for the mesh.
+        console.log('OOOOOOO', this.pTR);
+        console.log('OOOOOOO', this.pBL);
         const vX = L.latLng(this.pTR.lat - this.pTL.lat, this.pTR.lng - this.pTL.lng);
         const vY = L.latLng(this.pBL.lat - this.pTL.lat, this.pBL.lng - this.pTL.lng);
         this.O   = L.latLng(this.pTL.lat, this.pTL.lng);

@@ -168,7 +168,7 @@
             <server>atmosphericforcing</server>
             <servertype>dap</servertype>
             <layertype>dynmap</layertype>
-            <gridtype>rho,rho</gridtype>
+            <gridtype>rho</gridtype>
             <name>Qair</name>
             <varthreshold>1110.0</varthreshold>
             <varscale>131.0</varscale>

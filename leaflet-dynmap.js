@@ -147,13 +147,15 @@ let loadGridData = function loadGridData(fileName, idxDate, gridType, timeVar, t
     // Read the time dimension
     console.log('NNNNN')
     let [dimsTime, timesNC] = window.loadBinaryDODSFloat32Cached(fileName + '?' + timeVar);
-    console.log('NNNNN', timesNC)
+    // let [dimsTime, timesNC] = window.loadBinaryDODSFloat64Cached(fileName + '?' + timeVar);
+    // XXXXXXX
+
     let times = [];
 
     // Converts the time into JavaScript
     for (let i = 0; i< timesNC.length; i++) {
         const time = (timesNC[i] + timeOffsettime)*UnitsInSeconds*1000;
-        // console.log('tt  ', time);
+        console.log('tt  ', time);
         times.push(time);
     }
 

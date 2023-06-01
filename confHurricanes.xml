@@ -182,7 +182,7 @@
             <gridtype>rho</gridtype>
             <name>Qair</name>
             <varthreshold>1110.0</varthreshold>
-            <varscale>0.0</varscale>
+            <varscale>1.0</varscale>
             <longname>Average current velocity (m/s)</longname>
             <colorbar>Qair</colorbar>
             <visible>True</visible>

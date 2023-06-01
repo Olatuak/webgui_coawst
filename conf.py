@@ -135,10 +135,15 @@ class Conf:
                 grids = {}
                 for grid in server.getElementsByTagName('grid'):
                     gridName = grid.getAttribute('name')
+                    floatType32 = ()grid.getAttribute('floatType').lower() == 'float32')
+                    if floatType32:
+                        gridFloatBits = 32
+                    else:
+                        gridFloatBits = 64
                     gridLat, gridLon = grid.innerHTML.split(',')
 #                     keyLon  = window.loadBinaryDODSFloat64ToCache(HTML.unescape(url.format(strTime = srtTime) + '?' + gridLat.strip() ))
 #                     keyLat  = window.loadBinaryDODSFloat64ToCache(HTML.unescape(url.format(strTime = srtTime) + '?' + gridLon.strip() ))
-                    grids[gridName] = [gridLat, gridLon]
+                    grids[gridName] = [gridLat, gridLon, gridFloatBits]
 
 #                 # Parameters to convert the netCDF times into standard times.
 #                 timeOffset        = float(server.getElementsByTagName('time')['0'].getAttribute('offset'))

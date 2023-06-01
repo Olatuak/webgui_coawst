@@ -133,10 +133,13 @@ class Maps:
                 JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
                 timeOffset = layer['server']['timeOffset']
                 fileName = fileName.format(year = 2022, month = 9, day = 28)
-                print(333444, fileName,'  - ', layer['name'])
-                print(layer['gridtype'].split(','),128383)
+#                 print(333444, fileName,'  - ', layer['name'])
+#                 print(layer['gridtype'].split(','),128383)
                 gridType = layer['gridtype'].split(',')
+                print(334343434, gridType)
+                print(5555, layer['server']['grids'])
                 if len(gridType) == 1:
+
                     dynLayer, times = window.addNewDynHeatmapLayer(mapLayer, fileName,
                                                     layer['name'], layer['server']['grids'][gridType[0]], layer['server']['time'],
                                                     (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),

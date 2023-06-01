@@ -141,10 +141,9 @@ var VtoR = function(dims, data, isT)
     // [dims, dataV] = VtoR(dimsDataV, dataV)
 
 
-let loadGridData = function loadGridData(fileName, idxDate, gridType, timeVar, timeOffsettime, UnitsInSeconds, timeFloatBits) {
+let loadGridData = function loadGridData(fileName, idxDate, gridType, latlonFloatBits, timeVar, timeOffsettime, UnitsInSeconds, timeFloatBits) {
 
-    let dimsTime=0;
-    let timesNC=0;
+    let dimsTime, timesNC=0;
     // Read the time dimension
     if (timeFloatBits==32) {
         [dimsTime, timesNC] = window.loadBinaryDODSFloat32Cached(fileName + '?' + timeVar);
@@ -165,11 +164,16 @@ let loadGridData = function loadGridData(fileName, idxDate, gridType, timeVar, t
     // Converts the time into 
 
     // Read the mesh.
-    let [dimsLat, lat] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[0]);
-    let [dimsLon, lon] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[1]);
-    // XXXX
-    // let [dimsLat, lat] = window.loadBinaryDODSFloat64Cached(fileName + '?' + gridType[0]);
-    // let [dimsLon, lon] = window.loadBinaryDODSFloat64Cached(fileName + '?' + gridType[1]);
+    let dimsLat, lat, dimsLon, lon
+    if (latlonFloatBits==32) {
+        let [dimsLat, lat] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[0]);
+        let [dimsLon, lon] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[1]);
+    }
+    else
+    {
+        let [dimsLat, lat] = window.loadBinaryDODSFloat64Cached(fileName + '?' + gridType[0]);
+        let [dimsLon, lon] = window.loadBinaryDODSFloat64Cached(fileName + '?' + gridType[1]);
+    }
 
     return [dimsTime, times, dimsLat, lat, dimsLon, lon];
 }
@@ -231,10 +235,10 @@ const Cmap = class
 
 }
 
-function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBits, cmap, cbar, varThreshold)
+function addNewDynHeatmapLayer(map, fileName, varName, gridType, latlonFloatBits, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBits, cmap, cbar, varThreshold)
 // Creates and returns a dynamic heatmap map layer (CCS) based on the datafiles.
 {
-    const  [dimsTime, times, dimsLat, lat, dimsLon, lon] = loadGridData(fileName, 0, gridType, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBits)
+    const  [dimsTime, times, dimsLat, lat, dimsLon, lon] = loadGridData(fileName, 0, gridType, latlonFloatBits, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBits)
 
 
     // A general mesh is one that has different lat lon pairs for each node, i.e. lat and lon arrays are bidimensional.
@@ -296,7 +300,7 @@ function addNewDynVectormapLayer(map, fileName, varNames, gridTypeU, gridTypeV, 
     if (gridTypeU[0] !== gridTypeV[0]) {
         console.log('ERROR: gridTypes different from Rho are not yet supported.')
     }
-    const  [dimsTime, times, dimsLat, lat, dimsLon, lon] = loadGridData(fileName, 0, gridTypeU, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBits)
+    const  [dimsTime, times, dimsLat, lat, dimsLon, lon] = loadGridData(fileName, 0, gridTypeU, latlonFloatBits, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBits)
 
     // A general mesh is one that has different lat lon pairs for each node, i.e. lat and lon arrays are bidimensional.
     const isGeneralMesh = dimsLon.sizes.length > 1 && dimsLon.sizes[0] > 1 && dimsLon.sizes[1] > 1;

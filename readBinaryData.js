@@ -11,6 +11,7 @@ let keyCount = 0;
 
 function getCachedVar(key)
 {
+    console.log("oooooo", key)
     return cache.get(key);
 }
 
@@ -75,6 +76,7 @@ function readDODSHeader(url)
 
 function loadBinaryDODSFloat32Cached(url)
 {
+    console.log('_____', url);
     let res = getCachedVar(url);
 
     console.log('_____', res);

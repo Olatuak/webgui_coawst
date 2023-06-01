@@ -546,7 +546,7 @@ L.DynmapLayer = L.Layer.extend({
 
                         const val = dat[Slat*iLat + Slon*iLon];
 
-                        console.log('ppp', this.varThreshold);
+
                         if (!isNaN(val) && val != 0 && val>-this.varThreshold && val<this.varThreshold) {
                             const [R, G, B] = this.cmap.colors(val);
 
@@ -759,6 +759,7 @@ L.DynmapLayer = L.Layer.extend({
         // this.scale = 12;
         this.varScale = this.options.varScale;
         this.varThreshold = this.options.varThreshold;
+        console.log('ppp', this.varThreshold);
 
         this.g = this._container.getContext("2d");
 

@@ -111,7 +111,8 @@ def onBtnPointClick(event):
 
 
 
-conf = Conf('confSNB.xml')
+# conf = Conf('confSNB.xml')
+conf = Conf('confHurricanes.xml')
 
 
 mapLayers = Maps(dateStart, crs, conf, leaflet)

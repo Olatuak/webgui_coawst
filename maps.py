@@ -141,9 +141,10 @@ class Maps:
                 if len(gridType) == 1:
 
                     dynLayer, times = window.addNewDynHeatmapLayer(mapLayer, fileName,
-                                                    layer['name'], layer['server']['grids'][gridType[0]], layer['server']['time'],
+                                                    layer['name'], layer['server']['grids'][gridType[0]], layer['server']['grids'][2]
+                                                    layer['server']['time'],
                                                     (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
-                                                    int(layer['server']['timeFloatBits']),
+                                                    int(layer['server']['gridFloatBytes']),
                                                     conf.colormaps[colorbar['style']], colorbar,  layer['varthreshold'])
                 elif len(gridType) == 2:
                     print(layer.keys())
@@ -151,7 +152,7 @@ class Maps:
                                                     layer['name'].split(','), layer['server']['grids'][gridType[0]], layer['server']['grids'][gridType[1]],
                                                     layer['server']['time'],
                                                     (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
-                                                    int(layer['server']['timeFloatBits']),
+                                                    int(layer['server']['gridFloatBytes']),
                                                     conf.colormaps[colorbar['style']], colorbar, layer['varscale'], layer['varthreshold'])
                 else:
                     print('ERROR, too many layers')

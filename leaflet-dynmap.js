@@ -141,11 +141,12 @@ var VtoR = function(dims, data, isT)
     // [dims, dataV] = VtoR(dimsDataV, dataV)
 
 
-let loadGridData = function loadGridData(fileName, idxDate, gridType, latlonFloatBits, timeVar, timeOffsettime, UnitsInSeconds, timeFloatBits) {
+let loadGridData = function loadGridData(fileName, idxDate, timeVar, timeOffsettime, UnitsInSeconds, gridFloatBytes) {
+
 
     let dimsTime, timesNC=0;
     // Read the time dimension
-    if (timeFloatBits==32) {
+    if (gridFloatBytes==32) {
         [dimsTime, timesNC] = window.loadBinaryDODSFloat32Cached(fileName + '?' + timeVar);
     }
     else {
@@ -165,7 +166,7 @@ let loadGridData = function loadGridData(fileName, idxDate, gridType, latlonFloa
 
     // Read the mesh.
     let dimsLat, lat, dimsLon, lon
-    if (latlonFloatBits==32) {
+    if (gridType[2]==32) { // The third number in gridType es the zie of floats.
         let [dimsLat, lat] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[0]);
         let [dimsLon, lon] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[1]);
     }

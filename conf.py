@@ -137,13 +137,13 @@ class Conf:
                     gridName = grid.getAttribute('name')
                     floatType32 = (grid.getAttribute('floatType').lower() == 'float32')
                     if floatType32:
-                        gridFloatBits = 32
+                        gridFloatBytes = 32
                     else:
-                        gridFloatBits = 64
+                        gridFloatBytes = 64
                     gridLat, gridLon = grid.innerHTML.split(',')
 #                     keyLon  = window.loadBinaryDODSFloat64ToCache(HTML.unescape(url.format(strTime = srtTime) + '?' + gridLat.strip() ))
 #                     keyLat  = window.loadBinaryDODSFloat64ToCache(HTML.unescape(url.format(strTime = srtTime) + '?' + gridLon.strip() ))
-                    grids[gridName] = [gridLat, gridLon, gridFloatBits]
+                    grids[gridName] = [gridLat, gridLon, gridFloatBytes]
 
 #                 # Parameters to convert the netCDF times into standard times.
 #                 timeOffset        = float(server.getElementsByTagName('time')['0'].getAttribute('offset'))
@@ -160,9 +160,9 @@ class Conf:
                     timeUnitsInSeconds = 86400
                 timeFloatType = server.getElementsByTagName('time')['0'].getAttribute('floatType')
                 if (timeFloatType.lower()=='float32'):
-                    timeFloatBits = 32
+                    gridFloatBytes = 32
                 else:
-                    timeFloatBits = 64
+                    gridFloatBytes = 64
 
 
 
@@ -181,7 +181,7 @@ class Conf:
                                'time': timesVarName,
                                'timeOffset': timeOffset,
                                'timeUnitsInSeconds': timeUnitsInSeconds,
-                               'timeFloatBits': timeFloatBits,
+                               'gridFloatBytes': gridFloatBytes,
                               }
                 self.dapServers += [tempBasemap]
 

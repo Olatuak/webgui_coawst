@@ -132,21 +132,21 @@
 
         <server>
             <name>atmosphericforcing</name>
-            <url>http://icoast.rc.ufl.edu/thredds/dodsC/coamps/{year}{month}{day}_forcing_regular.nc.dods</url>
+            <url>http://icoast.rc.ufl.edu/thredds/dodsC/coamps/{year:04d}{month:02d}{day:02d}_forcing_regular.nc.dods</url>
             <grid name="rho">lat, lon</grid>
             <!--            Use this exact format for dates  '%YYYY-%mm-%ddT%HH:%MM:%SS.000Z' -->
             <time offset="1858-11-17T00:00:00.000Z" units="seconds">ocean_time</time>
         </server>
 
-        <server>
-            <name>coawstL0</name>
-            <url>https://icoast.rc.ufl.edu/thredds/dodsC/Noppcoawst/L0_Forecast/qck/L0_CNAPS_qck_{year}{month}{day}.nc.dods</url>
-            <grid name="rho">lat_rho, lon_rho</grid>
-            <grid name="u">lat_u, lon_u</grid>
-            <grid name="v">lat_v, lon_v</grid>
-            <!--            Use this exact format for dates  '%YYYY-%mm-%ddT%HH:%MM:%SS.000Z' -->
-            <time offset="1858-11-17T00:00:00.000Z" units="seconds">ocean_time</time>
-        </server>
+<!--        <server>-->
+<!--            <name>coawstL0</name>-->
+<!--            <url>https://icoast.rc.ufl.edu/thredds/dodsC/Noppcoawst/L0_Forecast/qck/L0_CNAPS_qck_{year:4d}{month:2d}{day:.2d}.nc.dods</url>-->
+<!--            <grid name="rho">lat_rho, lon_rho</grid>-->
+<!--            <grid name="u">lat_u, lon_u</grid>-->
+<!--            <grid name="v">lat_v, lon_v</grid>-->
+<!--            &lt;!&ndash;            Use this exact format for dates  '%YYYY-%mm-%ddT%HH:%MM:%SS.000Z' &ndash;&gt;-->
+<!--            <time offset="1858-11-17T00:00:00.000Z" units="seconds">ocean_time</time>-->
+<!--        </server>-->
 
 
         <!--        <server>-->
@@ -178,19 +178,19 @@
             <transparent>True</transparent>
         </layer>
 
-        <layer>
-            <server>icoast</server>
-            <servertype>dap</servertype>
-            <layertype>dynmap</layertype>
-            <gridtype>rho</gridtype>
-            <name>zeta</name>
-            <varthreshold>200.0</varthreshold>
-            <varscale>0.0</varscale>
-            <longname>Water level</longname>
-            <colorbar>zeta</colorbar>
-            <visible>True</visible>
-            <transparent>True</transparent>
-        </layer>
+<!--        <layer>-->
+<!--            <server>icoast</server>-->
+<!--            <servertype>dap</servertype>-->
+<!--            <layertype>dynmap</layertype>-->
+<!--            <gridtype>rho</gridtype>-->
+<!--            <name>zeta</name>-->
+<!--            <varthreshold>200.0</varthreshold>-->
+<!--            <varscale>0.0</varscale>-->
+<!--            <longname>Water level</longname>-->
+<!--            <colorbar>zeta</colorbar>-->
+<!--            <visible>True</visible>-->
+<!--            <transparent>True</transparent>-->
+<!--        </layer>-->
 
 
 

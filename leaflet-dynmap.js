@@ -142,14 +142,15 @@ var VtoR = function(dims, data, isT)
 
 
 let loadGridData = function loadGridData(fileName, idxDate, gridType, timeVar, timeOffsettime, UnitsInSeconds, timeFloatBits) {
-    // let fileName = `https://icoast.rc.ufl.edu/thredds/dodsC/matthew/L1_qck_${pad(year,4)}${pad(month,2)}${pad(day,2)}.nc.dods`;
 
+    let dimsTime=0;
+    let timesNC=0;
     // Read the time dimension
     if (timeFloatBits==32) {
-        let [dimsTime, timesNC] = window.loadBinaryDODSFloat32Cached(fileName + '?' + timeVar);
+        [dimsTime, timesNC] = window.loadBinaryDODSFloat32Cached(fileName + '?' + timeVar);
     }
     else {
-        let [dimsTime, timesNC] = window.loadBinaryDODSFloat64Cached(fileName + '?' + timeVar);
+        [dimsTime, timesNC] = window.loadBinaryDODSFloat64Cached(fileName + '?' + timeVar);
     }
 
     let times = [];

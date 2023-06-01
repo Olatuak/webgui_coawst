@@ -21,8 +21,8 @@ curDate = None
 # dateStart = datetime.datetime(2019, 2, 16, 8, 0)
 # dateEnd   = datetime.datetime(2019, 2, 22, 8, 0)
 
-dateStart = datetime.datetime(2017, 1,  2, 0, 0, 0, 0, datetime.timezone.utc)
-dateEnd   = datetime.datetime(2037, 4,  2, 0, 0, 0, 0, datetime.timezone.utc)
+dateStart = datetime.datetime(2022, 1,  2, 0, 0, 0, 0, datetime.timezone.utc)
+dateEnd   = datetime.datetime(2022, 10,  2, 0, 0, 0, 0, datetime.timezone.utc)
 dateFile  = datetime.datetime(2022, 9, 28, 0, 0, 0, 0, datetime.timezone.utc)
 
 

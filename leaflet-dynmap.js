@@ -155,7 +155,7 @@ let loadGridData = function loadGridData(fileName, idxDate, gridType, timeVar, t
     // Converts the time into JavaScript
     for (let i = 0; i< timesNC.length; i++) {
         const time = (timesNC[i]*UnitsInSeconds + timeOffsettime)*1000;
-        console.log('tt  ', timesNC[i], timeOffsettime, UnitsInSeconds);
+        // console.log('tt  ', timesNC[i], timeOffsettime, UnitsInSeconds);
         times.push(time);
     }
 
@@ -521,6 +521,7 @@ L.DynmapLayer = L.Layer.extend({
         const Slat = isT + (1 - isT)*nj;
         const Slon = isT*ni + (1 - isT);
 
+        console.log('LLLL', dat);
         // Draws all the pixels one by one
         if (dat != undefined) {
 
@@ -530,6 +531,8 @@ L.DynmapLayer = L.Layer.extend({
                     const p = this._map.containerPointToLatLng(L.point(i, j));
 
                     const p1 = L.latLng(M11 * (p.lat - O.lat) + M21 * (p.lng - O.lng), M12 * (p.lat - O.lat) + M22 * (p.lng - O.lng));
+
+                    console.log('LLLL', p1);
 
                     if (p1.lat >= 0 && p1.lng >= 0 && p1.lat <= 1 && p1.lng <= 1) {
 
@@ -701,7 +704,7 @@ L.DynmapLayer = L.Layer.extend({
             const iBL = (nj-1)*Sj + 0*Si;
             const iBR = (nj-1)*Sj + (ni-1)*Si;
 
-            console.log('KKKKK', iTL, iTR, iBL, iBR, this.lat);
+            // console.log('KKKKK', iTL, iTR, iBL, iBR, this.lat);
             this.pTL = L.latLng(this.lat[iTL], this.lon[iTL]);
             this.pTR = L.latLng(this.lat[iTR], this.lon[iTR]);
             this.pBL = L.latLng(this.lat[iBL], this.lon[iBL]);
@@ -737,8 +740,7 @@ L.DynmapLayer = L.Layer.extend({
         }
 
         // Base vectors and origin for the mesh.
-        console.log('OOOOOOO', this.pTR);
-        console.log('OOOOOOO', this.pBL);
+
         const vX = L.latLng(this.pTR.lat - this.pTL.lat, this.pTR.lng - this.pTL.lng);
         const vY = L.latLng(this.pBL.lat - this.pTL.lat, this.pBL.lng - this.pTL.lng);
         this.O   = L.latLng(this.pTL.lat, this.pTL.lng);

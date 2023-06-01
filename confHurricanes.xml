@@ -51,6 +51,17 @@
             <style>boxfill/ferret</style>
         </colorbar>
         <colorbar>
+            <name>Qair</name>
+            <longname>Air humidity</longname>
+            <min>0</min>
+            <max>100</max>
+            <abovemaxcol>extend</abovemaxcol>
+            <belowmincol>extend</belowmincol>
+            <units></units>
+            <style>boxfill/ferret</style>
+        </colorbar>
+
+        <colorbar>
             <name>velocity</name>
             <longname>Velocity</longname>
             <min>0.0</min>
@@ -173,7 +184,7 @@
             <varthreshold>1110.0</varthreshold>
             <varscale>0.0</varscale>
             <longname>Average current velocity (m/s)</longname>
-            <colorbar>zeta</colorbar>
+            <colorbar>Qair</colorbar>
             <visible>True</visible>
             <transparent>True</transparent>
         </layer>

@@ -132,7 +132,7 @@ class Maps:
                 fileName = layer['server']['url']
                 JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
                 timeOffset = layer['server']['timeOffset']
-                fileName = fileName.format(year = 2022, month = 9, day = 28)
+                fileName = fileName.format(year = 2022, month = 9, day = 30)
 #                 print(333444, fileName,'  - ', layer['name'])
 #                 print(layer['gridtype'].split(','),128383)
                 gridType = layer['gridtype'].split(',')

@@ -543,7 +543,7 @@ L.DynmapLayer = L.Layer.extend({
 
                         const val = dat[Slat*iLat + Slon*iLon];
 
-                        if (!isNaN(val) && val != 0 && val>-1.8 && val<111.8) {
+                        if (!isNaN(val) && val != 0 && val>-this.varThreshold && val<this.varThreshold) {
                             const [R, G, B] = this.cmap.colors(val);
 
                             image.data[idx    ] = R;

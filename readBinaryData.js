@@ -120,7 +120,7 @@ function loadBinaryDODSFloat32(url)
 // WARNING: Assumes little endian IEEE754
 {
     console.log('%%%%', url)
-    [dims, responseText] = readDODSHeader(url)
+    let [dims, responseText] = readDODSHeader(url)
     console.log('%%%%', dims, responseText)
     res = []
 

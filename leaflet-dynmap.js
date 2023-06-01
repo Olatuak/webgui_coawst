@@ -141,12 +141,12 @@ var VtoR = function(dims, data, isT)
     // [dims, dataV] = VtoR(dimsDataV, dataV)
 
 
-let loadGridData = function loadGridData(fileName, idxDate, timeVar, timeOffsettime, UnitsInSeconds, gridFloatBytes) {
+let loadGridData = function loadGridData(fileName, idxDate, timeVar, timeOffsettime, UnitsInSeconds, timeFloatBytes) {
 
 
     let dimsTime, timesNC=0;
     // Read the time dimension
-    if (gridFloatBytes==32) {
+    if (timeFloatBytes==32) {
         [dimsTime, timesNC] = window.loadBinaryDODSFloat32Cached(fileName + '?' + timeVar);
     }
     else {
@@ -166,7 +166,7 @@ let loadGridData = function loadGridData(fileName, idxDate, timeVar, timeOffsett
 
     // Read the mesh.
     let dimsLat, lat, dimsLon, lon
-    if (gridType[2]==32) { // The third number in gridType es the zie of floats.
+    if (gridType[2]==32) {
         let [dimsLat, lat] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[0]);
         let [dimsLon, lon] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[1]);
     }
@@ -239,7 +239,7 @@ const Cmap = class
 function addNewDynHeatmapLayer(map, fileName, varName, gridType, latlonFloatBits, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBits, cmap, cbar, varThreshold)
 // Creates and returns a dynamic heatmap map layer (CCS) based on the datafiles.
 {
-    const  [dimsTime, times, dimsLat, lat, dimsLon, lon] = loadGridData(fileName, 0, gridType, latlonFloatBits, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBits)
+    const  [dimsTime, times, dimsLat, lat, dimsLon, lon] = loadGridData(fileName, 0, gridType, latlonFloatBits, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes)
 
 
     // A general mesh is one that has different lat lon pairs for each node, i.e. lat and lon arrays are bidimensional.
@@ -301,7 +301,7 @@ function addNewDynVectormapLayer(map, fileName, varNames, gridTypeU, gridTypeV, 
     if (gridTypeU[0] !== gridTypeV[0]) {
         console.log('ERROR: gridTypes different from Rho are not yet supported.')
     }
-    const  [dimsTime, times, dimsLat, lat, dimsLon, lon] = loadGridData(fileName, 0, gridTypeU, latlonFloatBits, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBits)
+    const  [dimsTime, times, dimsLat, lat, dimsLon, lon] = loadGridData(fileName, 0, gridTypeU, latlonFloatBits, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes)
 
     // A general mesh is one that has different lat lon pairs for each node, i.e. lat and lon arrays are bidimensional.
     const isGeneralMesh = dimsLon.sizes.length > 1 && dimsLon.sizes[0] > 1 && dimsLon.sizes[1] > 1;

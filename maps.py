@@ -141,7 +141,7 @@ class Maps:
                 if len(gridType) == 1:
 
                     dynLayer, times = window.addNewDynHeatmapLayer(mapLayer, fileName,
-                                                    layer['name'], layer['server']['grids'][gridType[0]], layer['server']['grids'][2]
+                                                    layer['name'], layer['server']['grids'][gridType[0]],
                                                     layer['server']['time'],
                                                     (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
                                                     int(layer['server']['gridFloatBytes']),

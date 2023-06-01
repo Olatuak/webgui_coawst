@@ -272,8 +272,10 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
 
     dates = []
 
+
     date1 = convertPythonDateToJS(dat1)
     date2 = convertPythonDateToJS(dat2)
+    print(dat1, dat2, date1, date2)
     onDateChange = onDateChng
     layer = lyr
 

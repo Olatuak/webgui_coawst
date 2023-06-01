@@ -38,7 +38,6 @@ def convertPythonDateToJS(date):
 def convertJSDateToPython(JSDate):
     days = int(JSDate/86400000)
     milliseconds = (JSDate - days*86400000)
-    print ('LLLL  ', JSDate, days, JSDate, milliseconds)
     return JSDateOrig + datetime.timedelta(days = days, milliseconds = milliseconds)
 
 

@@ -145,7 +145,9 @@ let loadGridData = function loadGridData(fileName, idxDate, gridType, timeVar, t
     // let fileName = `https://icoast.rc.ufl.edu/thredds/dodsC/matthew/L1_qck_${pad(year,4)}${pad(month,2)}${pad(day,2)}.nc.dods`;
 
     // Read the time dimension
+    console.log('NNNNN')
     let [dimsTime, timesNC] = window.loadBinaryDODSFloat32Cached(fileName + '?' + timeVar);
+    console.log('NNNNN', timesNC)
     let times = [];
 
     // Converts the time into JavaScript

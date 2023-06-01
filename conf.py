@@ -135,7 +135,7 @@ class Conf:
                 grids = {}
                 for grid in server.getElementsByTagName('grid'):
                     gridName = grid.getAttribute('name')
-                    floatType32 = ()grid.getAttribute('floatType').lower() == 'float32')
+                    floatType32 = (grid.getAttribute('floatType').lower() == 'float32')
                     if floatType32:
                         gridFloatBits = 32
                     else:

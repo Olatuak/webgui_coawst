@@ -160,9 +160,9 @@ class Conf:
                     timeUnitsInSeconds = 86400
                 timeFloatType = server.getElementsByTagName('time')['0'].getAttribute('floatType')
                 if (timeFloatType.lower()=='float32'):
-                    gridFloatBytes = 32
+                    timeFloatBytes = 32
                 else:
-                    gridFloatBytes = 64
+                    timeFloatBytes = 64
 
 
 
@@ -181,7 +181,7 @@ class Conf:
                                'time': timesVarName,
                                'timeOffset': timeOffset,
                                'timeUnitsInSeconds': timeUnitsInSeconds,
-                               'gridFloatBytes': gridFloatBytes,
+                               'timeFloatBytes': timeFloatBytes,
                               }
                 self.dapServers += [tempBasemap]
 

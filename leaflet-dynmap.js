@@ -236,7 +236,7 @@ const Cmap = class
 
 }
 
-function addNewDynHeatmapLayer(map, fileName, varName, gridType, latlonFloatBits, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBits, cmap, cbar, varThreshold)
+function addNewDynHeatmapLayer(map, fileName, varName, gridType, latlonFloatBits, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes, cmap, cbar, varThreshold)
 // Creates and returns a dynamic heatmap map layer (CCS) based on the datafiles.
 {
     const  [dimsTime, times, dimsLat, lat, dimsLon, lon] = loadGridData(fileName, 0, gridType, latlonFloatBits, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes)

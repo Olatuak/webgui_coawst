@@ -144,7 +144,7 @@ class Maps:
                                                     layer['name'], layer['server']['grids'][gridType[0]],
                                                     layer['server']['time'],
                                                     (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
-                                                    int(layer['server']['gridFloatBytes']),
+                                                    int(layer['server']['timeFloatBytes']),
                                                     conf.colormaps[colorbar['style']], colorbar,  layer['varthreshold'])
                 elif len(gridType) == 2:
                     print(layer.keys())
@@ -152,7 +152,7 @@ class Maps:
                                                     layer['name'].split(','), layer['server']['grids'][gridType[0]], layer['server']['grids'][gridType[1]],
                                                     layer['server']['time'],
                                                     (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
-                                                    int(layer['server']['gridFloatBytes']),
+                                                    int(layer['server']['timeFloatBytes']),
                                                     conf.colormaps[colorbar['style']], colorbar, layer['varscale'], layer['varthreshold'])
                 else:
                     print('ERROR, too many layers')

@@ -158,8 +158,8 @@ let loadGridData = function loadGridData(fileName, idxDate, gridType, timeVar, t
     // Converts the time into 
 
     // Read the mesh.
-    let [dimsLat, lat] = window.loadBinaryDODSFloat64Cached(fileName + '?' + gridType[0]);
-    let [dimsLon, lon] = window.loadBinaryDODSFloat64Cached(fileName + '?' + gridType[1]);
+    let [dimsLat, lat] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[0]);
+    let [dimsLon, lon] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[1]);
 
     return [dimsTime, times, dimsLat, lat, dimsLon, lon];
 }

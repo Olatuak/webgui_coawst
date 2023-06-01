@@ -159,7 +159,7 @@
         </server>
 
         <server>
-            <name>L0</name>
+            <name>L1</name>
             <url>https://icoast.rc.ufl.edu/thredds/dodsC/Noppcoawst/L1_Forecast/qck/L0_CNAPS_qck_{year:04d}{month:02d}{day:02d}.nc.dods</url>
             <grid name="rho" floatType="float64">lat_rho,lon_rho</grid>
             <!--            Use this exact format for dates  '%YYYY-%mm-%ddT%HH:%MM:%SS.000Z' -->

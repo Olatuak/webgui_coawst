@@ -521,7 +521,6 @@ L.DynmapLayer = L.Layer.extend({
         const Slat = isT + (1 - isT)*nj;
         const Slon = isT*ni + (1 - isT);
 
-        console.log('LLLL', dat);
         // Draws all the pixels one by one
         if (dat != undefined) {
 
@@ -532,7 +531,6 @@ L.DynmapLayer = L.Layer.extend({
 
                     const p1 = L.latLng(M11 * (p.lat - O.lat) + M21 * (p.lng - O.lng), M12 * (p.lat - O.lat) + M22 * (p.lng - O.lng));
 
-                    console.log('LLLL', p1);
 
                     if (p1.lat >= 0 && p1.lng >= 0 && p1.lat <= 1 && p1.lng <= 1) {
 
@@ -545,7 +543,7 @@ L.DynmapLayer = L.Layer.extend({
 
                         const val = dat[Slat*iLat + Slon*iLon];
 
-                        if (!isNaN(val) && val != 0 && val>-1.8 && val<1.8) {
+                        if (!isNaN(val) && val != 0 && val>-1.8 && val<111.8) {
                             const [R, G, B] = this.cmap.colors(val);
 
                             image.data[idx    ] = R;

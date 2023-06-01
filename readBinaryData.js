@@ -77,6 +77,8 @@ function loadBinaryDODSFloat32Cached(url)
 {
     let res = getCachedVar(url);
 
+    console.log('_____', res);
+
     if (res == undefined) res = loadBinaryDODSFloat32ToCache(url);
 
     return res;

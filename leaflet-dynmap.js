@@ -170,9 +170,9 @@ let loadVarData = function loadVarData(fileName, idxDate, varName, dims) {
 
     console.log(">>>>>", varName)
     const fullFileName = fileName + '?' + varName + '%5B' + (idxDate + 1) + '%5D%5B0:1:' + (dims[1] -1) + '%5D%5B0:1:' + (dims[0] -1) + '%5D';
-    console.log(">>>>>", fullFileName)
+    console.log(">>>>>", fullFileName);
     [dimsData, data] = window.loadBinaryDODSFloat32Cached(fullFileName);
-
+    console.log(">>>>>>>", dimsData);
 
     return [dimsData, data];
 }

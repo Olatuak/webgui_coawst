@@ -200,7 +200,7 @@
 
 
         <layer>
-            <server>atmosphericforcing</server>
+            <server>L0</server>
             <servertype>dap</servertype>
             <layertype>dynmap</layertype>
             <gridtype>rho</gridtype>

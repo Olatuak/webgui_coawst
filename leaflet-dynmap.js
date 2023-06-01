@@ -694,7 +694,7 @@ L.DynmapLayer = L.Layer.extend({
             const iBL = (nj-1)*Sj + 0*Si;
             const iBR = (nj-1)*Sj + (ni-1)*Si;
 
-
+            console.log('KKKKK', iTL, iTR, iBL, iBR);
             this.pTL = L.latLng(this.lat[iTL], this.lon[iTL]);
             this.pTR = L.latLng(this.lat[iTR], this.lon[iTR]);
             this.pBL = L.latLng(this.lat[iBL], this.lon[iBL]);

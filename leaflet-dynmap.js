@@ -155,7 +155,7 @@ let loadGridData = function loadGridData(fileName, idxDate, gridType, timeVar, t
     // Converts the time into JavaScript
     for (let i = 0; i< timesNC.length; i++) {
         const time = (timesNC[i] + timeOffsettime)/UnitsInSeconds*1000;
-        console.log('tt  ', time);
+        console.log('tt  ', time, timeOffsettime, UnitsInSeconds);
         times.push(time);
     }
 

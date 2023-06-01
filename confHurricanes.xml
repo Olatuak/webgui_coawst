@@ -171,9 +171,9 @@
             <gridtype>rho</gridtype>
             <name>Qair</name>
             <varthreshold>1110.0</varthreshold>
-            <varscale>131.0</varscale>
+            <varscale>0.0</varscale>
             <longname>Average current velocity (m/s)</longname>
-            <colorbar>velocity</colorbar>
+            <colorbar>zeta</colorbar>
             <visible>True</visible>
             <transparent>True</transparent>
         </layer>

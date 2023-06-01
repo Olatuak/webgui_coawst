@@ -145,7 +145,7 @@ let loadGridData = function loadGridData(fileName, idxDate, gridType, timeVar, t
     // let fileName = `https://icoast.rc.ufl.edu/thredds/dodsC/matthew/L1_qck_${pad(year,4)}${pad(month,2)}${pad(day,2)}.nc.dods`;
 
     // Read the time dimension
-    let [dimsTime, timesNC] = window.loadBinaryDODSFloat64Cached(fileName + '?' + timeVar);
+    let [dimsTime, timesNC] = window.loadBinaryDODSFloat32Cached(fileName + '?' + timeVar);
     let times = [];
 
     // Converts the time into JavaScript
@@ -160,6 +160,9 @@ let loadGridData = function loadGridData(fileName, idxDate, gridType, timeVar, t
     // Read the mesh.
     let [dimsLat, lat] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[0]);
     let [dimsLon, lon] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[1]);
+    // XXXX
+    // let [dimsLat, lat] = window.loadBinaryDODSFloat64Cached(fileName + '?' + gridType[0]);
+    // let [dimsLon, lon] = window.loadBinaryDODSFloat64Cached(fileName + '?' + gridType[1]);
 
     return [dimsTime, times, dimsLat, lat, dimsLon, lon];
 }

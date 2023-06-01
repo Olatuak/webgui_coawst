@@ -144,9 +144,9 @@
         <server>
             <name>atmosphericforcing</name>
             <url>https://icoast.rc.ufl.edu/thredds/dodsC/coamps/{year:04d}{month:02d}{day:02d}00_forcing_regular.nc.dods</url>
-            <grid name="rho">lat,lon</grid>
+            <grid name="rho" floatType="float32">lat,lon</grid>
             <!--            Use this exact format for dates  '%YYYY-%mm-%ddT%HH:%MM:%SS.000Z' -->
-            <time offset="1858-11-17T00:00:00.000Z" units="days">ocean_time</time>
+            <time offset="1858-11-17T00:00:00.000Z" units="days"  floatType="float32">ocean_time</time>
         </server>
 
 <!--        <server>-->

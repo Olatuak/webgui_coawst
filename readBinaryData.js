@@ -256,11 +256,11 @@ function loadBinaryDODSFloat64(url)
 //
 // }
 
-
-function clearHeatmap(heatmapId)
-{
-
-}
+// REMOVE
+// function clearHeatmap(heatmapId)
+// {
+//
+// }
 
 
 // function updateHeatmap(heatmapId, mapLayer)

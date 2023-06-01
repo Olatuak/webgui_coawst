@@ -142,11 +142,11 @@
             <!--            <url>https://icoast.rc.ufl.edu/thredds/dodsC/coawst/snb/forecast/files/History_his.nc.dods</url>-->
             <url>https://icoast.rc.ufl.edu/thredds/dodsC/coawst/snb/forecast/SNB_FORECAST_best.ncd.dods</url>
 <!--            <url>https://icoast.rc.ufl.edu/thredds/dodsC/coawst/L0/forecast_qck/NHCI_L0_QCK_best.ncd.dods</url>-->
-            <grid name="rho">lat_rho, lon_rho</grid>
-            <grid name="u"  >lat_u,   lon_u  </grid>
-            <grid name="v"  >lat_v,   lon_v  </grid>
+            <grid name="rho" floatType="float64">lat_rho, lon_rho</grid>
+            <grid name="u"   floatType="float64">lat_u,   lon_u  </grid>
+            <grid name="v"   floatType="float64">lat_v,   lon_v  </grid>
             <!--            Use this exact format for dates  '%YYYY-%mm-%ddT%HH:%MM:%SS.000Z' -->
-            <time offset="1858-11-17T00:00:00.000Z" units="seconds">ocean_time</time>
+            <time offset="1858-11-17T00:00:00.000Z" units="seconds" floatType="float64">ocean_time</time>
         </server>
 
 

@@ -153,6 +153,13 @@ class Conf:
                     timeUnitsInSeconds = 3600
                 elif timeUnits == 'days':
                     timeUnitsInSeconds = 86400
+                timeFloatType = server.getElementsByTagName('time')['0'].getAttribute('floatType')
+                if (timeFloatType.lower()=='float32'):
+                    timeFloatBits = 32
+                else:
+                    timeFloatBits = 64
+
+
 
 
 #
@@ -169,6 +176,7 @@ class Conf:
                                'time': timesVarName,
                                'timeOffset': timeOffset,
                                'timeUnitsInSeconds': timeUnitsInSeconds,
+                               'timeFloatBits': timeFloatBits,
                               }
                 self.dapServers += [tempBasemap]
 
@@ -181,7 +189,6 @@ class Conf:
             layersSection = (treeConf.getElementsByTagName('layers'))[0]
             layers = layersSection.getElementsByTagName('layer')
             self.layers = []
-            print('111112222', self.layers)
             for layer in layers:
                 tempLayer = {'name':        layer.getElementsByTagName('name'        )[0].innerHTML,
                              'server':      layer.getElementsByTagName('server'      )[0].innerHTML,
@@ -201,7 +208,6 @@ class Conf:
 
                 self.layers += [tempLayer]
 
-            print('11111', self.layers)
 
         except:
             print('ERROR: reading layers section of configuration file. Please check.')

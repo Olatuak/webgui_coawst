@@ -141,7 +141,7 @@ class Maps:
                                                     layer['name'], layer['server']['grids'][gridType[0]], layer['server']['time'],
                                                     (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
                                                     int(layer['server']['timeFloatBits']),
-                                                    conf.colormaps[colorbar['style'], colorbar,  layer['varthreshold'])
+                                                    conf.colormaps[colorbar['style']], colorbar,  layer['varthreshold'])
                 elif len(gridType) == 2:
                     print(layer.keys())
                     dynLayer, times = window.addNewDynVectormapLayer(mapLayer, fileName,

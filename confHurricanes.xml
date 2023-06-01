@@ -191,7 +191,7 @@
         <name>zeta</name>
         <varthreshold>1110.0</varthreshold>
         <varscale>1.0</varscale>
-        <longname>Average current velocity (m/s)</longname>
+        <longname>Free surface (m)</longname>
         <colorbar>zeta</colorbar>
         <visible>True</visible>
         <transparent>True</transparent>
@@ -206,7 +206,7 @@
             <name>Qair</name>
             <varthreshold>1110.0</varthreshold>
             <varscale>1.0</varscale>
-            <longname>Average current velocity (m/s)</longname>
+            <longname>Air humidity</longname>
             <colorbar>Qair</colorbar>
             <visible>True</visible>
             <transparent>True</transparent>

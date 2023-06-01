@@ -183,6 +183,20 @@
 
 
 
+    <layer>
+        <server>L0</server>
+        <servertype>dap</servertype>
+        <layertype>dynmap</layertype>
+        <gridtype>rho</gridtype>
+        <name>zeta</name>
+        <varthreshold>1110.0</varthreshold>
+        <varscale>1.0</varscale>
+        <longname>Average current velocity (m/s)</longname>
+        <colorbar>zeta</colorbar>
+        <visible>True</visible>
+        <transparent>True</transparent>
+    </layer>
+
     <layers>
         <layer>
             <server>atmosphericforcing</server>
@@ -199,19 +213,7 @@
         </layer>
 
 
-        <layer>
-            <server>L0</server>
-            <servertype>dap</servertype>
-            <layertype>dynmap</layertype>
-            <gridtype>rho</gridtype>
-            <name>zeta</name>
-            <varthreshold>1110.0</varthreshold>
-            <varscale>1.0</varscale>
-            <longname>Average current velocity (m/s)</longname>
-            <colorbar>zeta</colorbar>
-            <visible>True</visible>
-            <transparent>True</transparent>
-        </layer>
+
 
 <!--        <layer>-->
 <!--            <server>icoast</server>-->

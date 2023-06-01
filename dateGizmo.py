@@ -275,7 +275,7 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
 
     date1 = convertPythonDateToJS(dat1)
     date2 = convertPythonDateToJS(dat2)
-    print(dat1, dat2, date1, date2)
+
     onDateChange = onDateChng
     layer = lyr
 
@@ -286,6 +286,7 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
     idxDate1 = 0
     idxDate2 = len(JSdates)-1
 
+    print(JSdates[0], JSdates[-1])
 
 
     # Creates the set of datetime objects with the available dates

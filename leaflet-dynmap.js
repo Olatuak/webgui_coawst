@@ -168,7 +168,7 @@ let loadVarData = function loadVarData(fileName, idxDate, varName, dims) {
     let data = Array(1);
     let dimsData = 0;
 
-
+    console.log(">>>>>", varName)
     const fullFileName = fileName + '?' + varName + '%5B' + (idxDate + 1) + '%5D%5B0:1:' + (dims[1] -1) + '%5D%5B0:1:' + (dims[0] -1) + '%5D';
     [dimsData, data] = window.loadBinaryDODSFloat32Cached(fullFileName);
 

@@ -167,14 +167,15 @@ let loadGridData = function loadGridData(fileName, idxDate, gridType, timeVar, t
     // Read the mesh.
     let dimsLat, lat, dimsLon, lon
 
+    console.log('KKKKKKKKK',gridType[2], gridType);
     if (gridType[2]==32) {
-        let [dimsLat, lat] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[0]);
-        let [dimsLon, lon] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[1]);
+        [dimsLat, lat] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[0]);
+        [dimsLon, lon] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[1]);
     }
     else
     {
-        let [dimsLat, lat] = window.loadBinaryDODSFloat64Cached(fileName + '?' + gridType[0]);
-        let [dimsLon, lon] = window.loadBinaryDODSFloat64Cached(fileName + '?' + gridType[1]);
+        [dimsLat, lat] = window.loadBinaryDODSFloat64Cached(fileName + '?' + gridType[0]);
+        [dimsLon, lon] = window.loadBinaryDODSFloat64Cached(fileName + '?' + gridType[1]);
     }
 
     return [dimsTime, times, dimsLat, lat, dimsLon, lon];

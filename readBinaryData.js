@@ -118,7 +118,9 @@ function loadBinaryDODSFloat32(url)
 // Read a Thredds dods binary file of float32 as an array of bytes
 // WARNING: Assumes little endian IEEE754
 {
+    console.log('%%%%', url)
     [dims, responseText] = readDODSHeader(url)
+    console.log('%%%%', dims, responseText)
     res = []
 
     // This is like a "union", fourU8 and oneF32 are two different views of the same buffer.

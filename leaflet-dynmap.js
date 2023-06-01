@@ -759,7 +759,7 @@ L.DynmapLayer = L.Layer.extend({
         // this.scale = 12;
         this.varScale = this.options.varScale;
         this.varThreshold = this.options.varThreshold;
-        console.log('ppp', this.varThreshold);
+        console.log('ppp', this.varThreshold, this.varScale);
 
         this.g = this._container.getContext("2d");
 

@@ -166,6 +166,7 @@ let loadGridData = function loadGridData(fileName, idxDate, timeVar, timeOffsett
 
     // Read the mesh.
     let dimsLat, lat, dimsLon, lon
+    console.log('KKKKKKKKK', gridType);
     if (gridType[2]==32) {
         let [dimsLat, lat] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[0]);
         let [dimsLon, lon] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[1]);

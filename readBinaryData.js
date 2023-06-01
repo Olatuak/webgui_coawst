@@ -11,7 +11,6 @@ let keyCount = 0;
 
 function getCachedVar(key)
 {
-    console.log("oooooo", key)
     return cache.get(key);
 }
 

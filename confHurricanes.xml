@@ -160,7 +160,7 @@
 
         <server>
             <name>L1</name>
-            <url>https://icoast.rc.ufl.edu/thredds/dodsC/Noppcoawst/L1_Forecast/qck/L0_CNAPS_qck_{year:04d}{month:02d}{day:02d}.nc.dods</url>
+            <url>https://icoast.rc.ufl.edu/thredds/dodsC/Noppcoawst/L1_Forecast/qck/L1_CNAPS_qck_{year:04d}{month:02d}{day:02d}.nc.dods</url>
             <grid name="rho" floatType="float64">lat_rho,lon_rho</grid>
             <!--            Use this exact format for dates  '%YYYY-%mm-%ddT%HH:%MM:%SS.000Z' -->
             <time offset="1858-11-17T00:00:00.000Z" units="seconds" floatType="float32">ocean_time</time>

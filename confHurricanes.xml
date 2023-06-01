@@ -158,6 +158,14 @@
             <time offset="1858-11-17T00:00:00.000Z" units="seconds" floatType="float32">ocean_time</time>
         </server>
 
+        <server>
+            <name>L0</name>
+            <url>https://icoast.rc.ufl.edu/thredds/dodsC/Noppcoawst/L1_Forecast/qck/L0_CNAPS_qck_{year:04d}{month:02d}{day:02d}.nc.dods</url>
+            <grid name="rho" floatType="float64">lat_rho,lon_rho</grid>
+            <!--            Use this exact format for dates  '%YYYY-%mm-%ddT%HH:%MM:%SS.000Z' -->
+            <time offset="1858-11-17T00:00:00.000Z" units="seconds" floatType="float32">ocean_time</time>
+        </server>
+
 <!--        <server>-->
 <!--            <name>coawstL0</name>-->
 <!--            <url>https://icoast.rc.ufl.edu/thredds/dodsC/Noppcoawst/L0_Forecast/qck/L0_CNAPS_qck_{year:4d}{month:2d}{day:.2d}.nc.dods</url>-->
@@ -187,6 +195,19 @@
 
     <layers>
 
+        <layer>
+            <server>L1</server>
+            <servertype>dap</servertype>
+            <layertype>dynmap</layertype>
+            <gridtype>rho</gridtype>
+            <name>zeta</name>
+            <varthreshold>1110.0</varthreshold>
+            <varscale>1.0</varscale>
+            <longname>Free surface (m)</longname>
+            <colorbar>zeta</colorbar>
+            <visible>True</visible>
+            <transparent>True</transparent>
+        </layer>
 
         <layer>
             <server>L0</server>

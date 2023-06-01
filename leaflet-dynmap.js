@@ -268,7 +268,7 @@ function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOf
             parameterNumberName: "Eastward current", parameterCategory: 2,
             lat: lat, dimsLat: dimsLat,
             lon: lon, dimsLon: dimsLat,
-            times: times, dimsTime: dimsTime, timeFloatBits: timeFloatBits,
+            times: times, dimsTime: dimsTime, timeFloatBytes: timeFloatBytes,
             refTime: "2022-09-30 00:00:00",
             latLonDims: dimsLon.sizes.length,
             latLonSize: dimsLon.sizes,},
@@ -299,7 +299,7 @@ function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOf
 
 
 
-function addNewDynVectormapLayer(map, fileName, varNames, gridTypeU, gridTypeV, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBits, cmap, cbar, varScale, varThreshold)
+function addNewDynVectormapLayer(map, fileName, varNames, gridTypeU, gridTypeV, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes, cmap, cbar, varScale, varThreshold)
 // Creates and returns a dynamic heatmap map layer (CCS) based on the datafiles.
 {
     if (gridTypeU[0] !== gridTypeV[0]) {
@@ -342,7 +342,7 @@ function addNewDynVectormapLayer(map, fileName, varNames, gridTypeU, gridTypeV, 
             parameterNumberName: "Eastward current", parameterCategory: 2,
             lat: lat, dimsLat: dims,
             lon: lon, dimsLon: dims,
-            times: times, dimsTime: dimsTime, timeFloatBits: timeFloatBits,
+            times: times, dimsTime: dimsTime, timeFloatBytes: timeFloatBytes,
             refTime: "2022-09-30 00:00:00",
             latLonDims: dimsLon.sizes.length,
             latLonSize: dimsLon.sizes,},

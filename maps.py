@@ -162,6 +162,7 @@ class Maps:
                 self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
 
                 self.dates = times
+                print(5555, dynLayer)
                 print(444444444, times)
 
             else:

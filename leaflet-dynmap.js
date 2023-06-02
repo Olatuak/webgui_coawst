@@ -294,6 +294,8 @@ function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOf
         varThreshold: varThreshold,
     });
 
+    console.log(3333)
+    console.log(times)
     return [heatmapLayer, times]
 }
 

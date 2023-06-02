@@ -163,7 +163,7 @@ class Maps:
 
                 self.dates = times
                 print(5555, dynLayer)
-                print(444444444, times)
+                print(444444444, times[0])
 
             else:
                 pass

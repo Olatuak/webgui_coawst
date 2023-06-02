@@ -223,19 +223,19 @@
             <transparent>True</transparent>
         </layer>
 
-<!--        <layer>-->
-<!--            <server>atmosphericforcing</server>-->
-<!--            <servertype>dap</servertype>-->
-<!--            <layertype>dynmap</layertype>-->
-<!--            <gridtype>rho</gridtype>-->
-<!--            <name>Qair</name>-->
-<!--            <varthreshold>1110.0</varthreshold>-->
-<!--            <varscale>1.0</varscale>-->
-<!--            <longname>Air humidity</longname>-->
-<!--            <colorbar>Qair</colorbar>-->
-<!--            <visible>True</visible>-->
-<!--            <transparent>True</transparent>-->
-<!--        </layer>-->
+        <layer>
+            <server>atmosphericforcing</server>
+            <servertype>dap</servertype>
+            <layertype>dynmap</layertype>
+            <gridtype>rho</gridtype>
+            <name>Qair</name>
+            <varthreshold>1110.0</varthreshold>
+            <varscale>1.0</varscale>
+            <longname>Air humidity</longname>
+            <colorbar>Qair</colorbar>
+            <visible>True</visible>
+            <transparent>True</transparent>
+        </layer>
 
 
 

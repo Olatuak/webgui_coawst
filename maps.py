@@ -162,7 +162,7 @@ class Maps:
                 self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
 
                 self.dates = times
-#                 print(444444444, times)
+                print(444444444, times)
 
             else:
                 pass

@@ -132,7 +132,7 @@ class Maps:
                 fileName = layer['server']['url']
                 JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
                 timeOffset = layer['server']['timeOffset']
-                fileName = fileName.format(year = 2022, month = 9, day = 30)
+                fileName = fileName.format(year = 2023, month = 6, day = 5)
 #                 print(333444, fileName,'  - ', layer['name'])
 #                 print(layer['gridtype'].split(','),128383)
                 gridType = layer['gridtype'].split(',')
@@ -163,7 +163,7 @@ class Maps:
 
                 self.dates = times
                 print(5555, dynLayer)
-                print(444444444, times[0])
+#                 print(444444444, times.__dir__)
 
             else:
                 pass

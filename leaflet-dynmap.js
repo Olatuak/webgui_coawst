@@ -143,7 +143,7 @@ var VtoR = function(dims, data, isT)
 
 let loadGridData = function loadGridData(fileName, idxDate, gridType, timeVar, timeOffsettime, UnitsInSeconds, timeFloatBytes) {
 
-    console.log('KKKKKKKKK',timeFloatBytes, gridType);
+    console.log('KKKKKKKKK',fileName, gridType);
     let dimsTime, timesNC=0;
     // Read the time dimension
     if (timeFloatBytes==32) {
@@ -167,7 +167,7 @@ let loadGridData = function loadGridData(fileName, idxDate, gridType, timeVar, t
     // Read the mesh.
     let dimsLat, lat, dimsLon, lon
 
-    console.log('KKKKKKKKK',gridType[2], gridType);
+    console.log('KKKKKKKKK',timeOffsettime, gridType[2], gridType);
     if (gridType[2]==32) {
         [dimsLat, lat] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[0]);
         [dimsLon, lon] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[1]);
@@ -294,7 +294,7 @@ function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOf
         varThreshold: varThreshold,
     });
 
-    console.log(3333)
+    console.log(3333, fileName)
     console.log(times)
     return [heatmapLayer, times]
 }

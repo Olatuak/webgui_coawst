@@ -22,7 +22,7 @@ curDate = None
 # dateEnd   = datetime.datetime(2019, 2, 22, 8, 0)
 
 dateStart = datetime.datetime(2022, 1,  2, 0, 0, 0, 0, datetime.timezone.utc)
-dateEnd   = datetime.datetime(2022, 10,  2, 0, 0, 0, 0, datetime.timezone.utc)
+dateEnd   = datetime.datetime(2025, 10,  2, 0, 0, 0, 0, datetime.timezone.utc)
 dateFile  = datetime.datetime(2022, 9, 28, 0, 0, 0, 0, datetime.timezone.utc)
 
 
@@ -145,8 +145,8 @@ except:
 # leaflet.marker([xyz.latitude, xyz.longitude]).addTo(map)
 
 curDate = dateStart
-
-setupDateGizmo(mapLayers.mainLayer, dateStart, dateEnd, mapLayers.dates, onDateChange, conf)
+print('rrr',mapLayers.dates[0],mapLayers.dates[-1])
+setupDateGizmo(mapLayers.mainLayer, None, None, mapLayers.dates, onDateChange, conf)
 setupDepthGizmo(0, 10, False)
 
 # cmap = setupCMap(document, [0,0.5,1], ['#f0ff1a', '#ffffff', '#3370d7'], -50, 50)

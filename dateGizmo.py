@@ -1,6 +1,7 @@
 # This module controls the date gizmo.
 from browser import alert, document, window, html, svg
 import datetime
+import javascript
 # import math
 
 # Global variables
@@ -37,7 +38,9 @@ def convertPythonDateToJS(date):
 
 def convertJSDateToPython(JSDate):
     days = int(JSDate/86400000)
-    milliseconds = (JSDate - days*86400000)
+    print('uuuuuu',JSDate, days*86400000.0)
+    milliseconds = (JSDate - days*86400000.0)
+#     print(seconds)
     return JSDateOrig + datetime.timedelta(days = days, milliseconds = milliseconds)
 
 
@@ -200,13 +203,15 @@ def onGizmoDateMove(event):
         # pos = max(min(pos, 1.0), 0.0)
         date = date1 + pos*(date2 - date1)
         print(100012345,  date, date1, date2, pos)
+        print('-----',  date, dates[0], dates[1], dates[2] , dates[-2], dates[-1] )
         idxDate = binSearchIdxDateCloser(date, dates)  # Index of the existing date closer to the 'date'
         date = dates[idxDate]
         selectedDateIdx = idxDate
         # dateText = document['textDate']
 
-        print(12345, idxDate, date, dates[0], dates[-1])
         date = convertJSDateToPython(dates[idxDate])
+        print(12345, idxDate, date, dates[0], dates[-1])
+
 
         strDate = conf.datefmt % (date.year, date.month, date.day, date.hour, date.minute)
         gizmoDateText = document['gizmoDateText']
@@ -263,6 +268,15 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
 
     conf = confFile
 
+    if dat1 is None:
+        date1 = JSdates[0]
+    else:
+        date1 = convertPythonDateToJS(dat1)
+
+    if dat2 is None:
+        date2 = JSdates[-1]
+    else:
+        date2 = convertPythonDateToJS(dat2)
 
 
 
@@ -273,8 +287,6 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
     dates = []
 
 
-    date1 = convertPythonDateToJS(dat1)
-    date2 = convertPythonDateToJS(dat2)
 
     onDateChange = onDateChng
     layer = lyr
@@ -286,7 +298,7 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
     idxDate1 = 0
     idxDate2 = len(JSdates)-1
 
-    print(JSdates[0], JSdates[-1])
+    print(JSdates[0], JSdates[-1], idxDate1, idxDate2, 999)
 
 
     # Creates the set of datetime objects with the available dates
@@ -296,7 +308,7 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
 
     setTicks(dates)
 
-    print('KKKK', dates[0])
+    print('KKKK', dates[0], dates[-1], idxDate2)
     # Starts the date labels with the first one
     date = convertJSDateToPython(dates[0])
     document['gizmoDateText'] =  conf.datefmt % (date.year, date.month, date.day, date.hour, date.minute)

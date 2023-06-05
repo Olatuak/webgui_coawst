@@ -25,6 +25,8 @@ function readDODSHeader(url)
     req.overrideMimeType('text\/plain; charset=x-user-defined');
     req.send(null);
 
+    console.debug('1111');
+    console.debug('1111');
     console.debug('1111', url)
     if (req.status > 299) return byteArray;
 
@@ -41,7 +43,6 @@ function readDODSHeader(url)
             break;
         }
     }
-    console.debug('2222', url)
 
     // Error condition
     if (!foundData)
@@ -76,10 +77,7 @@ function readDODSHeader(url)
 
 function loadBinaryDODSFloat32Cached(url)
 {
-    console.log('_____', url);
     let res = getCachedVar(url);
-
-    console.log('_____', res);
 
     if (res == undefined) res = loadBinaryDODSFloat32ToCache(url);
 
@@ -118,9 +116,7 @@ function loadBinaryDODSFloat32(url)
 // Read a Thredds dods binary file of float32 as an array of bytes
 // WARNING: Assumes little endian IEEE754
 {
-    console.log('%%%%', url)
     let [dims, responseText] = readDODSHeader(url)
-    console.log('%%%%', dims)
     res = []
 
     // This is like a "union", fourU8 and oneF32 are two different views of the same buffer.
@@ -176,7 +172,6 @@ function loadBinaryDODSFloat64(url)
         res.push(oneF64*1.0);
     }
 
-    console.log('******', res);
     return [dims, res];
 }
 

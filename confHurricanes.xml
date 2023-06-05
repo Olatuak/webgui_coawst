@@ -245,6 +245,21 @@
 <!--            <transparent>True</transparent>-->
 <!--        </layer>-->
 
+
+        <layer>
+            <server>L0</server>
+            <servertype>dap</servertype>
+            <layertype>dynmap</layertype>
+            <gridtype>rho,rho</gridtype>-->
+            <name>u_sur_eastward,v_sur_northward</name>
+            <varthreshold>12.0</varthreshold>
+            <varscale>12.0</varscale>
+            <longname>Barotropic currents (m/s)</longname>
+            <colorbar>velocity</colorbar>
+            <visible>False</visible>
+            <transparent>True</transparent>
+        </layer>
+
         <layer>
             <server>L0</server>
             <servertype>dap</servertype>
@@ -258,6 +273,8 @@
             <visible>True</visible>
             <transparent>True</transparent>
         </layer>
+
+
 
 <!--        <layer>-->
 <!--            <server>atmosphericforcing</server>-->

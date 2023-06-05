@@ -133,11 +133,7 @@ class Maps:
                 JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
                 timeOffset = layer['server']['timeOffset']
                 fileName = fileName.format(year = 2023, month = 6, day = 5)
-#                 print(333444, fileName,'  - ', layer['name'])
-#                 print(layer['gridtype'].split(','),128383)
                 gridType = layer['gridtype'].split(',')
-                print(334343434, gridType)
-                print(5555, layer['server']['grids'])
                 if len(gridType) == 1:
 
                     dynLayer, times = window.addNewDynHeatmapLayer(mapLayer, fileName,
@@ -147,7 +143,7 @@ class Maps:
                                                     int(layer['server']['timeFloatBytes']),
                                                     conf.colormaps[colorbar['style']], colorbar,  layer['varthreshold'])
                 elif len(gridType) == 2:
-                    print(layer.keys())
+                    print(fileName)
                     dynLayer, times = window.addNewDynVectormapLayer(mapLayer, fileName,
                                                     layer['name'].split(','), layer['server']['grids'][gridType[0]], layer['server']['grids'][gridType[1]],
                                                     layer['server']['time'],
@@ -162,8 +158,6 @@ class Maps:
                 self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
 
                 self.dates = times
-                print(5555, dynLayer)
-#                 print(444444444, times.__dir__)
 
             else:
                 pass
@@ -197,7 +191,6 @@ class Maps:
 
     def redrawLayers(self):
 
-        print('HERE')
         try:
             self.mainLayer
 

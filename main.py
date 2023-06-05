@@ -145,7 +145,6 @@ except:
 # leaflet.marker([xyz.latitude, xyz.longitude]).addTo(map)
 
 curDate = dateStart
-print('rrr',mapLayers.dates[0],mapLayers.dates[-1])
 setupDateGizmo(mapLayers.mainLayer, None, None, mapLayers.dates, onDateChange, conf)
 setupDepthGizmo(0, 10, False)
 

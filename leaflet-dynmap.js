@@ -143,7 +143,6 @@ var VtoR = function(dims, data, isT)
 
 let loadGridData = function loadGridData(fileName, idxDate, gridType, timeVar, timeOffsettime, UnitsInSeconds, timeFloatBytes) {
 
-    console.log('KKKKKKKKK',fileName, gridType);
     let dimsTime, timesNC=0;
     // Read the time dimension
     if (timeFloatBytes==32) {
@@ -158,7 +157,6 @@ let loadGridData = function loadGridData(fileName, idxDate, gridType, timeVar, t
     // Converts the time into JavaScript
     for (let i = 0; i< timesNC.length; i++) {
         const time = (timesNC[i]*UnitsInSeconds + timeOffsettime)*1000;
-        // console.log('tt  ', timesNC[i], timeOffsettime, UnitsInSeconds);
         times.push(time);
     }
 
@@ -167,7 +165,6 @@ let loadGridData = function loadGridData(fileName, idxDate, gridType, timeVar, t
     // Read the mesh.
     let dimsLat, lat, dimsLon, lon
 
-    console.log('KKKKKKKKK',timeOffsettime, gridType[2], gridType);
     if (gridType[2]==32) {
         [dimsLat, lat] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[0]);
         [dimsLon, lon] = window.loadBinaryDODSFloat32Cached(fileName + '?' + gridType[1]);
@@ -185,11 +182,8 @@ let loadVarData = function loadVarData(fileName, idxDate, varName, dims) {
     let data = Array(1);
     let dimsData = 0;
 
-    console.log(">>>>>", varName)
     const fullFileName = fileName + '?' + varName + '%5B' + (idxDate + 1) + '%5D%5B0:1:' + (dims[1] -1) + '%5D%5B0:1:' + (dims[0] -1) + '%5D';
-    console.log(">>>>>", fullFileName);
     [dimsData, data] = window.loadBinaryDODSFloat32Cached(fullFileName);
-    console.log(">>>>>>>", dimsData);
 
     return [dimsData, data];
 }
@@ -244,7 +238,6 @@ function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOf
     const  [dimsTime, times, dimsLat, lat, dimsLon, lon] = loadGridData(fileName, 0, gridType, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes)
 
 
-    console.log(12345, gridType, dimsLon);
 
     // A general mesh is one that has different lat lon pairs for each node, i.e. lat and lon arrays are bidimensional.
     const isGeneralMesh = dimsLon.sizes.length > 1 && dimsLon.sizes[0] > 1 && dimsLon.sizes[1] > 1;
@@ -294,8 +287,6 @@ function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOf
         varThreshold: varThreshold,
     });
 
-    console.log(3333, fileName)
-    console.log(times)
     return [heatmapLayer, times]
 }
 
@@ -457,10 +448,6 @@ L.DynmapLayer = L.Layer.extend({
 
             const iLat = binSearch(this.lat1d, p1.lat);
             const iLon = binSearch(this.lon1d, p1.lng);
-            // console.log('eeee', iLat, iLon, lat, lon);
-            // console.log(this.lat1d)
-            // console.log(this.lon1d)
-            // console.log('val: ', this.options.data.data[Slat * iLat + Slon * iLon]);
             return this.options.data.data[Slat * iLat + Slon * iLon];
         }
         else return NaN;
@@ -469,7 +456,6 @@ L.DynmapLayer = L.Layer.extend({
     onDateChange: function(idxDate)
     {
         this.idxDate = idxDate
-        console.log(4444, idxDate)
         if (typeof this.varName === 'string') {
             let [dimsData, data] = loadVarData(this.fileName, idxDate, this.varName, this.dims);
 
@@ -585,6 +571,7 @@ L.DynmapLayer = L.Layer.extend({
 
             const scale = this.varScale;
 
+
             for (let j = yB; j <= yT; j += arrowGridYSize) {
                 for (let i = xL; i <= xR; i += arrowGridXSize) {
                     const p = this._map.containerPointToLatLng(L.point(i, j));
@@ -606,7 +593,7 @@ L.DynmapLayer = L.Layer.extend({
                     const val = Math.sqrt(u*u + v*v);
 
 
-                    if (!isNaN(val) && val != 0 && val<1) {
+                    if (!isNaN(val) && val != 0 && val<this.varThreshold) {
                         const [R, G, B] = this.cmap.colors(val);
 
                         const decColor = B + 0x100 * G + 0x10000 * R;
@@ -635,6 +622,7 @@ L.DynmapLayer = L.Layer.extend({
                         // Draw the vectors.
                         g.beginPath();
                         g.moveTo(i, j);
+                        // console.log(scale * (-0.05 * uy), '--', scale * (0.05 * ux));
                         g.lineTo(i + scale * (-0.05 * uy), j + scale * (0.05 * ux));
                         g.lineTo(i + scale * (-0.05 * uy + 0.6 * ux), j + scale * (0.05 * ux + 0.6 * uy));
                         g.lineTo(i + scale * (-0.2 * uy + 0.6 * ux), j + scale * (0.2 * ux + 0.6 * uy));
@@ -645,6 +633,7 @@ L.DynmapLayer = L.Layer.extend({
 
 
                         g.closePath();
+                        // g.stroke();
                         g.fill();
                     }
                 }
@@ -652,6 +641,7 @@ L.DynmapLayer = L.Layer.extend({
         }
 
         // Draw rectangle
+        g.fillStyle = '#FF0000'
         g.beginPath();
         const aTL = this._map.latLngToContainerPoint(this.pTL);
         const aTR = this._map.latLngToContainerPoint(this.pTR);
@@ -718,7 +708,6 @@ L.DynmapLayer = L.Layer.extend({
             const iBL = (nj-1)*Sj + 0*Si;
             const iBR = (nj-1)*Sj + (ni-1)*Si;
 
-            // console.log('KKKKK', iTL, iTR, iBL, iBR, this.lat);
             this.pTL = L.latLng(this.lat[iTL], this.lon[iTL]);
             this.pTR = L.latLng(this.lat[iTR], this.lon[iTR]);
             this.pBL = L.latLng(this.lat[iBL], this.lon[iBL]);
@@ -771,7 +760,6 @@ L.DynmapLayer = L.Layer.extend({
         // this.scale = 12;
         this.varScale = this.options.varScale;
         this.varThreshold = this.options.varThreshold;
-        console.log('ppp', this.varThreshold, this.varScale);
 
         this.g = this._container.getContext("2d");
 

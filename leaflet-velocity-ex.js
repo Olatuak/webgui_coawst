@@ -52,7 +52,6 @@ L.CanvasLayer = (L.Layer ? L.Layer : L.Class).extend({
     var topLeft = this._map.containerPointToLayerPoint([0, 0]);
 
     L.DomUtil.setPosition(this._canvas, topLeft);
-console.log('dasjkjdalkdjsaldjsaldkjsalkdjsaldjsakl111111')
     this.drawLayer();
   },
   //-------------------------------------------------------------

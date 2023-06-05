@@ -38,9 +38,7 @@ def convertPythonDateToJS(date):
 
 def convertJSDateToPython(JSDate):
     days = int(JSDate/86400000)
-    print('uuuuuu',JSDate, days*86400000.0)
     milliseconds = (JSDate - days*86400000.0)
-#     print(seconds)
     return JSDateOrig + datetime.timedelta(days = days, milliseconds = milliseconds)
 
 
@@ -114,9 +112,36 @@ def onGizmoPlay(event):
     global selectedDateIdx
     selectedDateIdx += 1
     updateDateText()
+    updateGizmoPos(selectedDateIdx/(len(dates)-1))
     if onDateChange is not None:
         onDateChange(layer, selectedDateIdx)
-    print(12345)
+
+
+def updateGizmoPos(pos):
+    global oldxPointerSVG, xGizmo
+
+    svgroot = document['root']
+    mat = svgroot.getScreenCTM()  # This is to convert screen coordinates into SVG units.
+
+    xnewGizmo = pos*(datePos[-1] - datePos[0])
+
+#     xPointerSVG = (xGizmo - mat.e) / mat.a  # x position in SVG coordinates
+
+    dx = (xnewGizmo - xGizmo)/ mat.a
+
+    xGizmo = xnewGizmo
+
+    translate = svgroot.createSVGTransform()
+
+    translate.setTranslate(dx, 0) # Hack: mat.a is the x scale of the document
+
+
+
+
+    # Consolidates the transforms.
+    transformList = document['gizmoDateHandle'].transform.baseVal
+    transformList.appendItem(translate)
+    transformList.consolidate()
 
 
 
@@ -125,7 +150,6 @@ def updateDateText():
 
 
     selectDate = convertJSDateToPython(dates[selectedDateIdx])
-    print(8888, selectDate, selectedDateIdx, convertJSDateToPython(dates[0]), convertJSDateToPython(dates[-1]))
     strDate = '%s' % selectDate.strftime('%Y-%m-%dT%H:%M')
     document['textDate2'].text = strDate
     document['gizmoDateText'].text = strDate
@@ -202,15 +226,12 @@ def onGizmoDateMove(event):
         # pos = (xHandle - x1RectDate)/(x2RectDate - x1RectDate)
         # pos = max(min(pos, 1.0), 0.0)
         date = date1 + pos*(date2 - date1)
-        print(100012345,  date, date1, date2, pos)
-        print('-----',  date, dates[0], dates[1], dates[2] , dates[-2], dates[-1] )
         idxDate = binSearchIdxDateCloser(date, dates)  # Index of the existing date closer to the 'date'
         date = dates[idxDate]
         selectedDateIdx = idxDate
         # dateText = document['textDate']
 
         date = convertJSDateToPython(dates[idxDate])
-        print(12345, idxDate, date, dates[0], dates[-1])
 
 
         strDate = conf.datefmt % (date.year, date.month, date.day, date.hour, date.minute)
@@ -298,9 +319,6 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
     idxDate1 = 0
     idxDate2 = len(JSdates)-1
 
-    print(JSdates[0], JSdates[-1], idxDate1, idxDate2, 999)
-
-
     # Creates the set of datetime objects with the available dates
     for i in range(idxDate1, idxDate2+1):
         date = JSdates[i]
@@ -308,7 +326,6 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
 
     setTicks(dates)
 
-    print('KKKK', dates[0], dates[-1], idxDate2)
     # Starts the date labels with the first one
     date = convertJSDateToPython(dates[0])
     document['gizmoDateText'] =  conf.datefmt % (date.year, date.month, date.day, date.hour, date.minute)

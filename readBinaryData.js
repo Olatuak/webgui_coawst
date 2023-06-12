@@ -1,4 +1,5 @@
 let cache = new Map();
+let totCache = 0;
 let keyCount = 0;
 
 
@@ -25,11 +26,8 @@ function readDODSHeader(url)
     req.overrideMimeType('text\/plain; charset=x-user-defined');
     req.send(null);
 
-    console.debug('1111');
-    console.debug('1111');
-    console.debug('1111', url)
-    if (req.status > 299) return byteArray;
 
+    if (req.status > 299) return byteArray;
 
 
     // The binary data starts after some ascii data that ends in 'Data:'
@@ -100,6 +98,10 @@ function loadBinaryDODSFloat32ToCache(url)
 
     cache.set(url, data);
 
+    totCache += data[1].length * 4;
+    document.getElementById('txtCache').textContent=sprintf("%.1f mb", totCache/1024/1024);
+
+
     return data;
 }
 
@@ -108,6 +110,9 @@ function loadBinaryDODSFloat64ToCache(url)
     let data = loadBinaryDODSFloat64(url);
 
     cache.set(url, data);
+
+    totCache += data[1].length * 8;
+    document.getElementById('txtCache').textContent=sprintf("%.1f mb", totCache/1024/1024);
 
     return data;
 }
@@ -220,7 +225,7 @@ function loadBinaryDODSFloat64(url)
 //   ],
 //
 //     }];
-//
+
 //
 //     // Gives an id to the basemap, so Plotly can create the plot on top
 //     mapid = document.getElementById('mapid');

@@ -496,14 +496,14 @@ L.DynmapLayer = L.Layer.extend({
         const BR = this._map.latLngToContainerPoint(this.pBR);
 
 
-        const xL = Math.max(0, Math.min(TL.x, TR.x, BL.x, BR.x));
-        const yB = Math.max(0, Math.min(TL.y, TR.y, BL.y, BR.y));
-        const xR = Math.min(this._container.width,  Math.max(TL.x, TR.x, BL.x, BR.x));
-        const yT = Math.min(this._container.height, Math.max(TL.y, TR.y, BL.y, BR.y));
+        const xL = Math.round(Math.max(0, Math.min(TL.x, TR.x, BL.x, BR.x)));
+        const yB = Math.round(Math.max(0, Math.min(TL.y, TR.y, BL.y, BR.y)));
+        const xR = Math.round(Math.min(this._container.width,  Math.max(TL.x, TR.x, BL.x, BR.x)));
+        const yT = Math.round(Math.min(this._container.height, Math.max(TL.y, TR.y, BL.y, BR.y)));
 
 
-        const W = xR - xL + 1;
-        const H = yT - yB + 1;
+        const W = Math.round(xR - xL + 1);
+        const H = Math.round(yT - yB + 1);
         if (W<=0 || H<=0) return;
 
 

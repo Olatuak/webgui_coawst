@@ -123,41 +123,46 @@ class Maps:
                 self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
                 self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
             elif layerType == 'dynmap':
-                gridType   = layer['gridtype']
-                colorBarName = layer['colorbar']
-                colorbar = conf.colorbars[colorBarName]
-                mapLayer = self.map
 
-#                 fileName = 'https://icoast.rc.ufl.edu/thredds/dodsC/matthew/L1_qck_20220928.nc.dods'
-                fileName = layer['server']['url']
-                JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
-                timeOffset = layer['server']['timeOffset']
-                fileName = fileName.format(year = 2023, month = 6, day = 5)
-                gridType = layer['gridtype'].split(',')
-                if len(gridType) == 1:
+                try:
+                    gridType   = layer['gridtype']
+                    colorBarName = layer['colorbar']
+                    colorbar = conf.colorbars[colorBarName]
+                    mapLayer = self.map
 
-                    dynLayer, times = window.addNewDynHeatmapLayer(mapLayer, fileName,
-                                                    layer['name'], layer['server']['grids'][gridType[0]],
-                                                    layer['server']['time'],
-                                                    (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
-                                                    int(layer['server']['timeFloatBytes']),
-                                                    conf.colormaps[colorbar['style']], colorbar,  layer['varthreshold'])
-                elif len(gridType) == 2:
-                    print(fileName)
-                    dynLayer, times = window.addNewDynVectormapLayer(mapLayer, fileName,
-                                                    layer['name'].split(','), layer['server']['grids'][gridType[0]], layer['server']['grids'][gridType[1]],
-                                                    layer['server']['time'],
-                                                    (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
-                                                    int(layer['server']['timeFloatBytes']),
-                                                    conf.colormaps[colorbar['style']], colorbar, layer['varscale'], layer['varthreshold'])
-                else:
-                    print('ERROR, too many layers')
-                dynLayer.addTo(self.map)
-                self.listLayer += [dynLayer]
-                self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
-                self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
+    #                 fileName = 'https://icoast.rc.ufl.edu/thredds/dodsC/matthew/L1_qck_20220928.nc.dods'
+                    fileName = layer['server']['url']
+                    JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
+                    timeOffset = layer['server']['timeOffset']
+                    fileName = fileName.format(year = date.year, month = date.month, day = date.day)
+                    gridType = layer['gridtype'].split(',')
+                    if len(gridType) == 1:
 
-                self.dates = times
+                        dynLayer, times = window.addNewDynHeatmapLayer(mapLayer, fileName,
+                                                        layer['name'], layer['server']['grids'][gridType[0]],
+                                                        layer['server']['time'],
+                                                        (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
+                                                        int(layer['server']['timeFloatBytes']),
+                                                        conf.colormaps[colorbar['style']], colorbar,  layer['varthreshold'])
+                    elif len(gridType) == 2:
+                        print(fileName)
+                        dynLayer, times = window.addNewDynVectormapLayer(mapLayer, fileName,
+                                                        layer['name'].split(','), layer['server']['grids'][gridType[0]], layer['server']['grids'][gridType[1]],
+                                                        layer['server']['time'],
+                                                        (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
+                                                        int(layer['server']['timeFloatBytes']),
+                                                        conf.colormaps[colorbar['style']], colorbar, layer['varscale'], layer['varthreshold'])
+                    else:
+                        print('ERROR, too many layers')
+                    dynLayer.addTo(self.map)
+                    self.listLayer += [dynLayer]
+                    self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
+                    self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
+
+                    self.dates = times
+                except:
+                    pass
+
 
             else:
                 pass

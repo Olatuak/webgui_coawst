@@ -1,6 +1,8 @@
 from browser import alert, document, window, html, svg, ajax, timer
+import javascript
 import struct
 import datetime
+
 import html as HTML
 
 from dateGizmo  import *
@@ -18,12 +20,15 @@ request = None
 curDate = None
 
 
+
+
 # dateStart = datetime.datetime(2019, 2, 16, 8, 0)
 # dateEnd   = datetime.datetime(2019, 2, 22, 8, 0)
 
-dateStart = datetime.datetime(2022, 1,  2, 0, 0, 0, 0, datetime.timezone.utc)
-dateEnd   = datetime.datetime(2025, 10,  2, 0, 0, 0, 0, datetime.timezone.utc)
-dateFile  = datetime.datetime(2022, 9, 28, 0, 0, 0, 0, datetime.timezone.utc)
+dateStart = datetime.datetime(2023, 1,  7, 0, 0, 0, 0, datetime.timezone.utc)
+dateEnd   = datetime.datetime(2025, 10, 2, 0, 0, 0, 0, datetime.timezone.utc)
+print("ffffffffff",javascript.Date.new().getYear()+1900, javascript.Date.new().getMonth()+1, javascript.Date.new().getDay(), 0, 0, 0, 0, datetime.timezone.utc)
+dateFile  = datetime.datetime(javascript.Date.new().getYear()+1900, javascript.Date.new().getMonth()+1, javascript.Date.new().getDay()+1, 0, 0, 0, 0, datetime.timezone.utc)
 
 
 # Access the leaflet.js API
@@ -115,7 +120,7 @@ def onBtnPointClick(event):
 conf = Conf('confHurricanes.xml')
 
 
-mapLayers = Maps(dateStart, crs, conf, leaflet)
+mapLayers = Maps(dateFile, crs, conf, leaflet)
 
 
 # Creates the menu with the available layers

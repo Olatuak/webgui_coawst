@@ -117,6 +117,15 @@ def onGizmoPlay(event):
         onDateChange(layer, selectedDateIdx)
 
 
+def nextDate():
+    global selectedDateIdx
+    selectedDateIdx += 1
+    updateDateText()
+    updateGizmoPos(selectedDateIdx/(len(dates)-1))
+    if onDateChange is not None:
+        onDateChange(layer, selectedDateIdx)
+
+
 def updateGizmoPos(pos):
     global oldxPointerSVG, xGizmo
 

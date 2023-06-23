@@ -130,11 +130,10 @@ class Maps:
                     colorbar = conf.colorbars[colorBarName]
                     mapLayer = self.map
 
-    #                 fileName = 'https://icoast.rc.ufl.edu/thredds/dodsC/matthew/L1_qck_20220928.nc.dods'
                     fileName = layer['server']['url']
                     JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
                     timeOffset = layer['server']['timeOffset']
-                    fileName = fileName.format(year = date.year, month = date.month, day = date.day)
+                    fileName = fileName.format(year = date.year, month = date.month, day = date.day-2)
                     gridType = layer['gridtype'].split(',')
                     if len(gridType) == 1:
 
@@ -155,6 +154,8 @@ class Maps:
                     else:
                         print('ERROR, too many layers')
                     dynLayer.addTo(self.map)
+                    print('DDDDDDDDDDDDDD>>', dynLayer.__dir__)
+                    layer['dynlayer'] = dynLayer
                     self.listLayer += [dynLayer]
                     self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
                     self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]

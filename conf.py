@@ -189,10 +189,16 @@ class Conf:
         except:
             print('ERROR: reading opendap servers section of configuration file. Please check.')
 
+
         # Reads the layers section
         try:
             layersSection = (treeConf.getElementsByTagName('layers'))[0]
             layers = layersSection.getElementsByTagName('layer')
+
+            self.layersVarNames = []
+            self.layersVarShortNames = []
+            self.layersVarLongNames = []  # All different variables that are represented as layers. This is used to structure
+                                          # things in terms of variables, as for example, in menus.
             self.layers = []
             for layer in layers:
                 tempLayer = {'name':        layer.getElementsByTagName('name'        )[0].innerHTML,
@@ -203,32 +209,84 @@ class Conf:
                              'varthreshold':layer.getElementsByTagName('varthreshold')[0].innerHTML,
                              'varscale':    layer.getElementsByTagName('varscale'    )[0].innerHTML,
                              'longname':    layer.getElementsByTagName('longname'    )[0].innerHTML,
+                             'shortname':   layer.getElementsByTagName('shortname'   )[0].innerHTML,
+                             'units':       layer.getElementsByTagName('units'       )[0].innerHTML,
                              'colorbar':    layer.getElementsByTagName('colorbar'    )[0].innerHTML,
                              'visible':     layer.getElementsByTagName('visible'     )[0].innerHTML.lower() == 'true',
                              'transparent': layer.getElementsByTagName('transparent' )[0].innerHTML.lower() == 'true',
                              }
 
                 # Updates the server with the actual server dictionary of that name.
-                tempLayer['server'] = self.getServer(tempLayer['server'], tempLayer['servertype'])
+                servers = self.getServers(tempLayer['server'], tempLayer['servertype'])
 
-                self.layers += [tempLayer]
+#               # Is this a new type of variable we are representing?
+                longName  = tempLayer['longname']
+                shortName = tempLayer['shortname']
+                name = tempLayer['name']
+                if longName not in self.layersVarLongNames:
+                    self.layersVarLongNames  += [longName .strip()]
+                    self.layersVarShortNames += [shortName.strip()]
+                    self.layersVarNames      += [name.strip()]
+
+                # For each server it creates a new layer. This is an afterthought to simplify the configuration process,
+                # originally each layer had on server.
+                for server in servers:
+                    tempLayer['server'] = server
+                    print('PPPPP', server)
+                    self.layers += [tempLayer.copy()]
 
 
         except:
             print('ERROR: reading layers section of configuration file. Please check.')
 
 
-
-    def getServer(self, name, serverType):
-
-        if (serverType=='wms'):
-            for server in self.wmsServers:
-                if (server['name'] == name):
-                    return server
-        elif (serverType=='dap'):
-            for server in self.dapServers:
-                if (server['name'] == name):
-                    return server
-
-        print('Error: server %s not found' % name)
+    def getLayer(self, server, varName):
+        # Gets a layer based on the server it uses and the var name. If it doesn't find it, returns None.
+        for layer in self.layers:
+#             print('iiiiiii  ', layer['name'] , varName)
+#             print(layer["server"]['name'] == server['name'])
+#             print('ggg', layer["server"]['name'] , server['name'])
+            if (layer['name'] == varName) and (layer["server"]['name'] == server['name']):
+                print('iiiiiii  ', layer)
+                return layer
         return None
+
+
+
+    def getServers(self, names, serverType):
+        # Gets a list of servers from a list of comma-separated server names
+        servers = []
+        while (names != ''):
+            found = False
+            idx = names.find(',')
+            if (idx>-1):
+                name = names[:idx].strip()
+                names = names[idx+1:].strip()
+            else:
+                name = names.strip()
+                names = ''
+
+            if (serverType=='wms'):
+                for server in self.wmsServers:
+                    if (server['name'] == name):
+                        servers += [server]
+                        found = True
+                        break
+                if not found:
+                    print('Error: server %s not found' % name)
+                    return None
+
+            elif (serverType=='dap'):
+                for server in self.dapServers:
+                    print('****',server['name'], name)
+                    if (server['name'] == name):
+                        servers += [server]
+                        found = True
+                        break
+                if not found:
+                    print('Error: server %s not found' % name)
+                    return None
+
+
+        return servers
+

@@ -27,8 +27,11 @@ curDate = None
 
 dateStart = datetime.datetime(2023, 1,  7, 0, 0, 0, 0, datetime.timezone.utc)
 dateEnd   = datetime.datetime(2025, 10, 2, 0, 0, 0, 0, datetime.timezone.utc)
-print("ffffffffff",javascript.Date.new().getYear()+1900, javascript.Date.new().getMonth()+1, javascript.Date.new().getDay(), 0, 0, 0, 0, datetime.timezone.utc)
-dateFile  = datetime.datetime(javascript.Date.new().getYear()+1900, javascript.Date.new().getMonth()+1, javascript.Date.new().getDay()+1, 0, 0, 0, 0, datetime.timezone.utc)
+
+nowDate = javascript.Date.new(javascript.Date.now())
+print("afffffffff",nowDate.toISOString() )
+print("ffffffffff",nowDate.getYear()+1900, nowDate.getMonth()+1, nowDate.getUTCDate(), 0, 0, 0, 0, datetime.timezone.utc)
+dateFile  = datetime.datetime(nowDate.getYear()+1900, nowDate.getMonth()+1, nowDate.getUTCDate(), 0, 0, 0, 0, datetime.timezone.utc)
 
 
 # Access the leaflet.js API
@@ -119,12 +122,13 @@ def onBtnPointClick(event):
 # conf = Conf('confSNB.xml')
 conf = Conf('confHurricanes.xml')
 
-
+print('&&&&&', dateFile)
 mapLayers = Maps(dateFile, crs, conf, leaflet)
 
 
 # Creates the menu with the available layers
 setupLayersMenu(conf, mapLayers)
+setupLayersMenu2(conf, mapLayers)
 
 
 parser = window.DOMParser.new()
@@ -150,7 +154,7 @@ except:
 # leaflet.marker([xyz.latitude, xyz.longitude]).addTo(map)
 
 curDate = dateStart
-setupDateGizmo(mapLayers.mainLayer, None, None, mapLayers.dates, onDateChange, conf)
+setupDateGizmo(mapLayers.mainLayer, None, None, mapLayers.dates[:], onDateChange, conf)
 setupDepthGizmo(0, 10, False)
 
 # cmap = setupCMap(document, [0,0.5,1], ['#f0ff1a', '#ffffff', '#3370d7'], -50, 50)

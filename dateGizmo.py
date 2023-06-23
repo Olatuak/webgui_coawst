@@ -132,11 +132,12 @@ def updateGizmoPos(pos):
     svgroot = document['root']
     mat = svgroot.getScreenCTM()  # This is to convert screen coordinates into SVG units.
 
-    xnewGizmo = pos*(datePos[-1] - datePos[0])
 
+    xnewGizmo = pos*(datePos[-1] - datePos[0])
+    print('-----',mat.a, xGizmo, xnewGizmo, pos, datePos[0], datePos[-1])
 #     xPointerSVG = (xGizmo - mat.e) / mat.a  # x position in SVG coordinates
 
-    dx = (xnewGizmo - xGizmo)/ mat.a
+    dx = (xnewGizmo - xGizmo) #/ mat.a
 
     xGizmo = xnewGizmo
 
@@ -224,6 +225,8 @@ def onGizmoDateMove(event):
         # location
 
         pos = (xGizmo) / (datePos[-1] - datePos[0])
+
+        print('----->', xGizmo, xnewGizmo, pos, datePos[0], datePos[-1])
 
         # Consolidates the transforms.
         transformList = document['gizmoDateHandle'].transform.baseVal

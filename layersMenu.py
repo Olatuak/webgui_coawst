@@ -11,6 +11,7 @@ listItemText2 = []
 
 listItemLayers = []
 listItemLayersBox = []
+itemsInColumn = []  # All the items that belong to a column.
 
 def onMenuClick(evt):
     global conf
@@ -25,10 +26,37 @@ def onMenuClick(evt):
 
 
 def onMenuClick2(evt):
-    global conf
+    # Called when any element in the menu table is clicked.
+    global conf, itemsTextElement
+
     idx = int(evt.toElement['Idx'])
     layer = listItemLayers[idx]
     layer['visible'] = not layer['visible']
+
+    updateLayersMenu2()
+
+    mapLayers.updateLayers()
+
+
+def onMenuClick3(evt):
+    # Called when any column header in the menu table is clicked.
+    global conf, itemsInColumn
+    idx = int(evt.toElement['Idx'])
+    itemsIdx = itemsInColumn[idx]
+    print(itemsIdx, idx)
+    print(listItemLayers[itemsIdx[0]])
+    print(itemsIdx,'dfdfd')
+    firstNonEmpty = 0
+    while listItemLayers[itemsIdx[firstNonEmpty]] is None:
+        firstNonEmpty += 1
+        if firstNonEmpty >= len(itemsIdx):
+            return
+    selected = listItemLayers[itemsIdx[firstNonEmpty]]['visible']  #  Takes the value of the first one as a representative of the whole column
+    for idx in itemsIdx:
+        layer = listItemLayers[idx]
+        if layer is not None:
+            layer['visible'] = not selected
+
 
     updateLayersMenu2()
 
@@ -134,10 +162,11 @@ def setupLayersMenu(config, mapLyrs):
 def setupLayersMenu2(config, mapLyrs):
 
     global conf, mapLayers
-    global listItemHighlightRect, listItemText, listItemText2, listItemLayers, listItemLayersBox
+    global listItemHighlightRect, listItemText, listItemText2, listItemLayers, listItemLayersBox, itemsInColumn
 
     conf = config
     mapLayers = mapLyrs
+    lastX = 0
 
 
     # Creates the table inside the menu.
@@ -169,13 +198,15 @@ def setupLayersMenu2(config, mapLyrs):
     curItemText ['x'] = '%.4f' % (float(curItemText ['x']) + xDisp)
     curItemText2['x'] = '%.4f' % (float(curItemText2['x']) + xDisp)
 
+
     for i, varName in enumerate(conf.layersVarShortNames):
         isLast = (i == len(conf.layersVarShortNames) - 1)
 
         curItemText2.innerHTML = varName
 
         curItemHighlightRect['Idx'] = i
-        curItemHighlightRect.bind("mousedown", onMenuClick)
+        curItemHighlightRect.bind("mousedown", onMenuClick3)
+        itemsInColumn += [[]]
 
         # Stores them in list for later use (fixing the x coordinate according to the final width)
         listItemHighlightRect += [curItemHighlightRect]
@@ -235,7 +266,7 @@ def setupLayersMenu2(config, mapLyrs):
         height = curItemText.getBBox().height*1.05
         width  = curItemText.getBBox().width *1.05
         curItemHighlightRect['height'] = '%.4f' % (height)
-        curItemHighlightRect['width' ] = '%.4f' % (maxColWidth)
+        curItemHighlightRect['width' ] = '%.4f' % (maxColWidth+3)
         curItemText ['x'] = '%.4f' % (firstColPos)
         curItemText2['x'] = '%.4f' % (firstColPos)
         lastY = float(curItemHighlightRect['y']) + height
@@ -265,27 +296,36 @@ def setupLayersMenu2(config, mapLyrs):
 
 
 
-    # Creates all the options (layers that ce be enabled or disabled)
+    # Creates all the options (layers that can be enabled or disabled)
+    idx = 0
+    rectMenuItemSample = document['rectMenuItemSample']
     for row in rowInfo:
-        for col in columnInfo:
-            rectMenuItemSample = document['rectMenuItemSample']
+        for icol, col in enumerate(columnInfo):
+            idx += 1
             curItemHighlightRect = rectMenuItemSample.cloneNode()
 
-            curItemHighlightRect['width'] = '%.4f' % (col['width'])
-            curItemHighlightRect['height' ] = '%.4f' % (row['height'])
+
+            curItemHighlightRect['width']  = '%.4f' % (col['width'])
+            curItemHighlightRect['height'] = '%.4f' % (row['height'])
             curItemHighlightRect['x'] = '%.4f' % (col['x'])
             curItemHighlightRect['y'] = '%.4f' % (row['y'])
+            curItemHighlightRect['id'] = '%s_%i' % (rectMenuItemSample['id'], idx)
+
             try:
                 layer = conf.getLayer(row['server'], col['varname'])
                 listItemLayers += [layer]
                 listItemLayersBox += [curItemHighlightRect]
 
-                curItemHighlightRect['Idx'] = len(listItemLayers) - 1
+                idx = len(listItemLayers) - 1
+                curItemHighlightRect['Idx'] = idx
+                itemsInColumn[icol] += [idx]
             except:
-                curItemHighlightRect['layer'] = None
+                curItemHighlightRect['Idx'] = None
+
             curItemHighlightRect.bind("mousedown", onMenuClick2)
             parent.append(curItemHighlightRect)
-    rectMenuItemSample['visible'] = 'false'
+
+    rectMenuItemSample['visibility'] = 'hidden'
 
 
 

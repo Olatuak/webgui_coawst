@@ -1,6 +1,8 @@
 "use strict";
 
 
+var drawingCount = 0
+
 const pad = function(num, digits)
 // Converts an integer number into a string with the specified digits, pading with zeros from the left if necessary
 {
@@ -9,7 +11,10 @@ const pad = function(num, digits)
 
 
 // Binary Search of the interval that contains x
-var binSearch = function(arr, x) {
+var binSearch = function(arr, x, memoL=-1) {
+
+    // Some memoization.
+    if (memoL>=0 && memoL<arr.length-2 && x<arr[memoL+1] && x>=arr[memoL]) return memoL;
 
     let L = 0
     let R = arr.length-1;
@@ -224,7 +229,7 @@ const Cmap = class
 
     colors(val)
     {
-        let idx = Math.round((val - this.cbar.min)/(this.cbar.max - this.cbar.min)*this.nLevels);
+        const idx = Math.round((val - this.cbar.min)/(this.cbar.max - this.cbar.min)*this.nLevels);
 
         return [this.R[idx], this.G[idx], this.B[idx]];
 
@@ -232,7 +237,7 @@ const Cmap = class
 
 }
 
-function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes, cmap, cbar, varThreshold)
+function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes, cmap, cbar, varThresholdMin, varThresholdMax)
 // Creates and returns a dynamic heatmap map layer (CCS) based on the datafiles.
 {
     const  [dimsTime, times, dimsLat, lat, dimsLon, lon] = loadGridData(fileName, 0, gridType, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes)
@@ -284,7 +289,8 @@ function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOf
         visible: true,
         cmap: cmap,
         cbar: cbar,
-        varThreshold: varThreshold,
+        varThresholdMin: varThresholdMin,
+        varThresholdMax: varThresholdMax,
     });
 
     return [heatmapLayer, times]
@@ -400,6 +406,10 @@ L.DynmapLayer = L.Layer.extend({
         this.dimsU    = options.data.dimsU;  // These two might not exist if it is a scalar var
         this.dimsV    = options.data.dimsV;
 
+        this.image = null
+        this.indicesCache = null
+        this.windowSizes = [0,0];
+
 
 
     },
@@ -435,7 +445,7 @@ L.DynmapLayer = L.Layer.extend({
 
         const p1 = L.latLng(M11 * (p.lat - O.lat) + M21 * (p.lng - O.lng), M12 * (p.lat - O.lat) + M22 * (p.lng - O.lng));
 
-        if (p1.lat >= 0 && p1.lng >= 0 && p1.lat <= 1 && p1.lng <= 1 && this.options.data.data != undefined) {
+        if (p1.lat >= 0 && p1.lng >= 0 && p1.lat <= 1 && p1.lng <= 1) {
 
             // transforms the point from the unit box to a rectangle of the proper size.
             p1.lat *= this.lat1d[ni - 1];
@@ -448,9 +458,11 @@ L.DynmapLayer = L.Layer.extend({
 
             const iLat = binSearch(this.lat1d, p1.lat);
             const iLon = binSearch(this.lon1d, p1.lng);
-            return this.options.data.data[Slat * iLat + Slon * iLon];
+            if (this.options.data.data != undefined)       return [this.options.data.data[Slat * iLat + Slon * iLon]];
+            else if (this.options.data.dataU != undefined) return [this.options.data.dataU[Slat * iLat + Slon * iLon], this.options.data.dataV[Slat * iLat + Slon * iLon]];
+            else return [1e36];
         }
-        else return NaN;
+        else return [1e36];
     },
 
     onDateChange: function(idxDate)
@@ -506,6 +518,7 @@ L.DynmapLayer = L.Layer.extend({
         const H = Math.round(yT - yB + 1);
         if (W<=0 || H<=0) return;
 
+        drawingCount++;
 
         const M11 = this.M11;
         const M12 = this.M12;
@@ -517,51 +530,99 @@ L.DynmapLayer = L.Layer.extend({
 
 
         const arr = new Uint8ClampedArray(4*W*H);
-        let image = new ImageData(arr, W, H);
+        if (this.image == null || this.image.width != W || this.image.height != H)
+        {
+            this.image = new ImageData(arr, W, H);
+        }
+        this.image.data.fill(0);
+
 
         const Slat = isT + (1 - isT)*nj;
         const Slon = isT*ni + (1 - isT);
 
+        let iLat = 0, iLon= 0;
+
+        const pTL = this._map.containerPointToLatLng(L.point(xL, yT))
+        const pBR = this._map.containerPointToLatLng(L.point(xR, yB))
+
         // Draws all the pixels one by one
-        if (dat != undefined) {
+        if (this.indicesCache == null || !pTL.equals(this.windowSizes[0]) || !pBR.equals(this.windowSizes[1]))
+        {
+            // First time something is plotted for an area, precomputes the data indices.
 
-            let idx = 0;
-            for (let j = yB; j <= yT; j++) {
-                for (let i = xL; i <= xR; i++) {
-                    const p = this._map.containerPointToLatLng(L.point(i, j));
+            this.windowSizes = [pTL, pBR];
+            this.indicesCache = new Array((xR-xL+1)*(yT-yB+1))
+            this.indicesCache.fill(-1);
 
-                    const p1 = L.latLng(M11 * (p.lat - O.lat) + M21 * (p.lng - O.lng), M12 * (p.lat - O.lat) + M22 * (p.lng - O.lng));
+            if (dat != undefined) {
 
+                let idx = 0;
+                for (let j = yB; j <= yT; j++) {
+                    for (let i = xL; i <= xR; i++) {
+                        const p = this._map.containerPointToLatLng(L.point(i, j));
 
-                    if (p1.lat >= 0 && p1.lng >= 0 && p1.lat <= 1 && p1.lng <= 1) {
-
-                        // transforms the point from the unit box to a rectangle of the proper size.
-                        p1.lat *= lat[ni - 1];
-                        p1.lng *= lon[nj - 1];
-
-                        const iLat = binSearch(lat, p1.lat);
-                        const iLon = binSearch(lon, p1.lng);
-
-                        const val = dat[Slat*iLat + Slon*iLon];
+                        const p1 = L.latLng(M11 * (p.lat - O.lat) + M21 * (p.lng - O.lng), M12 * (p.lat - O.lat) + M22 * (p.lng - O.lng));
 
 
-                        if (!isNaN(val) && val != 0 && val>-this.varThreshold && val<this.varThreshold) {
-                            const [R, G, B] = this.cmap.colors(val);
+                        if (p1.lat >= 0 && p1.lng >= 0 && p1.lat <= 1 && p1.lng <= 1) {
 
-                            image.data[idx    ] = R;
-                            image.data[idx + 1] = G;
-                            image.data[idx + 2] = B;
-                            image.data[idx + 3] = 255;
+                            // transforms the point from the unit box to a rectangle of the proper size.
+                            p1.lat *= lat[ni - 1];
+                            p1.lng *= lon[nj - 1];
+
+                            iLat = binSearch(lat, p1.lat, iLat);
+                            iLon = binSearch(lon, p1.lng, iLon);
+
+                            const val = dat[Slat * iLat + Slon * iLon];
+
+                            this.indicesCache[idx / 4] = Slat * iLat + Slon * iLon;
+                            if (!isNaN(val) && val != 0 && val > this.varThresholdMin && val < this.varThresholdMax) {
+                                const [R, G, B] = this.cmap.colors(val);
+
+                                this.image.data[idx] = R;
+                                this.image.data[idx + 1] = G;
+                                this.image.data[idx + 2] = B;
+                                this.image.data[idx + 3] = 255;
+                            }
                         }
-                    }
 
-                    idx += 4;
+                        idx += 4;
+                    }
                 }
+
+                g.putImageData(this.image, xL, yB);
             }
 
-            g.putImageData(image, xL, yB);
+        }
+        else
+        {
+            // Reuses previously calculated data
+            if (dat != undefined) {
+                let idx = 0;
+                for (let j = yB; j <= yT; j++) {
+                    for (let i = xL; i <= xR; i++) {
+
+                        const i = this.indicesCache[idx / 4];
+                        if (i > -1) {
+                            const val = dat[i];
+
+                            if (!isNaN(val) && val != 0 && val > this.varThresholdMin && val < this.varThresholdMax) {
+                                const [R, G, B] = this.cmap.colors(val);
+
+                                this.image.data[idx] = R;
+                                this.image.data[idx + 1] = G;
+                                this.image.data[idx + 2] = B;
+                                this.image.data[idx + 3] = 255;
+                            }
+                        }
 
 
+                        idx += 4;
+                    }
+
+                }
+                g.putImageData(this.image, xL, yB);
+            }
         }
 
         if (datU != undefined) {
@@ -584,12 +645,12 @@ L.DynmapLayer = L.Layer.extend({
                     p1.lat *= lat[ni - 1];
                     p1.lng *= lon[nj - 1];
 
-                    const iLat = binSearch(lat, p1.lat);
-                    const iLon = binSearch(lon, p1.lng);
+                    iLat = binSearch(lat, p1.lat, iLat);
+                    iLon = binSearch(lon, p1.lng, iLon);
 
                     // isT and isnT decide if the array is transposed or not.
-                    const u = datU[Slat*iLat + Slon*iLon];
-                    const v = datV[Slat*iLat + Slon*iLon];
+                    const u =  datU[Slat*iLat + Slon*iLon];
+                    const v = -datV[Slat*iLat + Slon*iLon];
                     const val = Math.sqrt(u*u + v*v);
 
 
@@ -641,7 +702,7 @@ L.DynmapLayer = L.Layer.extend({
         }
 
         // Draw rectangle
-        g.fillStyle = '#FF0000'
+        g.strokeStyle = '#00000030'
         g.beginPath();
         const aTL = this._map.latLngToContainerPoint(this.pTL);
         const aTR = this._map.latLngToContainerPoint(this.pTR);
@@ -655,12 +716,15 @@ L.DynmapLayer = L.Layer.extend({
         g.stroke();
 
 
-        // if (this._timer) clearTimeout(self._timer);
-        // this._timer = setTimeout((function  () {
-        //     this.onDateChange(this.idxDate+1)
-        //     this.draw();
+        drawingCount--;
+        // if (drawingCount==0) {
+        //     if (this._timer) clearTimeout(self._timer);
+        //     this._timer = setTimeout((function () {
+        //         this.onDateChange(this.idxDate + 1)
+        //         this.draw();
         //
-        // }).bind(this), 10); // showing velocity is delayed. JMG: why? (used to be 750)
+        //     }).bind(this), 10); // showing velocity is delayed. JMG: why? (used to be 750)
+        // }
 
     },
 
@@ -759,7 +823,9 @@ L.DynmapLayer = L.Layer.extend({
 
         // this.scale = 12;
         this.varScale = this.options.varScale;
-        this.varThreshold = this.options.varThreshold;
+        this.varThresholdMin = this.options.varThresholdMin;
+        this.varThresholdMax = this.options.varThresholdMax;
+        this.varThreshold    = this.options.varThreshold;
 
         this.g = this._container.getContext("2d");
 

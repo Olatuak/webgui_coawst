@@ -1,5 +1,6 @@
 from browser import document, window, timer
 import dateGizmo
+import colorBar
 from colorBar   import *
 import datetime
 # import velocityPythonAdaptor
@@ -32,6 +33,13 @@ def onError(event):
         layer._level.el.appendChild(fragment)
 
 
+def nextFrame():
+    if dateGizmo.isPlaying:
+        dateGizmo.nextDate()
+
+    timer.set_timeout(nextFrame, 200)
+
+
 class Maps:
 
     def onDateChange(self, idxDate):
@@ -51,15 +59,32 @@ class Maps:
 
     def peekValues(self, lat, lon):
 
+        # Clears the labels.
+        for colorBar in self.colorBars:
+            colorBar.getElementsByClassName('ColorbarValueText')[0].innerHTML = ''
+
         values = []
-        for mapLayer, layer in zip(reversed(self.listLayer), reversed(self.layers)):
+        for mapLayer, layer, colorBar in zip(reversed(self.listLayer), reversed(self.layers), reversed(self.colorBars)):
 
             if layer['visible']:
 
                 layerType =  layer['layertype']
                 serverType = layer['servertype']
                 if serverType == 'dap':
-                    values += [mapLayer.peekValue(lat, lon)]
+                    value = mapLayer.peekValue(lat, lon)
+#                     print(999,value)
+
+                    colorBarValueText = colorBar.getElementsByClassName('ColorbarValueText')[0]
+                    if len(value) == 1:
+                        if value[0]<1e30 and not (value[0] != value[0]):    # Checks for nan
+                            colorBarValueText.innerHTML = '%.2f' % value[0]
+
+                    elif len(value) == 2:
+                        if (value[0]<1e30) and (value[1]<1e30) and not (value[0] != value[0]):
+                            colorBarValueText.innerHTML = '%.2f,%.2f' % (value[0], value[1])
+
+
+
 
         return values
 
@@ -133,8 +158,9 @@ class Maps:
                     fileName = layer['server']['url']
                     JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
                     timeOffset = layer['server']['timeOffset']
-                    fileName = fileName.format(year = date.year, month = date.month, day = date.day-2)
+                    fileName = fileName.format(year = date.year, month = 6+0*date.month, day = date.day*0 + 21)
                     gridType = layer['gridtype'].split(',')
+
                     if len(gridType) == 1:
 
                         dynLayer, times = window.addNewDynHeatmapLayer(mapLayer, fileName,
@@ -142,7 +168,7 @@ class Maps:
                                                         layer['server']['time'],
                                                         (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
                                                         int(layer['server']['timeFloatBytes']),
-                                                        conf.colormaps[colorbar['style']], colorbar,  layer['varthreshold'])
+                                                        conf.colormaps[colorbar['style']], colorbar,  layer['varthresholdmin'], layer['varthresholdmax'])
                     elif len(gridType) == 2:
                         print(fileName)
                         dynLayer, times = window.addNewDynVectormapLayer(mapLayer, fileName,
@@ -150,11 +176,10 @@ class Maps:
                                                         layer['server']['time'],
                                                         (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
                                                         int(layer['server']['timeFloatBytes']),
-                                                        conf.colormaps[colorbar['style']], colorbar, layer['varscale'], layer['varthreshold'])
+                                                        conf.colormaps[colorbar['style']], colorbar, layer['varscale'], layer['varthresholdmax'])
                     else:
                         print('ERROR, too many layers')
                     dynLayer.addTo(self.map)
-                    print('DDDDDDDDDDDDDD>>', dynLayer.__dir__)
                     layer['dynlayer'] = dynLayer
                     self.listLayer += [dynLayer]
                     self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
@@ -239,7 +264,7 @@ class Maps:
                     else:
                         print('ERROR, invalid server ', serverType)
 
-#         timer.set_timeout(self.redrawLayers, 10)
+        timer.set_timeout(nextFrame, 100)
 
 
 

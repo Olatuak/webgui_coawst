@@ -42,11 +42,11 @@ def createNewColorBar(cmap, colorbar):
         if colorbar['name'] == cbar['colorbarname']:
             return cbar
 
-    # Clones the colorbar object, intially invisible
+    # Clones the colorbar object, initially invisible
     templateColorBar = document["colorBar"]
     svgColorBar = templateColorBar.clone(True)
     svgColorBar['id'] = 'colorBar%i' % idxColorBar
-    svgColorBar.style['visibility'] = 'hide'
+    svgColorBar.style['visibility'] = 'hidden'
     svgColorBar['colorbarname'] = colorbar['name']
     templateColorBar.parent.append(svgColorBar)
 
@@ -114,6 +114,21 @@ def newPlotlyCMapFromConfig(confColormap):
         strColors += [['%.8f' % stop,'rgb(%i,%i,%i)' % (round(color[0]*255), round(color[1]*255), round(color[2]*255))]]
 
     return strColors
+
+
+def showColorBarsValueBox(colorBars):
+#     Shows the boxes with values that is used to show the value under the pointer.
+    for colorBar in colorBars:
+        if colorBar.style['visibility'] == 'visible':
+            colorBar.getElementsByClassName('ColorbarValueText')[0].style['visibility'] = 'visible'
+            colorBar.getElementsByClassName('ColorbarValueRect')[0].style['visibility'] = 'visible'
+
+def hideColorBarsValueBox(colorBars):
+#     Shows the boxes with values that is used to show the value under the pointer.
+    for colorBar in colorBars:
+        colorBar.getElementsByClassName('ColorbarValueText')[0].style['visibility'] = 'hidden'
+        colorBar.getElementsByClassName('ColorbarValueRect')[0].style['visibility'] = 'hidden'
+
 
 
 

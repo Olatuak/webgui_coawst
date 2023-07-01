@@ -61,34 +61,9 @@ def onPointerMove(event):
     y = xy2.y
 
     if isPeeking:
-        values = mapLayers.peekValues(latlngPointer.lat, latlngPointer.lng)
+        mapLayers.peekValues(latlngPointer.lat, latlngPointer.lng)
 
-
-#         mapSize = map.getSize()
-#
-#         strBBox = map.getBounds().toBBoxString()
-#
-#         crs = 'CRS:84'
-#
-#
-#         server = conf.servers[0]
-#
-#         layerName = 'zeta'
-#         featureReqUrl = server['featureinforeq'].format(wmsURL=server['url'], layerName = layerName, crs=crs, strBBox=strBBox, mapSizeX=mapSize.x,
-#                                                         mapSizeY=mapSize.y, x=round(x), y=round(y), time=curDate.strftime('%Y-%m-%dT%H:%M:00.0Z'))
-#         fileFeatureInfo = open(featureReqUrl)
-#         txtFeatureInfo = fileFeatureInfo.read()
-#
-#         parser = window.DOMParser.new()
-#         tree = parser.parseFromString(txtFeatureInfo, "application/xml")
-#
-#         elemDimension = tree.getElementsByTagName('value')
-#         val = elemDimension[0].innerHTML
-
-        try:
-            document['textCoords2'].text = '%.3f, %.3f  =  %.3f' % (latlngPointer.lat, latlngPointer.lng, values[0])
-        except:
-            document['textCoords2'].text = '%.3f, %.3f' % (latlngPointer.lat, latlngPointer.lng)
+        document['textCoords2'].text = '%.3f, %.3f' % (latlngPointer.lat, latlngPointer.lng)
         document['rectCoords'].attributeStyleMap.set('opacity', 1)
 
 
@@ -102,6 +77,7 @@ def onPointerDown(event):
 
 
     isPeeking = False
+    hideColorBarsValueBox(mapLayers.colorBars)
 
     # Hides the rectangle with the label
     document['rectCoords'].attributeStyleMap.set('opacity', 0)
@@ -112,6 +88,7 @@ def onBtnPointClick(event):
     global isPeeking, map
 
     isPeeking = True
+    showColorBarsValueBox(mapLayers.colorBars)
 
     # Allows for events and changes the cursor to cross hair
     document['root'].style.cursor = 'crosshair'
@@ -127,7 +104,7 @@ mapLayers = Maps(dateFile, crs, conf, leaflet)
 
 
 # Creates the menu with the available layers
-setupLayersMenu(conf, mapLayers)
+# setupLayersMenu(conf, mapLayers)
 setupLayersMenu2(conf, mapLayers)
 
 

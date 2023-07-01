@@ -5,6 +5,8 @@ import javascript
 # import math
 
 # Global variables
+isPlaying = False
+
 xPointer = -1
 xGizmo = 0.0
 oldxPointerSVG = 0
@@ -109,12 +111,14 @@ def onGizmoDateDown(event):
     svgroot.style['pointer-events'] = 'all'
 
 def onGizmoPlay(event):
-    global selectedDateIdx
-    selectedDateIdx += 1
-    updateDateText()
-    updateGizmoPos(selectedDateIdx/(len(dates)-1))
-    if onDateChange is not None:
-        onDateChange(layer, selectedDateIdx)
+    global isPlaying
+    isPlaying = not isPlaying
+#     global selectedDateIdx
+#     selectedDateIdx += 1
+#     updateDateText()
+#     updateGizmoPos(selectedDateIdx/(len(dates)-1))
+#     if onDateChange is not None:
+#         onDateChange(layer, selectedDateIdx)
 
 
 def nextDate():

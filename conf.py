@@ -206,7 +206,6 @@ class Conf:
                              'servertype':  layer.getElementsByTagName('servertype'  )[0].innerHTML,
                              'layertype':   layer.getElementsByTagName('layertype'   )[0].innerHTML,
                              'gridtype':    layer.getElementsByTagName('gridtype'    )[0].innerHTML,
-                             'varthreshold':layer.getElementsByTagName('varthreshold')[0].innerHTML,
                              'varscale':    layer.getElementsByTagName('varscale'    )[0].innerHTML,
                              'longname':    layer.getElementsByTagName('longname'    )[0].innerHTML,
                              'shortname':   layer.getElementsByTagName('shortname'   )[0].innerHTML,
@@ -215,6 +214,17 @@ class Conf:
                              'visible':     layer.getElementsByTagName('visible'     )[0].innerHTML.lower() == 'true',
                              'transparent': layer.getElementsByTagName('transparent' )[0].innerHTML.lower() == 'true',
                              }
+
+                try:
+                    varthresholdmin = layer.getElementsByTagName('varthresholdmin')[0].innerHTML
+                    varthresholdmax = layer.getElementsByTagName('varthresholdmax')[0].innerHTML
+                    tempLayer['varthresholdmin'] = varthresholdmin
+                    tempLayer['varthresholdmax'] = varthresholdmax
+                except:
+                    varthreshold = layer.getElementsByTagName('varthreshold'   )[0].innerHTML
+                    tempLayer['varthresholdmin'] = '-'+varthreshold
+                    tempLayer['varthresholdmax'] =     varthreshold
+
 
                 # Updates the server with the actual server dictionary of that name.
                 servers = self.getServers(tempLayer['server'], tempLayer['servertype'])

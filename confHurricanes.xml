@@ -4,7 +4,7 @@
 
     <datefmt>%.4i-%.2i-%.2iT%.2i:%.2i</datefmt>
     <viewcenter>26.60, -82.0</viewcenter>
-    <viewzoom>9</viewzoom>
+    <viewzoom>5</viewzoom>
 
 
     <colormaps>
@@ -36,7 +36,7 @@
             <max>500</max>
             <abovemaxcol>extend</abovemaxcol>
             <belowmincol>extend</belowmincol>
-            <units></units>
+            <units>m</units>
             <style>boxfill/ferret</style>
         </colorbar>
 
@@ -47,7 +47,7 @@
             <max>1</max>
             <abovemaxcol>extend</abovemaxcol>
             <belowmincol>extend</belowmincol>
-            <units></units>
+            <units>m</units>
             <style>boxfill/ferret</style>
         </colorbar>
 
@@ -58,7 +58,7 @@
             <max>35</max>
             <abovemaxcol>extend</abovemaxcol>
             <belowmincol>extend</belowmincol>
-            <units></units>
+            <units>C</units>
             <style>boxfill/ferret</style>
         </colorbar>
 
@@ -164,13 +164,13 @@
 
     <opendapservers>
 
-        <server>
-            <name>atmosphericforcing</name>
-            <url>https://icoast.rc.ufl.edu/thredds/dodsC/coamps/{year:04d}{month:02d}{day:02d}00_forcing_regular.nc.dods</url>
-            <grid name="rho" floatType="float32">lat,lon</grid>
-            <!--            Use this exact format for dates  '%YYYY-%mm-%ddT%HH:%MM:%SS.000Z' -->
-            <time offset="1858-11-17T00:00:00.000Z" units="days" floatType="float32">ocean_time</time>
-        </server>
+<!--        <server>-->
+<!--            <name>atmosphericforcing</name>-->
+<!--            <url>https://icoast.rc.ufl.edu/thredds/dodsC/coamps/{year:04d}{month:02d}{day:02d}00_forcing_regular.nc.dods</url>-->
+<!--            <grid name="rho" floatType="float32">lat,lon</grid>-->
+<!--            &lt;!&ndash;            Use this exact format for dates  '%YYYY-%mm-%ddT%HH:%MM:%SS.000Z' &ndash;&gt;-->
+<!--            <time offset="1858-11-17T00:00:00.000Z" units="days" floatType="float32">ocean_time</time>-->
+<!--        </server>-->
 
 
         <server>
@@ -182,7 +182,7 @@
         </server>
 
         <server>
-            <name>L1</name>
+            <name>L1 GOMSAB</name>
             <url>https://icoast.rc.ufl.edu/thredds/dodsC/Noppcoawst/L1_Forecast/qck/L1_GOMSAB_qck_{year:04d}{month:02d}{day:02d}.nc.dods</url>
             <grid name="rho" floatType="float64">lat_rho,lon_rho</grid>
             <!--            Use this exact format for dates  '%YYYY-%mm-%ddT%HH:%MM:%SS.000Z' -->
@@ -258,7 +258,7 @@
 
 
         <layer>
-            <server>L1,L0</server>
+            <server>L1 GOMSAB,L0</server>
             <servertype>dap</servertype>
             <layertype>dynmap</layertype>
             <gridtype>rho,rho</gridtype>-->
@@ -274,12 +274,13 @@
         </layer>
 
         <layer>
-            <server>L1,L0</server>
+            <server>L1 GOMSAB,L0</server>
             <servertype>dap</servertype>
             <layertype>dynmap</layertype>
             <gridtype>rho</gridtype>
             <name>zeta</name>
-            <varthreshold>1110.0</varthreshold>
+            <varthresholdmin>-1.89</varthresholdmin>
+            <varthresholdmax>100</varthresholdmax>
             <varscale>1.0</varscale>
             <longname>Water level</longname>
             <shortname>Water lvl.</shortname>
@@ -318,7 +319,7 @@
 <!--        </layer>-->
 
         <layer>
-            <server>L1,L0</server>
+            <server>L1 GOMSAB,L0</server>
             <servertype>dap</servertype>
             <layertype>dynmap</layertype>
             <gridtype>rho</gridtype>
@@ -326,7 +327,7 @@
             <varthreshold>1110.0</varthreshold>
             <varscale>1.0</varscale>
             <longname>Surface temperature</longname>
-            <shortname>Srfc. T</shortname>
+            <shortname>SST</shortname>
             <units>°C</units>
             <colorbar>temperature</colorbar>
             <visible>True</visible>
@@ -335,7 +336,7 @@
 
 
         <layer>
-            <server>L1,L0</server>
+            <server>L1 GOMSAB,L0</server>
             <servertype>dap</servertype>
             <layertype>dynmap</layertype>
             <gridtype>rho</gridtype>
@@ -343,7 +344,7 @@
             <varthreshold>1110.0</varthreshold>
             <varscale>1.0</varscale>
             <longname>Surface salinity</longname>
-            <shortname>Srfc. S</shortname>
+            <shortname>SSS</shortname>
             <units></units>
             <colorbar>salinity</colorbar>
             <visible>False</visible>

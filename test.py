@@ -29,13 +29,9 @@ def onDateChange(layer, date):
     newDate = date.strftime('%Y-%m-%dT%H:00:00.0Z')
     # newDate = date.strftime('%Y-%m-%dT')  #xxxxxx
 
-    print('>>>>>', newDate)
     layer.options  ['time'] = newDate
     layer.wmsParams['time'] = newDate
-    # sapoWLLayer.setParams('time', '2020-09-23')
-    # layer._map.invalidateSize()
     layer.redraw()
-    # print(layer.__dict__.keys())
 
 
 def onPointerMove(event):

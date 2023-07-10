@@ -61,32 +61,38 @@ class Maps:
 
         # Clears the labels.
         for colorBar in self.colorBars:
-            colorBar.getElementsByClassName('ColorbarValueText')[0].innerHTML = ''
+            try:
+                print(1234)
+                colorBar.getElementsByClassName('ColorbarValueText')[0].innerHTML = ''
+            except:
+                pass
 
-        values = []
         for mapLayer, layer, colorBar in zip(reversed(self.listLayer), reversed(self.layers), reversed(self.colorBars)):
 
-            if layer['visible']:
+            try:
+                if layer['visible']:
+                    print(123456)
 
-                layerType =  layer['layertype']
-                serverType = layer['servertype']
-                if serverType == 'dap':
-                    value = mapLayer.peekValue(lat, lon)
-#                     print(999,value)
+                    layerType =  layer['layertype']
+                    serverType = layer['servertype']
+                    if serverType == 'dap':
+                        value = mapLayer.peekValue(lat, lon)
+                        print(999,value)
 
-                    colorBarValueText = colorBar.getElementsByClassName('ColorbarValueText')[0]
-                    if len(value) == 1:
-                        if value[0]<1e30 and not (value[0] != value[0]):    # Checks for nan
-                            colorBarValueText.innerHTML = '%.2f' % value[0]
+                        colorBarValueText = colorBar.getElementsByClassName('ColorbarValueText')[0]
+                        if len(value) == 1:
+                            if value[0]<1e30 and not (value[0] != value[0]):    # Checks for nan
+                                colorBarValueText.innerHTML = '%.2f' % value[0]
 
-                    elif len(value) == 2:
-                        if (value[0]<1e30) and (value[1]<1e30) and not (value[0] != value[0]):
-                            colorBarValueText.innerHTML = '%.2f,%.2f' % (value[0], value[1])
+                        elif len(value) == 2:
+                            if (value[0]<1e30) and (value[1]<1e30) and not (value[0] != value[0]):
+                                colorBarValueText.innerHTML = '%.2f,%.2f' % (value[0], value[1])
+            except:
+                pass
 
 
 
 
-        return values
 
 
 
@@ -160,7 +166,7 @@ class Maps:
                     timeOffset = layer['server']['timeOffset']
                     fileName = fileName.format(year = date.year, month = 6+0*date.month, day = date.day*0 + 21)
                     gridType = layer['gridtype'].split(',')
-
+                    print(36666)
                     if len(gridType) == 1:
 
                         dynLayer, times = window.addNewDynHeatmapLayer(mapLayer, fileName,
@@ -181,13 +187,16 @@ class Maps:
                         print('ERROR, too many layers')
                     dynLayer.addTo(self.map)
                     layer['dynlayer'] = dynLayer
+                    print(3333,dynLayer)
                     self.listLayer += [dynLayer]
                     self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
                     self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
 
                     self.dates = times
                 except:
-                    pass
+                    self.listLayer += [None]
+                    self.colorMaps += [None]
+                    self.colorBars += [None]
 
 
             else:
@@ -292,49 +301,51 @@ class Maps:
         # Reversed because the first layer in the menu is the one on top
         for mapLayer, layer, colorBar in zip(reversed(self.listLayer), reversed(self.layers), reversed(self.colorBars)):
 
-            if layer['visible']:
+            try:
+                if layer['visible']:
 
-                layerType =  layer['layertype']
-                serverType = layer['servertype']
-                if layerType == 'colormap':
-                    if serverType == 'wms':
-                        mapLayer.addTo(self.map)
+                    layerType =  layer['layertype']
+                    serverType = layer['servertype']
+                    if layerType == 'colormap':
+                        if serverType == 'wms':
+                            mapLayer.addTo(self.map)
 
-                    elif serverType == 'dap':
-                        # try:
-                        #     window.addNewHeatMap(mapLayer)
-                        #     window.updateHeatmap('baseMapId', mapLayer)
-                        # except:
-                        #     pass
-                        mapLayer.addTo(self.map)
+                        elif serverType == 'dap':
+                            # try:
+                            #     window.addNewHeatMap(mapLayer)
+                            #     window.updateHeatmap('baseMapId', mapLayer)
+                            # except:
+                            #     pass
+                            mapLayer.addTo(self.map)
 
-                    else:
-                        print('ERROR, invalid server ', serverType)
+                        else:
+                            print('ERROR, invalid server ', serverType)
 
-                elif layerType == 'velocitymap':
-                    if serverType == 'dap':
-                        mapLayer.addTo(self.map)
+                    elif layerType == 'velocitymap':
+                        if serverType == 'dap':
+                            mapLayer.addTo(self.map)
 
-                elif layerType == 'dynmap':
-                    if serverType == 'dap':
-                        mapLayer.addTo(self.map)
+                    elif layerType == 'dynmap':
+                        if serverType == 'dap':
+                            mapLayer.addTo(self.map)
 
-                    else:
-                        print('ERROR, invalid server ', serverType)
-
-
-
-
-                if self.mainLayer is None:
-                    self.mainLayer = mapLayer
+                        else:
+                            print('ERROR, invalid server ', serverType)
 
 
-                if colorBar is not None:
-                    try:
-                        addColorBarToMap(colorBar)
-                    except:
-                        pass
 
+
+                    if self.mainLayer is None:
+                        self.mainLayer = mapLayer
+
+
+                    if colorBar is not None:
+                        try:
+                            addColorBarToMap(colorBar)
+                        except:
+                            pass
+            except:
+                pass
         self.redrawLayers()
 
 

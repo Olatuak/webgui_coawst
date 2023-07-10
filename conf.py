@@ -42,10 +42,23 @@ class Conf:
             self.colormaps = {}
 
             for colormap in colormaps:
-                tempColormap = {'name':   colormap.getElementsByTagName('name')[0].innerHTML,
-                                'colors': eval(colormap.getElementsByTagName('colors')[0].innerHTML),
-                                'stops':  eval(colormap.getElementsByTagName('stops')[0].innerHTML),
-                               }
+                try:
+                    print(7654)
+                    tempColormap = {'name':   colormap.getElementsByTagName('name')[0].innerHTML,
+                                    'colors': eval(colormap.getElementsByTagName('colors')[0].innerHTML),
+                                    'stops':  eval(colormap.getElementsByTagName('stops')[0].innerHTML),
+                                   }
+                except:
+                    colors=eval(colormap.getElementsByTagName('colors')[0].innerHTML)
+
+                    stops = []
+                    for i in range(len(colors)):
+                        stops += [i/len(colors)]
+                    tempColormap = {'name':   colormap.getElementsByTagName('name')[0].innerHTML,
+                                    'colors': eval(colormap.getElementsByTagName('colors')[0].innerHTML),
+                                    'stops':  stops,
+                                   }
+
                 name = colormap.getElementsByTagName('name')[0].innerHTML
                 self.colormaps[name] = tempColormap
 
@@ -242,7 +255,7 @@ class Conf:
                 # originally each layer had on server.
                 for server in servers:
                     tempLayer['server'] = server
-                    print('PPPPP', server)
+#                     print('PPPPP', server)
                     self.layers += [tempLayer.copy()]
 
 
@@ -253,11 +266,7 @@ class Conf:
     def getLayer(self, server, varName):
         # Gets a layer based on the server it uses and the var name. If it doesn't find it, returns None.
         for layer in self.layers:
-#             print('iiiiiii  ', layer['name'] , varName)
-#             print(layer["server"]['name'] == server['name'])
-#             print('ggg', layer["server"]['name'] , server['name'])
             if (layer['name'] == varName) and (layer["server"]['name'] == server['name']):
-                print('iiiiiii  ', layer)
                 return layer
         return None
 

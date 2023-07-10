@@ -94,7 +94,13 @@ def newSVGCMapFromConfig(confColormap):
 # Creates a colormap for the SVG
 
     colors = confColormap['colors']
-    stops  = confColormap['stops']
+    try:
+        stops  = confColormap['stops']
+    except:
+        stops = []
+        for i in range(len(colors)):
+            stops += [i/len(colors)]
+
 
     strColors = []
     for i, color in enumerate(colors):
@@ -119,15 +125,21 @@ def newPlotlyCMapFromConfig(confColormap):
 def showColorBarsValueBox(colorBars):
 #     Shows the boxes with values that is used to show the value under the pointer.
     for colorBar in colorBars:
-        if colorBar.style['visibility'] == 'visible':
-            colorBar.getElementsByClassName('ColorbarValueText')[0].style['visibility'] = 'visible'
-            colorBar.getElementsByClassName('ColorbarValueRect')[0].style['visibility'] = 'visible'
+        try:
+            if colorBar.style['visibility'] == 'visible':
+                colorBar.getElementsByClassName('ColorbarValueText')[0].style['visibility'] = 'visible'
+                colorBar.getElementsByClassName('ColorbarValueRect')[0].style['visibility'] = 'visible'
+        except:
+            pass
 
 def hideColorBarsValueBox(colorBars):
 #     Shows the boxes with values that is used to show the value under the pointer.
-    for colorBar in colorBars:
-        colorBar.getElementsByClassName('ColorbarValueText')[0].style['visibility'] = 'hidden'
-        colorBar.getElementsByClassName('ColorbarValueRect')[0].style['visibility'] = 'hidden'
+    try:
+        for colorBar in colorBars:
+            colorBar.getElementsByClassName('ColorbarValueText')[0].style['visibility'] = 'hidden'
+            colorBar.getElementsByClassName('ColorbarValueRect')[0].style['visibility'] = 'hidden'
+    except:
+        pass
 
 
 

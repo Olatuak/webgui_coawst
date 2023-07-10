@@ -113,6 +113,15 @@ def onGizmoDateDown(event):
 def onGizmoPlay(event):
     global isPlaying
     isPlaying = not isPlaying
+
+    if isPlaying:
+        print(4444, document['iconPlay' ].style)
+        print(555,document['iconPlay' ].style['fill-opacity'])
+        document['iconPlay' ].style['fill-opacity'] = 0.0
+        document['iconPause'].style['fill-opacity'] = 1.0
+    else:
+        document['iconPlay' ].style['fill-opacity'] = 1.0
+        document['iconPause'].style['fill-opacity'] = 0.0
 #     global selectedDateIdx
 #     selectedDateIdx += 1
 #     updateDateText()
@@ -124,6 +133,8 @@ def onGizmoPlay(event):
 def nextDate():
     global selectedDateIdx
     selectedDateIdx += 1
+    if (selectedDateIdx>len(dates)):
+        selectedDateIdx = 0
     updateDateText()
     updateGizmoPos(selectedDateIdx/(len(dates)-1))
     if onDateChange is not None:

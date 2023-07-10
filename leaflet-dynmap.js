@@ -187,8 +187,14 @@ let loadVarData = function loadVarData(fileName, idxDate, varName, dims) {
     let data = Array(1);
     let dimsData = 0;
 
-    const fullFileName = fileName + '?' + varName + '%5B' + (idxDate + 1) + '%5D%5B0:1:' + (dims[1] -1) + '%5D%5B0:1:' + (dims[0] -1) + '%5D';
-    [dimsData, data] = window.loadBinaryDODSFloat32Cached(fullFileName);
+    try
+    {
+        const fullFileName = fileName + '?' + varName + '%5B' + (idxDate + 1) + '%5D%5B0:1:' + (dims[1] -1) + '%5D%5B0:1:' + (dims[0] -1) + '%5D';
+        [dimsData, data] = window.loadBinaryDODSFloat32Cached(fullFileName);
+    }
+    catch(err) {
+        [dimsData, data] = [null, null]
+    }
 
     return [dimsData, data];
 }
@@ -468,17 +474,26 @@ L.DynmapLayer = L.Layer.extend({
     onDateChange: function(idxDate)
     {
         this.idxDate = idxDate
-        if (typeof this.varName === 'string') {
-            let [dimsData, data] = loadVarData(this.fileName, idxDate, this.varName, this.dims);
-
-            this.options.data.data = data.slice(0, this.ni*this.nj);
-        } else
+        try
         {
-            let [dimsDataU, dataU] = loadVarData(this.fileName, idxDate, this.varName[0], this.dims);
-            let [dimsDataV, dataV] = loadVarData(this.fileName, idxDate, this.varName[1], this.dims);
+            if (typeof this.varName === 'string') {
+                let [dimsData, data] = loadVarData(this.fileName, idxDate, this.varName, this.dims);
 
-            this.options.data.dataU = dataU.slice(0, dimsDataU.sizes[1]*dimsDataU.sizes[2]);
-            this.options.data.dataV = dataV.slice(0, dimsDataV.sizes[1]*dimsDataV.sizes[2]);
+                this.options.data.data = data.slice(0, this.ni*this.nj);
+            } else
+            {
+                let [dimsDataU, dataU] = loadVarData(this.fileName, idxDate, this.varName[0], this.dims);
+                let [dimsDataV, dataV] = loadVarData(this.fileName, idxDate, this.varName[1], this.dims);
+
+                this.options.data.dataU = dataU.slice(0, dimsDataU.sizes[1]*dimsDataU.sizes[2]);
+                this.options.data.dataV = dataV.slice(0, dimsDataV.sizes[1]*dimsDataV.sizes[2]);
+            }
+        }
+        catch (err)
+        {
+            this.options.data.data  = undefined;
+            this.options.data.dataU = undefined;
+            this.options.data.dataV = undefined;
         }
 
 
@@ -633,8 +648,11 @@ L.DynmapLayer = L.Layer.extend({
             const scale = this.varScale;
 
 
-            for (let j = yB; j <= yT; j += arrowGridYSize) {
-                for (let i = xL; i <= xR; i += arrowGridXSize) {
+
+            const i0 = (TL.x - xL) % arrowGridXSize;
+            const j0 = (BR.y - yB) % arrowGridYSize;
+            for (let j = yB + j0; j <= yT; j += arrowGridYSize) {
+                for (let i = xL + i0; i <= xR; i += arrowGridXSize) {
                     const p = this._map.containerPointToLatLng(L.point(i, j));
 
                     const p1 = L.latLng(M11 * (p.lat - O.lat) + M21 * (p.lng - O.lng), M12 * (p.lat - O.lat) + M22 * (p.lng - O.lng));

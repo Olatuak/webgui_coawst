@@ -1,171 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-        id="root"
-        version="1.1"
-        viewBox="0 0 610 439"
-        height="800px"
-        width="1000px"
-        style="pointer-events:none"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:svg="http://www.w3.org/2000/svg"
-        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-        xmlns:cc="http://creativecommons.org/ns#"
-        xmlns:dc="http://purl.org/dc/elements/1.1/">
+   id="root"
+   version="1.1"
+   viewBox="0 0 610 439"
+   height="800px"
+   width="1000px"
+   style="pointer-events:none"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <metadata
-          id="metadata3795">
+     id="metadata3795">
     <rdf:RDF>
       <cc:Work
-              rdf:about="">
+         rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type
-                rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <defs
-          id="defs33">
+     id="defs33">
     <linearGradient
-            gradientTransform="translate(-375.50172,-368.20878)"
-            id="cmapGrad"
-            gradientUnits="userSpaceOnUse"
-            y2="367.66486"
-            x2="590.35651"
-            y1="367.66486"
-            x1="490.68201">
+       gradientTransform="translate(-375.50172,-368.20878)"
+       id="cmapGrad"
+       gradientUnits="userSpaceOnUse"
+       y2="367.66486"
+       x2="590.35651"
+       y1="367.66486"
+       x1="490.68201">
       <stop
-              id="stop5678"
-              offset="0"
-              style="stop-color:#f0001a;stop-opacity:0.91489273;" />
+         id="stop5678"
+         offset="0"
+         style="stop-color:#f0001a;stop-opacity:0.91489273;" />
       <stop
-              id="stop5691"
-              offset="0.48991847"
-              style="stop-color:#ffffff;stop-opacity:0.95294118;" />
+         id="stop5691"
+         offset="0.48991847"
+         style="stop-color:#ffffff;stop-opacity:0.95294118;" />
       <stop
-              id="stop5680"
-              offset="1"
-              style="stop-color:#3370d7;stop-opacity:1;" />
+         id="stop5680"
+         offset="1"
+         style="stop-color:#3370d7;stop-opacity:1;" />
     </linearGradient>
     <filter
-            height="1.640227"
-            width="1.0414588"
-            y="-0.32011349"
-            x="-0.020729406"
-            id="filter2251"
-            style="color-interpolation-filters:sRGB;">
+       height="1.640227"
+       width="1.0414588"
+       y="-0.32011349"
+       x="-0.020729406"
+       id="filter2251"
+       style="color-interpolation-filters:sRGB;">
       <feFlood
-              id="feFlood2241"
-              result="flood"
-              flood-color="rgb(36,49,189)"
-              flood-opacity="0.67451" />
+         id="feFlood2241"
+         result="flood"
+         flood-color="rgb(36,49,189)"
+         flood-opacity="0.67451" />
       <feComposite
-              id="feComposite2243"
-              result="composite1"
-              operator="in"
-              in2="SourceGraphic"
-              in="flood" />
+         id="feComposite2243"
+         result="composite1"
+         operator="in"
+         in2="SourceGraphic"
+         in="flood" />
       <feGaussianBlur
-              id="feGaussianBlur2245"
-              result="blur"
-              stdDeviation="2"
-              in="composite1" />
+         id="feGaussianBlur2245"
+         result="blur"
+         stdDeviation="2"
+         in="composite1" />
       <feOffset
-              id="feOffset2247"
-              result="offset"
-              dy="1.38778e-16"
-              dx="1.38778e-16" />
+         id="feOffset2247"
+         result="offset"
+         dy="1.38778e-16"
+         dx="1.38778e-16" />
       <feComposite
-              id="feComposite2249"
-              result="composite2"
-              operator="over"
-              in2="offset"
-              in="SourceGraphic" />
+         id="feComposite2249"
+         result="composite2"
+         operator="over"
+         in2="offset"
+         in="SourceGraphic" />
     </filter>
   </defs>
   <g
-          style="stroke:none"
-          transform="translate(0,61)"
-          id="layer1">
-    <circle
-            r="8.1020546"
-            onmouseover=""
-            cy="378.56848"
-            cx="22.85927"
-            id="play2"
-            style="pointer-events:all;stroke-width:0.365001;stroke:none;fill-rule:evenodd;fill:#ffeeaa"
-            class="play2" />
+     style="stroke:none"
+     transform="translate(0,61)"
+     id="layer1">
     <path
-            onmouseover=""
-            d="m 32.756415,211.60548 -8.979319,5.18422 v -10.36843 z"
-            id="path19"
-            style="fill-rule:evenodd;stroke:none;stroke-width:0.365001;stop-color:#000000;fill:#c83737"
-            transform="matrix(0.65068539,0,0,0.65068539,5.479179,240.84813)" />
+       id="rect354"
+       style="opacity:0.496933;fill:#2b0000;fill-rule:evenodd;stroke-width:2.28559"
+       class="play2"
+       d="M 22.859512 369.23355 A 11.162857 11.162857 0 0 0 11.696035 380.39584 A 11.162857 11.162857 0 0 0 22.859512 391.55932 A 11.162857 11.162857 0 0 0 31.817695 387.02959 L 559.39502 387.02959 C 562.55482 387.02959 565.09828 384.30316 565.09828 380.91768 L 565.09828 380.13492 C 565.09828 376.74943 562.55482 374.0242 559.39502 374.0242 L 32.022617 374.0242 A 11.162857 11.162857 0 0 0 22.859512 369.23355 z " />
+    <circle
+       r="8.1020546"
+       onmouseover=""
+       cy="380.3963"
+       cx="22.85927"
+       id="play2"
+       style="fill:#ffeeaa;fill-rule:evenodd;stroke:none;stroke-width:0.365001"
+       class="play2" />
+    <path
+       onmouseover=""
+       d="m 26.7933,380.36455 -5.842712,3.3733 v -6.74659 z"
+       id="iconPlay"
+       style="fill:#c83737;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.237501;stop-color:#000000" />
     <rect
-            ry="0"
-            rx="0"
-            y="378.03143"
-            x="46.811066"
-            height="1.4608775"
-            width="513.13055"
-            id="rectDateGizmo"
-            style="fill:#ffeeaa;fill-rule:evenodd;stroke:none;stroke-width:0.74270439;fill-opacity:1"
-            class="play2" />
+       ry="0"
+       rx="0"
+       y="378.03143"
+       x="46.811066"
+       height="1.4608775"
+       width="513.13055"
+       id="rectDateGizmo"
+       style="fill:#ffeeaa;fill-rule:evenodd;stroke:none;stroke-width:0.74270439;fill-opacity:1"
+       class="play2" />
     <g
-            style="pointer-events:all;stroke:none"
-            id="gizmoDateHandle"
-            x="110">
+       style="pointer-events:all;stroke:none"
+       id="gizmoDateHandle"
+       x="110">
       <path
-              onmouseover=""
-              d="m 22.910302,359.9433 h 49.410454 c 2.39527,0 4.32359,1.95086 4.32359,4.37412 0,2.42326 -1.92832,4.37412 -4.32359,4.37412 H 49.345878 l -1.670273,9.15776 -1.714438,-9.15776 H 22.910302 c -2.39527,0 -4.323591,-1.95086 -4.323591,-4.37412 0,-2.42326 1.928321,-4.37412 4.323591,-4.37412 z"
-              style="fill:#ffeeaa;fill-rule:evenodd;stroke:none;stroke-width:0.365001;image-rendering:auto;stop-color:#000000;fill-opacity:1"
-              id="gizmoDateBubble"
-              class="gizmo" />
+         onmouseover=""
+         d="m 22.910302,359.9433 h 49.410454 c 2.39527,0 4.32359,1.95086 4.32359,4.37412 0,2.42326 -1.92832,4.37412 -4.32359,4.37412 H 49.345878 l -1.670273,9.15776 -1.714438,-9.15776 H 22.910302 c -2.39527,0 -4.323591,-1.95086 -4.323591,-4.37412 0,-2.42326 1.928321,-4.37412 4.323591,-4.37412 z"
+         style="fill:#ffeeaa;fill-rule:evenodd;stroke:none;stroke-width:0.365001;image-rendering:auto;stop-color:#000000;fill-opacity:1"
+         id="gizmoDateBubble"
+         class="gizmo" />
       <text
-              id="gizmoDateText2"
-              user-select="none"
-              y="366.32776"
-              x="47.92844"
-              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.50667px;line-height:1.25;letter-spacing:0px;word-spacing:0px;fill:#554400;fill-opacity:1;stroke:none;stroke-width:0.234006"
-              xml:space="preserve"
-              class="svgtxt"><tspan
+         id="gizmoDateText2"
+         user-select="none"
+         y="366.32776"
+         x="47.92844"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.50667px;line-height:1.25;letter-spacing:0px;word-spacing:0px;fill:#554400;fill-opacity:1;stroke:none;stroke-width:0.234006"
+         xml:space="preserve"
+         class="svgtxt"><tspan
            y="366.32776"
            x="47.92844"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.50667px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;fill:#554400;fill-opacity:1;stroke:none;stroke-width:0.234006"
            id="gizmoDateText">---</tspan></text>
     </g>
+    <path
+       id="playPause"
+       style="fill:#c83737;fill-opacity:0;fill-rule:evenodd;stroke:none;stroke-width:0.149999"
+       class="play2"
+       d="M -375.54324 19.855977 C -375.54324 19.082033 -376.16682 18.459648 -376.94076 18.459648 L -383.31955 18.459648 C -384.09349 18.459648 -384.71707 19.082033 -384.71707 19.855977 L -384.71707 20.395684 C -384.71707 21.169627 -384.09349 21.793203 -383.31955 21.793203 L -376.94076 21.793203 C -376.16682 21.793203 -375.54324 21.169627 -375.54324 20.395684 L -375.54324 19.855977 z M -375.54324 24.735977 C -375.54324 23.962033 -376.16682 23.339648 -376.94076 23.339648 L -383.31955 23.339648 C -384.09349 23.339648 -384.71707 23.962033 -384.71707 24.735977 L -384.71707 25.275684 C -384.71707 26.049627 -384.09349 26.673203 -383.31955 26.673203 L -376.94076 26.673203 C -376.16682 26.673203 -375.54324 26.049627 -375.54324 25.275684 L -375.54324 24.735977 z "
+       transform="rotate(-90)" />
   </g>
   <g
-          visibility="hidden"
-          id="DepthControl">
+     visibility="hidden"
+     id="DepthControl">
     <rect
-            transform="rotate(90)"
-            ry="0"
-            rx="0"
-            y="-589.73187"
-            x="89.827507"
-            height="0.88159215"
-            width="116.1299"
-            id="rectDepthGizmo"
-            style="fill:#554400;fill-rule:evenodd;stroke:#554400;stroke-width:0.26595;stop-color:#000000"
-            class="play2" />
+       transform="rotate(90)"
+       ry="0"
+       rx="0"
+       y="-589.73187"
+       x="89.827507"
+       height="0.88159215"
+       width="116.1299"
+       id="rectDepthGizmo"
+       style="fill:#554400;fill-rule:evenodd;stroke:#554400;stroke-width:0.26595;stop-color:#000000"
+       class="play2" />
     <rect
-            y="204.7708"
-            x="589.21533"
-            height="1.3081919"
-            width="2.9019623"
-            id="rect1755"
-            style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000" />
+       y="204.7708"
+       x="589.21533"
+       height="1.3081919"
+       width="2.9019623"
+       id="rect1755"
+       style="opacity:1;fill:#554400;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.940876;stop-color:#000000" />
     <g
-            id="gizmoDepthHandle">
+       id="gizmoDepthHandle">
       <path
-              d="m 546.32994,84.470691 h 30.65138 c 1.92256,0 3.47033,1.470942 3.47033,3.298075 l 8.90745,1.538564 -8.90745,1.505089 c 0,1.827134 -1.54777,3.298075 -3.47033,3.298075 h -30.65138 c -1.92256,0 -3.47033,-1.470941 -3.47033,-3.298075 v -3.043653 c 0,-1.827133 1.54777,-3.298075 3.47033,-3.298075 z"
-              style="pointer-events:all;stop-color:#000000;stroke-width:0.689306;stroke:none;fill-rule:evenodd;fill:#ffcc00;opacity:1"
-              class="gizmo"
-              id="gizmoDepthBubble" />
+         d="m 546.32994,84.470691 h 30.65138 c 1.92256,0 3.47033,1.470942 3.47033,3.298075 l 8.90745,1.538564 -8.90745,1.505089 c 0,1.827134 -1.54777,3.298075 -3.47033,3.298075 h -30.65138 c -1.92256,0 -3.47033,-1.470941 -3.47033,-3.298075 v -3.043653 c 0,-1.827133 1.54777,-3.298075 3.47033,-3.298075 z"
+         style="pointer-events:all;stop-color:#000000;stroke-width:0.689306;stroke:none;fill-rule:evenodd;fill:#ffcc00;opacity:1"
+         class="gizmo"
+         id="gizmoDepthBubble" />
       <text
-              id="gizmoDepthText"
-              y="91.544289"
-              x="573.72479"
-              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.43312px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.482484"
-              xml:space="preserve"><tspan
+         id="gizmoDepthText"
+         y="91.544289"
+         x="573.72479"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.43312px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.482484"
+         xml:space="preserve"><tspan
            y="91.544289"
            x="561.85431"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.43312px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';text-align:center;text-anchor:middle;stroke-width:0.482484"
@@ -173,204 +184,203 @@
     </g>
   </g>
   <rect
-          ry="4.1256037"
-          y="-5.5980129"
-          x="278.60779"
-          height="9.510129"
-          width="128.71243"
-          id="rect3797"
-          style="fill:#aad400;stroke:none;stroke-width:0.61" />
+     ry="4.1256037"
+     y="-5.5980129"
+     x="278.60779"
+     height="9.510129"
+     width="128.71243"
+     id="rect3797"
+     style="fill:#aad400;stroke:none;stroke-width:0.61" />
   <text
-          id="textDate"
-          y="1.6582582"
-          x="282.46436"
-          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.959px;line-height:1.25;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#222b00;fill-opacity:1;stroke:none;stroke-width:0.331625;-inkscape-font-specification:'sans-serif Bold';font-family:sans-serif"
-          xml:space="preserve"><tspan
+     id="textDate"
+     y="1.6582582"
+     x="282.46436"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.959px;line-height:1.25;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#222b00;fill-opacity:1;stroke:none;stroke-width:0.331625;-inkscape-font-specification:'sans-serif Bold';font-family:sans-serif"
+     xml:space="preserve"><tspan
        y="1.6582582"
        x="341.93777"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#222b00;stroke-width:0.331625"
        id="textDate2">       </tspan></text>
   <rect
-          y="440.50906"
-          x="46.813175"
-          height="3.8702052"
-          width="1.2513598"
-          class="dateTick"
-          id="dateTick"
-          style="opacity:0.992256;fill:#ffcc00;fill-opacity:0.556271;fill-rule:evenodd;stroke:none;stroke-width:9.11437;stop-color:#000000" />
+     y="440.50906"
+     x="46.813175"
+     height="3.8702052"
+     width="1.2513598"
+     class="dateTick"
+     id="dateTick"
+     style="opacity:0.992256;fill:#ffeeaa;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:9.11437;stop-color:#000000" />
   <rect
-          ry="4.1256037"
-          y="-5.1944618"
-          x="466.48795"
-          height="9.510129"
-          width="128.71243"
-          id="rectCoords"
-          style="fill:#e3dbdb;stroke:none;stroke-width:0.61" />
+     ry="4.1256037"
+     y="-5.1944618"
+     x="466.48795"
+     height="9.510129"
+     width="128.71243"
+     id="rectCoords"
+     style="fill:#e3dbdb;stroke:none;stroke-width:0.61" />
   <text
-          id="textCoords"
-          y="2.0617959"
-          x="470.34454"
-          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.959px;line-height:1.25;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#222b00;fill-opacity:1;stroke:none;stroke-width:0.331625;-inkscape-font-specification:'sans-serif Bold';font-family:sans-serif"
-          xml:space="preserve"><tspan
+     id="textCoords"
+     y="2.0617959"
+     x="470.34454"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.959px;line-height:1.25;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#222b00;fill-opacity:1;stroke:none;stroke-width:0.331625;-inkscape-font-specification:'sans-serif Bold';font-family:sans-serif"
+     xml:space="preserve"><tspan
        y="2.0617959"
        x="529.8175"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#222b00;stroke-width:0.331625"
        id="textCoords2">   </tspan></text>
   <rect
-          class="svgbutton"
-          style="pointer-events:all;opacity:0.67537313;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stop-color:#000000;stroke-dasharray:none"
-          id="btnPoint"
-          width="20.425196"
-          height="20.425196"
-          x="573.73987"
-          y="12.166425"
-          ry="5.2242203" />
+     class="svgbutton"
+     style="pointer-events:all;opacity:0.67537313;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stop-color:#000000;stroke-dasharray:none"
+     id="btnPoint"
+     width="20.425196"
+     height="20.425196"
+     x="573.73987"
+     y="12.166425"
+     ry="5.2242203" />
   <circle
-          style="opacity:1;fill:none;fill-opacity:0.556271;fill-rule:evenodd;stroke:#333333;stroke-width:0.77533;stroke-dasharray:none;stop-color:#000000"
-          id="path934"
-          cx="583.95245"
-          cy="22.379021"
-          r="5.3250775" />
+     style="opacity:1;fill:none;fill-opacity:0.556271;fill-rule:evenodd;stroke:#333333;stroke-width:0.77533;stroke-dasharray:none;stop-color:#000000"
+     id="path934"
+     cx="583.95245"
+     cy="22.379021"
+     r="5.3250775" />
   <path
-          style="fill:none;stroke:#000000;stroke-width:0.688386px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-          d="M 583.82383,14.185651 V 30.666992"
-          id="path1544" />
+     style="fill:none;stroke:#000000;stroke-width:0.688386px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="M 583.82383,14.185651 V 30.666992"
+     id="path1544" />
   <path
-          style="fill:none;stroke:#000000;stroke-width:0.688386px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-          d="M 592.0645,22.426321 H 575.58315"
-          id="path1546" />
+     style="fill:none;stroke:#000000;stroke-width:0.688386px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="M 592.0645,22.426321 H 575.58315"
+     id="path1546" />
   <rect
-          class="svgLayersButton"
-          style="pointer-events:all;opacity:0.67537313;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stop-color:#000000;stroke-dasharray:none"
-          id="btnLayer"
-          width="20.425196"
-          height="20.425196"
-          x="573.73987"
-          y="34.19479"
-          ry="5.2242203" />
+     class="svgLayersButton"
+     style="pointer-events:all;opacity:0.67537313;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stop-color:#000000;stroke-dasharray:none"
+     id="btnLayer"
+     width="20.425196"
+     height="20.425196"
+     x="573.73987"
+     y="34.19479"
+     ry="5.2242203" />
   <rect
-          style="opacity:1;fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#1a1a1a;stroke-width:0.868026;stroke-dasharray:none;stop-color:#000000"
-          id="rect2386"
-          width="9.5876312"
-          height="7.271852"
-          x="543.57104"
-          y="55.905323"
-          ry="0"
-          transform="matrix(1,0,0.60288906,0.79782503,0,0)" />
+     style="opacity:1;fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#1a1a1a;stroke-width:0.868026;stroke-dasharray:none;stop-color:#000000"
+     id="rect2386"
+     width="9.5876312"
+     height="7.271852"
+     x="543.57104"
+     y="55.905323"
+     ry="0"
+     transform="matrix(1,0,0.60288906,0.79782503,0,0)" />
   <rect
-          style="opacity:1;fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#1a1a1a;stroke-width:0.868026;stroke-dasharray:none;stop-color:#000000"
-          id="rect2384"
-          width="9.5876312"
-          height="7.271852"
-          x="545.65186"
-          y="52.45401"
-          ry="0"
-          transform="matrix(1,0,0.60288906,0.79782503,0,0)" />
+     style="opacity:1;fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#1a1a1a;stroke-width:0.868026;stroke-dasharray:none;stop-color:#000000"
+     id="rect2384"
+     width="9.5876312"
+     height="7.271852"
+     x="545.65186"
+     y="52.45401"
+     ry="0"
+     transform="matrix(1,0,0.60288906,0.79782503,0,0)" />
   <rect
-          style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#1a1a1a;stroke-width:0.868026;stroke-dasharray:none;stop-color:#000000"
-          id="rect2382"
-          width="9.5876312"
-          height="7.271852"
-          x="547.73267"
-          y="49.002697"
-          ry="0"
-          transform="matrix(1,0,0.60288906,0.79782503,0,0)" />
+     style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#1a1a1a;stroke-width:0.868026;stroke-dasharray:none;stop-color:#000000"
+     id="rect2382"
+     width="9.5876312"
+     height="7.271852"
+     x="547.73267"
+     y="49.002697"
+     ry="0"
+     transform="matrix(1,0,0.60288906,0.79782503,0,0)" />
   <g
-          id="colorBar"
-          visibility="hidden"
-          translate="(100,100)"
-          transform="translate(-0.21605667)">
+     id="colorBar"
+     visibility="hidden"
+     translate="(100,100)"
+     transform="translate(-0.21605667)">
     <text
-            id="txtUnits"
-            y="2.6551161"
-            x="131.93886"
-            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.3586px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial Bold';letter-spacing:0px;word-spacing:0px;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.348275"
-            xml:space="preserve"><tspan
+       id="txtUnits"
+       y="2.6551161"
+       x="131.93886"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.3586px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial Bold';letter-spacing:0px;word-spacing:0px;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.348275"
+       xml:space="preserve"><tspan
          class="txtUnits"
          y="2.6551161"
          x="112.03423"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:'Arial Bold';text-align:end;text-anchor:end;fill:#000000;stroke:none;stroke-width:0.348275"
          id="tspan4288">MPH</tspan></text>
     <text
-            id="textMinVal"
-            y="10.771124"
-            x="131.28908"
-            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04729px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.196708"
-            xml:space="preserve"><tspan
+       id="textMinVal"
+       y="10.771124"
+       x="131.28908"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04729px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.196708"
+       xml:space="preserve"><tspan
          class="textMinVal"
          y="10.771124"
          x="116.02306"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.04729px;font-family:Arial;-inkscape-font-specification:'Arial Bold';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.196708"
          id="textMinVal2">-10</tspan></text>
-
     <text
-            id="textMaxVal"
-            y="10.771124"
-            x="227.24391"
-            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04729px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.196708"
-            xml:space="preserve"><tspan
+       id="textMaxVal"
+       y="10.771124"
+       x="227.24391"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04729px;line-height:1.25;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;mix-blend-mode:difference;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.196708"
+       xml:space="preserve"><tspan
          class="textMaxVal"
          y="10.771124"
          x="211.97794"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.04729px;font-family:Arial;-inkscape-font-specification:'Arial Bold';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.196708"
          id="textMaxVal2">10</tspan></text>
     <rect
-            rx="4.6434426"
-            ry="4.4129586"
-            y="-4.9569159"
-            x="115.40199"
-            height="8.8259172"
-            width="99.231041"
-            id="rectColorBar"
-            style="fill:url(#cmapGrad);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.443491;stop-color:#000000" />
+       rx="4.6434426"
+       ry="4.4129586"
+       y="-4.9569159"
+       x="115.40199"
+       height="8.8259172"
+       width="99.231041"
+       id="rectColorBar"
+       style="fill:url(#cmapGrad);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.443491;stop-color:#000000" />
     <rect
-            style="opacity:0.628016;fill:#f4eed7;stroke:none;stroke-width:7.00121"
-            id="rectColorMapValue"
-            visibility = 'hidden'
-            width="51.385033"
-            height="8.8332472"
-            x="216.36847"
-            y="-4.9862432"
-            rx="2.6523707"
-            ry="3.0116558"
-            class = "ColorbarValueRect"/>
+       style="opacity:0.628016;fill:#f4eed7;stroke:none;stroke-width:7.00121"
+       id="rectColorMapValue"
+       visibility="hidden"
+       width="51.385033"
+       height="8.8332472"
+       x="216.36847"
+       y="-4.9862432"
+       rx="2.6523707"
+       ry="3.0116558"
+       class="ColorbarValueRect" />
     <text
-            id="txtColorMapValue"
-            y="2.0755546"
-            x="261.91971"
-            visibility = 'hidden'
-            class = "ColorbarValueText"
-            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:1.25;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.196708"
-            xml:space="preserve">0.0</text>
+       id="txtColorMapValue"
+       y="2.0755546"
+       x="261.91971"
+       visibility="hidden"
+       class="ColorbarValueText"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:1.25;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.196708"
+       xml:space="preserve">0.0</text>
   </g>
   <g
-          id="menuLayers"
-          class="svgLayersMenu">
+     id="menuLayers"
+     class="svgLayersMenu">
     <rect
-            style="opacity:0.940675;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stroke-dasharray:none;image-rendering:auto;stop-color:#000000"
-            id="rectLayer"
-            width="38.725239"
-            height="42.495239"
-            x="424.07755"
-            y="147.93166"
-            ry="3.1959491" />
+       style="opacity:0.940675;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stroke-dasharray:none;image-rendering:auto;stop-color:#000000"
+       id="rectLayer"
+       width="38.725239"
+       height="42.495239"
+       x="424.07755"
+       y="147.93166"
+       ry="3.1959491" />
     <rect
-            style="fill:#d45500;stroke:none;stroke-width:4.99144"
-            id="rectHighlightItem1"
-            width="35.289227"
-            height="9.7225504"
-            x="426.06375"
-            y="149.45041"
-            ry="1.6564345"
-            class="svgMenuItemHighlight" />
+       style="fill:#d45500;stroke:none;stroke-width:4.99144"
+       id="rectHighlightItem1"
+       width="35.289227"
+       height="9.7225504"
+       x="426.06375"
+       y="149.45041"
+       ry="1.6564345"
+       class="svgMenuItemHighlight" />
     <text
-            xml:space="preserve"
-            style="font-size:8.13333px;opacity:1;fill:#ffcc00;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none;image-rendering:auto"
-            user-select="none"
-            x="428.33768"
-            y="156.80447"
-            id="txtLayer2"
-            class="svgMenuItem"><tspan
+       xml:space="preserve"
+       style="font-size:8.13333px;opacity:1;fill:#ffcc00;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none;image-rendering:auto"
+       user-select="none"
+       x="428.33768"
+       y="156.80447"
+       id="txtLayer2"
+       class="svgMenuItem"><tspan
          id="txtLayer1"
          class="svgMenuItem"
          user-select="none"
@@ -379,52 +389,52 @@
          y="156.80447">Layer 1</tspan></text>
   </g>
   <text
-          xml:space="preserve"
-          style="font-weight:bold;font-stretch:condensed;font-size:6.83707px;font-family:Arial;-inkscape-font-specification:'Arial Bold Condensed';text-align:end;text-anchor:end;opacity:0.86912065;fill:#000000;stroke-width:2.1351"
-          x="604.36597"
-          y="-16.460442"
-          id="text604"><tspan
+     xml:space="preserve"
+     style="font-weight:bold;font-stretch:condensed;font-size:6.83707px;font-family:Arial;-inkscape-font-specification:'Arial Bold Condensed';text-align:end;text-anchor:end;opacity:0.86912065;fill:#000000;stroke-width:2.1351"
+     x="604.36597"
+     y="-16.460442"
+     id="text604"><tspan
        id="txtCache"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial;text-align:end;text-anchor:end;fill:#000000;stroke-width:2.1351"
        x="604.36597"
        y="-16.460442">Cache: 0 mb</tspan></text>
   <g
-          id="menuLayers2"
-          class="svgLayersMenu2">
+     id="menuLayers2"
+     class="svgLayersMenu2">
     <rect
-            style="pointer-events: all;opacity:0.940675;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#552200;stroke-width:0.244;stroke-dasharray:none;image-rendering:auto;stop-color:#000000"
-            id="rectMenuLayers"
-            width="122.44601"
-            height="83.6222"
-            x="238.23975"
-            y="51.13826"
-            ry="2.2217569"
-            class="svgMenuRect" />
+       style="pointer-events: all;opacity:0.940675;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#552200;stroke-width:0.244;stroke-dasharray:none;image-rendering:auto;stop-color:#000000"
+       id="rectMenuLayers"
+       width="122.44601"
+       height="83.6222"
+       x="238.23975"
+       y="51.13826"
+       ry="2.2217569"
+       class="svgMenuRect" />
     <rect
-            style="pointer-events:all;stroke:none;stroke-width:5.71539;fill:#de8787"
-            id="rectMenuItemSample"
-            width="35.289227"
-            height="12.747344"
-            x="267.72543"
-            y="69.339966"
-            ry="2.1717696"
-            class="svgMenuItemHighlight2" />
+       style="pointer-events:all;stroke:none;stroke-width:5.71539;fill:#de8787"
+       id="rectMenuItemSample"
+       width="35.289227"
+       height="12.747344"
+       x="267.72543"
+       y="69.339966"
+       ry="2.1717696"
+       class="svgMenuItemHighlight2" />
     <rect
-            style="opacity:1;fill:#dab16c;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stroke-dasharray:none;image-rendering:auto;stop-color:#000000"
-            id="rectMeshName"
-            width="27.381069"
-            height="12.606735"
-            x="240.11224"
-            y="69.287018"
-            ry="0.60196602" />
+       style="opacity:1;fill:#dab16c;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stroke-dasharray:none;image-rendering:auto;stop-color:#000000"
+       id="rectMeshName"
+       width="27.381069"
+       height="12.606735"
+       x="240.11224"
+       y="69.287018"
+       ry="0.60196602" />
     <text
-            xml:space="preserve"
-            style="font-size:8.13333px;opacity:1;fill:#ffcc00;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none;image-rendering:auto"
-            user-select="none"
-            x="274.36343"
-            y="78.130089"
-            id="txtMeshName"
-            class="svgMenuItem"><tspan
+       xml:space="preserve"
+       style="font-size:8.13333px;opacity:1;fill:#ffcc00;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none;image-rendering:auto"
+       user-select="none"
+       x="274.36343"
+       y="78.130089"
+       id="txtMeshName"
+       class="svgMenuItem"><tspan
          id="tspan1376"
          class="svgMenuItem"
          user-select="none"
@@ -432,21 +442,21 @@
          x="265.99582"
          y="78.130089">L0</tspan></text>
     <rect
-            style="pointer-events: all;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stroke-dasharray:none;image-rendering:auto;stop-color:#000000"
-            id="rectVarName"
-            class="svgMenuColumnHighlight"
-            width="35.303146"
-            height="16.063643"
-            x="267.48083"
-            y="53.154789"
-            ry="0.76703179" />
+       style="pointer-events: all;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stroke-dasharray:none;image-rendering:auto;stop-color:#000000"
+       id="rectVarName"
+       class="svgMenuColumnHighlight"
+       width="35.303146"
+       height="16.063643"
+       x="267.48083"
+       y="53.154789"
+       ry="0.76703179" />
     <text
-            xml:space="preserve"
-            style="font-size:5.79541px;opacity:1;fill:#ffcc00;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none;image-rendering:auto"
-            user-select="none"
-            x="273"
-            y="53.874966"
-            id="txtVarName"><tspan
+       xml:space="preserve"
+       style="font-size:5.79541px;opacity:1;fill:#ffcc00;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-dasharray:none;image-rendering:auto"
+       user-select="none"
+       x="273"
+       y="53.874966"
+       id="txtVarName"><tspan
          id="tspan1482"
          class="svgMenuItem"
          user-select="none"

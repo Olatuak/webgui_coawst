@@ -31,6 +31,7 @@ def onMenuClick2(evt):
 
     idx = int(evt.toElement['Idx'])
     layer = listItemLayers[idx]
+    print(88899, idx, layer['name'])
     layer['visible'] = not layer['visible']
 
     updateLayersMenu2()
@@ -76,7 +77,7 @@ def updateLayersMenu2():
         if layer is not None:
 
             visible = int((layer['visible']))
-            print(box, 'pppp', box['style'])
+#             print(box, 'pppp', box['style'])
             if visible==1:
                 box['style'] = 'fill:#d45500;pointer-events: all;stroke:none;stroke-width:5.71539'
             else:
@@ -299,7 +300,7 @@ def setupLayersMenu2(config, mapLyrs):
     # Creates all the options (layers that can be enabled or disabled)
     idx = 0
     rectMenuItemSample = document['rectMenuItemSample']
-    for row in rowInfo:
+    for irow, row in enumerate(rowInfo):
         for icol, col in enumerate(columnInfo):
             idx += 1
             curItemHighlightRect = rectMenuItemSample.cloneNode()

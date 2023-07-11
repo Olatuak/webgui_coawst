@@ -43,7 +43,6 @@ class Conf:
 
             for colormap in colormaps:
                 try:
-                    print(7654)
                     tempColormap = {'name':   colormap.getElementsByTagName('name')[0].innerHTML,
                                     'colors': eval(colormap.getElementsByTagName('colors')[0].innerHTML),
                                     'stops':  eval(colormap.getElementsByTagName('stops')[0].innerHTML),
@@ -255,7 +254,6 @@ class Conf:
                 # originally each layer had on server.
                 for server in servers:
                     tempLayer['server'] = server
-#                     print('PPPPP', server)
                     self.layers += [tempLayer.copy()]
 
 
@@ -266,6 +264,7 @@ class Conf:
     def getLayer(self, server, varName):
         # Gets a layer based on the server it uses and the var name. If it doesn't find it, returns None.
         for layer in self.layers:
+
             if (layer['name'] == varName) and (layer["server"]['name'] == server['name']):
                 return layer
         return None
@@ -297,7 +296,6 @@ class Conf:
 
             elif (serverType=='dap'):
                 for server in self.dapServers:
-                    print('****',server['name'], name)
                     if (server['name'] == name):
                         servers += [server]
                         found = True

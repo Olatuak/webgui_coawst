@@ -29,8 +29,6 @@ dateStart = datetime.datetime(2023, 1,  7, 0, 0, 0, 0, datetime.timezone.utc)
 dateEnd   = datetime.datetime(2025, 10, 2, 0, 0, 0, 0, datetime.timezone.utc)
 
 nowDate = javascript.Date.new(javascript.Date.now())
-print("afffffffff",nowDate.toISOString() )
-print("ffffffffff",nowDate.getYear()+1900, nowDate.getMonth()+1, nowDate.getUTCDate(), 0, 0, 0, 0, datetime.timezone.utc)
 dateFile  = datetime.datetime(nowDate.getYear()+1900, nowDate.getMonth()+1, nowDate.getUTCDate(), 0, 0, 0, 0, datetime.timezone.utc)
 
 
@@ -99,7 +97,6 @@ def onBtnPointClick(event):
 # conf = Conf('confSNB.xml')
 conf = Conf('confHurricanes.xml')
 
-print('&&&&&', dateFile)
 mapLayers = Maps(dateFile, crs, conf, leaflet)
 
 

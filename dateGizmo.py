@@ -115,8 +115,6 @@ def onGizmoPlay(event):
     isPlaying = not isPlaying
 
     if isPlaying:
-        print(4444, document['iconPlay' ].style)
-        print(555,document['iconPlay' ].style['fill-opacity'])
         document['iconPlay' ].style['fill-opacity'] = 0.0
         document['iconPause'].style['fill-opacity'] = 1.0
     else:
@@ -149,7 +147,6 @@ def updateGizmoPos(pos):
 
 
     xnewGizmo = pos*(datePos[-1] - datePos[0])
-    print('-----',mat.a, xGizmo, xnewGizmo, pos, datePos[0], datePos[-1])
 #     xPointerSVG = (xGizmo - mat.e) / mat.a  # x position in SVG coordinates
 
     dx = (xnewGizmo - xGizmo) #/ mat.a
@@ -241,7 +238,6 @@ def onGizmoDateMove(event):
 
         pos = (xGizmo) / (datePos[-1] - datePos[0])
 
-        print('----->', xGizmo, xnewGizmo, pos, datePos[0], datePos[-1])
 
         # Consolidates the transforms.
         transformList = document['gizmoDateHandle'].transform.baseVal

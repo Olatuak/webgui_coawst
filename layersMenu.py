@@ -31,7 +31,6 @@ def onMenuClick2(evt):
 
     idx = int(evt.toElement['Idx'])
     layer = listItemLayers[idx]
-    print(88899, idx, layer['name'])
     layer['visible'] = not layer['visible']
 
     updateLayersMenu2()

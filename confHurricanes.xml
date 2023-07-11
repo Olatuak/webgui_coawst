@@ -450,6 +450,14 @@
         </server>
 
         <server>
+            <name>L1 NYBIGHT</name>
+            <url>https://icoast.rc.ufl.edu/thredds/dodsC/Noppcoawst/L1_Forecast/qck/L1_NYBIGHT_qck_{year:04d}{month:02d}{day:02d}.nc.dods</url>
+            <grid name="rho" floatType="float64">lat_rho,lon_rho</grid>
+            <!--            Use this exact format for dates  '%YYYY-%mm-%ddT%HH:%MM:%SS.000Z' -->
+            <time offset="1858-11-17T00:00:00.000Z" units="seconds" floatType="float64">ocean_time</time>
+        </server>
+
+        <server>
             <name>L2</name>
             <url>https://icoast.rc.ufl.edu/thredds/dodsC/Noppcoawst/L2_Forecast/qck/L2_GOMSAB_qck_{year:04d}{month:02d}{day:02d}.nc.dods</url>
             <grid name="rho" floatType="float64">lat_rho,lon_rho</grid>
@@ -518,7 +526,7 @@
 
 
         <layer>
-            <server>L1 GOMSAB,L0</server>
+            <server>L1 NYBIGHT,L1 GOMSAB,L0</server>
             <servertype>dap</servertype>
             <layertype>dynmap</layertype>
             <gridtype>rho,rho</gridtype>-->
@@ -534,7 +542,7 @@
         </layer>
 
         <layer>
-            <server>L1 GOMSAB,L0</server>
+            <server>L1 NYBIGHT,L1 GOMSAB,L0</server>
             <servertype>dap</servertype>
             <layertype>dynmap</layertype>
             <gridtype>rho</gridtype>
@@ -551,7 +559,7 @@
         </layer>
 
         <layer>
-            <server>L1 GOMSAB,L0</server>
+            <server>L1 NYBIGHT,L1 GOMSAB,L0</server>
             <servertype>dap</servertype>
             <layertype>dynmap</layertype>
             <gridtype>rho</gridtype>
@@ -597,7 +605,7 @@
 <!--        </layer>-->
 
         <layer>
-            <server>L1 GOMSAB,L0</server>
+            <server>L1 NYBIGHT,L1 GOMSAB,L0</server>
             <servertype>dap</servertype>
             <layertype>dynmap</layertype>
             <gridtype>rho</gridtype>
@@ -614,7 +622,7 @@
 
 
         <layer>
-            <server>L1 GOMSAB,L0</server>
+            <server>L1 NYBIGHT,L1 GOMSAB,L0</server>
             <servertype>dap</servertype>
             <layertype>dynmap</layertype>
             <gridtype>rho</gridtype>

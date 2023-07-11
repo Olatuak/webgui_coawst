@@ -62,7 +62,6 @@ class Maps:
         # Clears the labels.
         for colorBar in self.colorBars:
             try:
-                print(1234)
                 colorBar.getElementsByClassName('ColorbarValueText')[0].innerHTML = ''
             except:
                 pass
@@ -71,13 +70,10 @@ class Maps:
 
             try:
                 if layer['visible']:
-                    print(123456)
-
                     layerType =  layer['layertype']
                     serverType = layer['servertype']
                     if serverType == 'dap':
                         value = mapLayer.peekValue(lat, lon)
-                        print(999,value)
 
                         colorBarValueText = colorBar.getElementsByClassName('ColorbarValueText')[0]
                         if len(value) == 1:
@@ -166,9 +162,7 @@ class Maps:
                     timeOffset = layer['server']['timeOffset']
                     fileName = fileName.format(year = date.year, month = 6+0*date.month, day = date.day*0 + 21)
                     gridType = layer['gridtype'].split(',')
-                    print(36666)
                     if len(gridType) == 1:
-
                         dynLayer, times = window.addNewDynHeatmapLayer(mapLayer, fileName,
                                                         layer['name'], layer['server']['grids'][gridType[0]],
                                                         layer['server']['time'],
@@ -176,7 +170,6 @@ class Maps:
                                                         int(layer['server']['timeFloatBytes']),
                                                         conf.colormaps[colorbar['style']], colorbar,  layer['varthresholdmin'], layer['varthresholdmax'])
                     elif len(gridType) == 2:
-                        print(fileName)
                         dynLayer, times = window.addNewDynVectormapLayer(mapLayer, fileName,
                                                         layer['name'].split(','), layer['server']['grids'][gridType[0]], layer['server']['grids'][gridType[1]],
                                                         layer['server']['time'],
@@ -187,7 +180,6 @@ class Maps:
                         print('ERROR, too many layers')
                     dynLayer.addTo(self.map)
                     layer['dynlayer'] = dynLayer
-                    print(3333,dynLayer)
                     self.listLayer += [dynLayer]
                     self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
                     self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]

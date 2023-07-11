@@ -568,7 +568,7 @@
             <varthresholdmax>100</varthresholdmax>
             <varscale>1.0</varscale>
             <longname>Wave amplitude</longname>
-            <shortname>Wave amp.</shortname>
+            <shortname>Hm0</shortname>
             <units>m</units>
             <colorbar>zeta</colorbar>
             <visible>False</visible>

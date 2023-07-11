@@ -313,7 +313,7 @@
 
         <colorbar>
             <name>Hm0</name>
-            <longname>significant wave height</longname>
+            <longname>Significant wave height</longname>
             <min>-3</min>
             <max>3</max>
             <abovemaxcol>extend</abovemaxcol>

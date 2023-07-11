@@ -44,14 +44,20 @@ class Maps:
 
     def onDateChange(self, idxDate):
 
-        for mapLayer, layer in zip(reversed(self.listLayer), reversed(self.layers)):
+        date = self.dates[idxDate]
+
+        for mapLayer, layer, localDates in zip(reversed(self.listLayer), reversed(self.layers), reversed(self.localDates)):
 
             if layer['visible']:
 
                 layerType =  layer['layertype']
                 serverType = layer['servertype']
+
                 if serverType == 'dap':
-                    mapLayer.onDateChange(idxDate)
+                    print('AAAAAA')
+                    print('AAAAAAB', date)
+                    print('AAAAAAC', localDates.index(date), date)
+                    mapLayer.onDateChange(localDates.index(date))
 
 #         self.update()
         self.redrawLayers()
@@ -103,10 +109,11 @@ class Maps:
         self.listLayer = []
         self.colorMaps = []
         self.colorBars = []
+        self.localDates = [] # Each layer may have a different set of dates.
 
         self.map = self.leaflet.map('mapid').setView(self.conf.viewcenter, self.conf.zoom)
 
-        # Creates all the maps, plotlys and velocity layers.
+        # Creates all the maps and velocity layers.
         for layer in self.layers:
             colorBarName = layer['colorbar']
             colorbar = conf.colorbars[colorBarName]
@@ -184,11 +191,19 @@ class Maps:
                     self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
                     self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
 
-                    self.dates = times
+                    # Finds the intersection of dates.
+                    try:
+                        if times is not None and times != []:
+                            self.dates = list(set(self.dates).intersection(set(self.dates)))
+                    except:
+                        if times is not None and times != []:
+                            self.dates= times
+                    self.localDates += [times]
                 except:
                     self.listLayer += [None]
                     self.colorMaps += [None]
                     self.colorBars += [None]
+                    self.localDates += [times]
 
 
             else:

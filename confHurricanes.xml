@@ -312,6 +312,18 @@
         </colorbar>
 
         <colorbar>
+            <name>Hm0</name>
+            <longname>significant wave height</longname>
+            <min>-3</min>
+            <max>3</max>
+            <abovemaxcol>extend</abovemaxcol>
+            <belowmincol>extend</belowmincol>
+            <units>m</units>
+            <style>magma</style>
+        </colorbar>
+
+
+        <colorbar>
             <name>temperature</name>
             <longname>Temperature</longname>
             <min>0</min>
@@ -570,7 +582,7 @@
             <longname>Wave amplitude</longname>
             <shortname>Hm0</shortname>
             <units>m</units>
-            <colorbar>zeta</colorbar>
+            <colorbar>Hm0</colorbar>
             <visible>False</visible>
             <transparent>True</transparent>
         </layer>

@@ -375,7 +375,7 @@
 
         <colorbar>
             <name>risk</name>
-            <longname>Risk</longname>
+            <longname>Damage</longname>
             <min>0.0</min>
             <max>1.0</max>
             <abovemaxcol>extend</abovemaxcol>
@@ -569,8 +569,8 @@
             <name>Risk</name>
             <varthreshold>12.0</varthreshold>
             <varscale>12.0</varscale>
-            <longname>Damage risk</longname>
-            <shortname>Risk.</shortname>
+            <longname>Damage level</longname>
+            <shortname>Damage.</shortname>
             <units>m/s</units>
             <colorbar>risk</colorbar>
             <visible>False</visible>

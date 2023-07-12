@@ -544,9 +544,10 @@ L.DynmapLayer = L.Layer.extend({
         const isT = 1, isnT = 0;
 
 
-        const arr = new Uint8ClampedArray(4*W*H);
+
         if (this.image == null || this.image.width != W || this.image.height != H)
         {
+            const arr = new Uint8ClampedArray(4*W*H);
             this.image = new ImageData(arr, W, H);
         }
         this.image.data.fill(0);

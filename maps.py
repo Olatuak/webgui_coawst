@@ -54,10 +54,13 @@ class Maps:
                 serverType = layer['servertype']
 
                 if serverType == 'dap':
-                    print('AAAAAA')
-                    print('AAAAAAB', date)
-                    print('AAAAAAC', localDates.index(date), date)
-                    mapLayer.onDateChange(localDates.index(date))
+#                     print('AAAAAA')
+#                     print('AAAAAAB', date)
+#                     print('AAAAAAC', localDates.index(date), date)
+                    try:
+                        mapLayer.onDateChange(localDates.index(date))
+                    except:
+                        pass
 
 #         self.update()
         self.redrawLayers()
@@ -203,9 +206,44 @@ class Maps:
                     self.listLayer += [None]
                     self.colorMaps += [None]
                     self.colorBars += [None]
-                    self.localDates += [times]
+                    self.localDates += [None]
+
+            elif layerType == 'dynscatter':
+                try:
+                    print(111111)
+                    print(44444)
+                    gridType   = layer['gridtype']
+                    colorBarName = layer['colorbar']
+                    colorbar = conf.colorbars[colorBarName]
+                    mapLayer = self.map
+                    print(444445)
+
+                    fileName = layer['server']['url']
+                    JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
+                    timeOffset = layer['server']['timeOffset']
+                    fileName = fileName.format(year = date.year, month = 6+0*date.month, day = date.day*0 + 21)
+                    gridType = layer['gridtype'].split(',')
+                    print(444446, gridType)
+                    print((mapLayer, fileName,layer['name'], layer['server']['grids'][gridType[0]],conf.colormaps[colorbar['style']], colorbar,  layer['varthresholdmin'], layer['varthresholdmax']))
+                    dynScatterLayer = window.addNewDynScatterLayer(mapLayer, fileName,
+                                                        layer['name'], layer['server']['grids'][gridType[0]],
+                                                        conf.colormaps[colorbar['style']], colorbar,  layer['varthresholdmin'], layer['varthresholdmax'])
+                    print(444447, dynScatterLayer)
+
+                    dynScatterLayer.addTo(self.map)
+                    print(44444755, layer)
+                    layer['dynlayer'] = dynScatterLayer
+                    self.listLayer += [dynScatterLayer]
+                    self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
+                    self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
+                    print(444448)
 
 
+                except:
+                    self.listLayer += [None]
+                    self.colorMaps += [None]
+                    self.colorBars += [None]
+                    self.localDates += [None]
             else:
                 pass
 
@@ -338,6 +376,13 @@ class Maps:
 
                         else:
                             print('ERROR, invalid server ', serverType)
+                    elif layerType == 'dynscatter':
+                        if serverType == 'dap':
+                            mapLayer.addTo(self.map)
+
+                        else:
+                            print('ERROR, invalid server ', serverType)
+
 
 
 

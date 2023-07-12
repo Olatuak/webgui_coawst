@@ -153,6 +153,7 @@ class Conf:
                     else:
                         gridFloatBytes = 64
                     gridLat, gridLon = grid.innerHTML.split(',')
+
 #                     keyLon  = window.loadBinaryDODSFloat64ToCache(HTML.unescape(url.format(strTime = srtTime) + '?' + gridLat.strip() ))
 #                     keyLat  = window.loadBinaryDODSFloat64ToCache(HTML.unescape(url.format(strTime = srtTime) + '?' + gridLon.strip() ))
                     grids[gridName] = [gridLat, gridLon, gridFloatBytes]
@@ -160,21 +161,27 @@ class Conf:
 #                 # Parameters to convert the netCDF times into standard times.
 #                 timeOffset        = float(server.getElementsByTagName('time')['0'].getAttribute('offset'))
 #                 timeUnitsMillisec = float(server.getElementsByTagName('time')['0'].getAttribute('unitsToMilliseconds'))
-                timeOffset = convertDate(server.getElementsByTagName('time')['0'].getAttribute('offset'))
-                timeUnits = server.getElementsByTagName('time')['0'].getAttribute('units')
-                if timeUnits == 'seconds':
-                    timeUnitsInSeconds = 1
-                elif timeUnits == 'minutes':
-                    timeUnitsInSeconds = 60
-                elif timeUnits == 'hours':
-                    timeUnitsInSeconds = 3600
-                elif timeUnits == 'days':
-                    timeUnitsInSeconds = 86400
-                timeFloatType = server.getElementsByTagName('time')['0'].getAttribute('floatType')
-                if (timeFloatType.lower()=='float32'):
-                    timeFloatBytes = 32
-                else:
-                    timeFloatBytes = 64
+                try:
+                    timeOffset = convertDate(server.getElementsByTagName('time')['0'].getAttribute('offset'))
+                    timeUnits = server.getElementsByTagName('time')['0'].getAttribute('units')
+                    if timeUnits == 'seconds':
+                        timeUnitsInSeconds = 1
+                    elif timeUnits == 'minutes':
+                        timeUnitsInSeconds = 60
+                    elif timeUnits == 'hours':
+                        timeUnitsInSeconds = 3600
+                    elif timeUnits == 'days':
+                        timeUnitsInSeconds = 86400
+                    timeFloatType = server.getElementsByTagName('time')['0'].getAttribute('floatType')
+                    if (timeFloatType.lower()=='float32'):
+                        timeFloatBytes = 32
+                    else:
+                        timeFloatBytes = 64
+                except:
+                    timeUnits = None
+                    timeUnitsInSeconds = None
+                    timeFloatBytes = None
+
 
 
 

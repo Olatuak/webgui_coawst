@@ -178,6 +178,7 @@ def setupLayersMenu2(config, mapLyrs):
     curItemText = document['txtMeshName']
     curItemText2 = curItemText.getElementsByTagName('tspan')[0]
     origColWidth = curItemText2.getBBox().width
+    origXPos = curItemText2.getBBox().x
     for i, dapServer in enumerate(conf.dapServers):
             serverName = dapServer['name']
             isLast = (i == len(conf.dapServers) - 1)
@@ -185,8 +186,9 @@ def setupLayersMenu2(config, mapLyrs):
             curItemText2.innerHTML = serverName
 
             maxColWidth = max(maxColWidth, curItemText2.getBBox().width)
+            print(1777111, maxColWidth, origColWidth)
     xDisp = maxColWidth*.85 - origColWidth
-    firstColPos = curItemText2.getBBox().x + xDisp
+    firstColPos = origXPos + xDisp
 
     # Creates as many columns as different variables are shown
     curItemText = document['txtVarName']
@@ -213,7 +215,7 @@ def setupLayersMenu2(config, mapLyrs):
         listItemText          += [curItemText]
         listItemText2         += [curItemText2]
 
-        width  = curItemText.getBBox().width*1.02
+        width  = curItemText.getBBox().width*1.05
         height = curItemText.getBBox().height*1.02
         curItemHighlightRect['width'] = '%.4f' % (width)
         lastX = float(curItemHighlightRect['x']) + width

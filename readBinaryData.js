@@ -99,7 +99,8 @@ function loadBinaryDODSFloat32ToCache(url)
     cache.set(url, data);
 
     totCache += data[1].length * 4;
-    document.getElementById('txtCache').textContent=sprintf("%.1f mb", totCache/1024/1024);
+
+    document.getElementById('txtCache').textContent = `${(totCache/1024/1024).toFixed(1)} mb`;
 
 
     return data;
@@ -112,7 +113,7 @@ function loadBinaryDODSFloat64ToCache(url)
     cache.set(url, data);
 
     totCache += data[1].length * 8;
-    document.getElementById('txtCache').textContent=sprintf("%.1f mb", totCache/1024/1024);
+    document.getElementById('txtCache').textContent = `${(totCache/1024/1024).toFixed(1)} mb`;
 
     return data;
 }

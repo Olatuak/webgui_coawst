@@ -284,6 +284,12 @@
             <colors>[[0.3,0.4,0.5], [0.0,0.0,0.0]]</colors>
             <stops>[0.0, 1.0]</stops>
         </colormap>
+
+        <colormap>
+            <name>riskIntensity</name>
+            <colors>[[0.0,1.0,0.0], [1.0,1.0,0.0], [1.0,0.0,0.0]]</colors>
+            <stops>[0.0, 0.5, 1.0]</stops>
+        </colormap>
     </colormaps>
 
 
@@ -302,7 +308,7 @@
 
         <colorbar>
             <name>zeta</name>
-            <longname>Mean water level</longname>
+            <longname>Water level</longname>
             <min>-2</min>
             <max>2</max>
             <abovemaxcol>extend</abovemaxcol>
@@ -314,7 +320,7 @@
         <colorbar>
             <name>Hm0</name>
             <longname>Significant wave height</longname>
-            <min>-3</min>
+            <min>0</min>
             <max>3</max>
             <abovemaxcol>extend</abovemaxcol>
             <belowmincol>extend</belowmincol>
@@ -366,6 +372,18 @@
             <units></units>
             <style>vectorIntensity</style>
         </colorbar>
+
+        <colorbar>
+            <name>risk</name>
+            <longname>Risk</longname>
+            <min>0.0</min>
+            <max>1.0</max>
+            <abovemaxcol>extend</abovemaxcol>
+            <belowmincol>extend</belowmincol>
+            <units></units>
+            <style>riskIntensity</style>
+        </colorbar>
+
         <colorbar>
             <name>salt</name>
             <longname>Salt</longname>
@@ -477,6 +495,14 @@
             <time offset="1858-11-17T00:00:00.000Z" units="seconds" floatType="float64">ocean_time</time>
         </server>
 
+        <server>
+            <name>Damage</name>
+            <url>https://icoast.rc.ufl.edu/thredds/dodsC/Noppcoawst/Damage_Forecast/damage_{year:04d}{month:02d}{day:02d}.nc.dods</url>
+            <grid name="LatLon" floatType="float32">Lat,Lon</grid>
+            <!--            Use this exact format for dates  '%YYYY-%mm-%ddT%HH:%MM:%SS.000Z' -->
+            <time offset="1858-11-17T00:00:00.000Z" units="seconds" floatType="float64">ocean_time</time>
+        </server>
+
 <!--        <server>-->
 <!--            <name>coawstL0</name>-->
 <!--            <url>https://icoast.rc.ufl.edu/thredds/dodsC/Noppcoawst/L0_Forecast/qck/L0_CNAPS_qck_{year:4d}{month:2d}{day:.2d}.nc.dods</url>-->
@@ -535,6 +561,21 @@
 <!--        </layer>-->
 
 
+        <layer>
+            <server>Damage</server>
+            <servertype>dap</servertype>
+            <layertype>dynscatter</layertype>
+            <gridtype>LatLon</gridtype>
+            <name>Risk</name>
+            <varthreshold>12.0</varthreshold>
+            <varscale>12.0</varscale>
+            <longname>Damage risk</longname>
+            <shortname>Risk.</shortname>
+            <units>m/s</units>
+            <colorbar>risk</colorbar>
+            <visible>False</visible>
+            <transparent>True</transparent>
+        </layer>
 
 
         <layer>

@@ -220,7 +220,8 @@ def setupLayersMenu2(config, mapLyrs):
         curItemHighlightRect['width'] = '%.4f' % (width)
         lastX = float(curItemHighlightRect['x']) + width
         columnInfo += [{'x': float(curItemHighlightRect['x']), 'y': float(curItemHighlightRect['y']),
-                        'width': width, 'height': height, 'ctrl': curItemHighlightRect, 'varname': conf.layersVarNames[i]}]
+                        'width': width, 'height': height, 'ctrl': curItemHighlightRect,
+                        'varname': conf.layersVarNames[i]}]
         if not isLast:
             parent = curItemText.parent
 

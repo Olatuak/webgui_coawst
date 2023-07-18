@@ -279,45 +279,5 @@ function loadBinaryDODSFloat64(url)
 // }
 
 
-function addNewVelocityLayer(map)
-// Creates and returns a velocity layer based on the datafiles.
-{
-    // Reads the files/urls
-    [dimsLon,  lon ] = loadBinaryDODSFloat64('./lon.bin');
-    [dimsLat,  lat ] = loadBinaryDODSFloat64('./lat.bin');
-    [dimsData, data] = loadBinaryDODSFloat32('./sample2.bin');
 
-    // Creates the data structure.
-    var Nx = lon.length
-    var Ny = lat.length
-    var layerData = [{header: {parameterUnit: "m.s-1", parameterNumber: 2,
-                      parameterNumberName: "Eastward current", parameterCategory: 2,
-                      lat: lat, lon: lon,
-                      refTime: "2022-09-30 00:00:00"},
-                      data: data.slice(0, Nx*Ny)},
-                     {header: {parameterUnit: "m.s-1", parameterNumber: 3,
-                      parameterNumberName: "Northward current", parameterCategory: 2,
-                      lat: lat, lon: lon,
-                      refTime: "2022-09-30 00:00:00"},
-                      data: data.slice(-Nx*Ny)}]
-
-    // Creates the leaflet velocity layer.
-    var velocityLayer = L.velocityLayer({
-        displayValues: true,
-        displayOptions: {
-          velocityType: "Global Wind",
-          position: "bottomright",
-          emptyString: "sss No wind data",
-
-        },
-        data: layerData,
-        maxVelocity: 0.25,
-        velocityScale: 0.3,
-        lineWidth: 2,
-        visible: true
-      });
-
-
-    return velocityLayer
-}
 

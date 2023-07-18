@@ -44,9 +44,19 @@ class Maps:
 
     def onDateChange(self, idxDate):
 
-        date = self.dates[idxDate]
+        try:
+            date = self.dates[idxDate]
+        except:
+            return
 
         for mapLayer, layer, localDates in zip(reversed(self.listLayer), reversed(self.layers), reversed(self.localDates)):
+
+            # Saves the date for later.
+            try:
+                layer['idxDate'] = localDates.index(date)
+            except:
+                layer['idxDate'] = 0
+
 
             if layer['visible']:
 
@@ -54,11 +64,8 @@ class Maps:
                 serverType = layer['servertype']
 
                 if serverType == 'dap':
-#                     print('AAAAAA')
-#                     print('AAAAAAB', date)
-#                     print('AAAAAAC', localDates.index(date), date)
                     try:
-                        mapLayer.onDateChange(localDates.index(date))
+                        mapLayer.onDateChange(layer['idxDate'])
                     except:
                         pass
 
@@ -178,14 +185,14 @@ class Maps:
                                                         layer['server']['time'],
                                                         (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
                                                         int(layer['server']['timeFloatBytes']),
-                                                        conf.colormaps[colorbar['style']], colorbar,  layer['varthresholdmin'], layer['varthresholdmax'])
+                                                        conf.colormaps[colorbar['style']], colorbar,  layer['varthresholdmin'], layer['varthresholdmax'], layer['visible'])
                     elif len(gridType) == 2:
                         dynLayer, times = window.addNewDynVectormapLayer(mapLayer, fileName,
                                                         layer['name'].split(','), layer['server']['grids'][gridType[0]], layer['server']['grids'][gridType[1]],
                                                         layer['server']['time'],
                                                         (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
                                                         int(layer['server']['timeFloatBytes']),
-                                                        conf.colormaps[colorbar['style']], colorbar, layer['varscale'], layer['varthresholdmax'])
+                                                        conf.colormaps[colorbar['style']], colorbar, layer['varscale'], layer['varthresholdmax'], layer['visible'])
                     else:
                         print('ERROR, too many layers')
                     dynLayer.addTo(self.map)
@@ -210,33 +217,26 @@ class Maps:
 
             elif layerType == 'dynscatter':
                 try:
-                    print(111111)
-                    print(44444)
                     gridType   = layer['gridtype']
                     colorBarName = layer['colorbar']
                     colorbar = conf.colorbars[colorBarName]
                     mapLayer = self.map
-                    print(444445)
 
                     fileName = layer['server']['url']
                     JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
                     timeOffset = layer['server']['timeOffset']
                     fileName = fileName.format(year = date.year, month = 6+0*date.month, day = date.day*0 + 21)
                     gridType = layer['gridtype'].split(',')
-                    print(444446, gridType)
-                    print((mapLayer, fileName,layer['name'], layer['server']['grids'][gridType[0]],conf.colormaps[colorbar['style']], colorbar,  layer['varthresholdmin'], layer['varthresholdmax']))
                     dynScatterLayer = window.addNewDynScatterLayer(mapLayer, fileName,
                                                         layer['name'], layer['server']['grids'][gridType[0]],
-                                                        conf.colormaps[colorbar['style']], colorbar,  layer['varthresholdmin'], layer['varthresholdmax'])
-                    print(444447, dynScatterLayer)
+                                                        conf.colormaps[colorbar['style']], colorbar,  layer['varthresholdmin'], layer['varthresholdmax'], layer['visible'])
 
                     dynScatterLayer.addTo(self.map)
-                    print(44444755, layer)
                     layer['dynlayer'] = dynScatterLayer
                     self.listLayer += [dynScatterLayer]
                     self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
                     self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
-                    print(444448)
+                    self.localDates += [None]
 
 
                 except:
@@ -246,6 +246,7 @@ class Maps:
                     self.localDates += [None]
             else:
                 pass
+
 
         self.onDateChange(0)
 
@@ -287,6 +288,7 @@ class Maps:
         # Reversed because the first layer in the menu is the one on top
         for mapLayer, layer, colorBar in zip(reversed(self.listLayer), reversed(self.layers), reversed(self.colorBars)):
 
+
             if layer['visible']:
 
                 layerType =  layer['layertype']
@@ -311,7 +313,7 @@ class Maps:
 #                     if serverType == 'dap':
 #                         mapLayer.addTo(self.map)
 
-                elif layerType == 'dynmap':
+                elif layerType == 'dynmap' or layerType == 'dynscatter':
                     if serverType == 'dap':
                         mapLayer.draw()
 
@@ -325,6 +327,9 @@ class Maps:
 
     def updateLayers(self):
         resetColorBarsInMap(self.colorBars)  # Hide all color bars before visualizing only the ones that are visible.
+
+#         print(4444, dateGizmo)
+#         self.onDateChange(dateGizmo.selectedDateIdx)
 
         # Remove all previous layers.
         for mapLayer in self.listLayer:
@@ -349,6 +354,10 @@ class Maps:
             try:
                 if layer['visible']:
 
+                    try:
+                        mapLayer.onDateChange(layer['idxDate'])
+                    except:
+                        pass
                     layerType =  layer['layertype']
                     serverType = layer['servertype']
                     if layerType == 'colormap':
@@ -376,13 +385,13 @@ class Maps:
 
                         else:
                             print('ERROR, invalid server ', serverType)
+
                     elif layerType == 'dynscatter':
                         if serverType == 'dap':
                             mapLayer.addTo(self.map)
 
                         else:
                             print('ERROR, invalid server ', serverType)
-
 
 
 

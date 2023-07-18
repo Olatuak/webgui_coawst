@@ -86,12 +86,13 @@ let loadScatterVarData = function loadScatterVarData(fileName, idxDate, varName,
 //
 // }
 
-function addNewDynScatterLayer(map, fileName, varName, gridType, cmap, cbar, varThresholdMin, varThresholdMax)
+function addNewDynScatterLayer(map, fileName, varName, gridType, cmap, cbar, varThresholdMin, varThresholdMax, visible)
 // Creates and returns a dynamic heatmap map layer (CCS) based on the datafiles.
 {
 
     // const dims = [ni, nj, nt];
     let [lat, lon, data] = loadScatterVarData(fileName, 0, varName, gridType)
+    console.log("dajkdslkajdslakdjsal")
 
 
     // Creates the data structure.
@@ -178,31 +179,7 @@ L.DynscatterLayer = L.Layer.extend({
 
     onDateChange: function(idxDate)
     {
-        this.idxDate = idxDate
-        try
-        {
-            if (typeof this.varName === 'string') {
-                let [dimsData, data] = loadVarData(this.fileName, idxDate, this.varName, this.dims);
-
-                this.options.data.data = data.slice(0, this.ni*this.nj);
-            } else
-            {
-                let [dimsDataU, dataU] = loadVarData(this.fileName, idxDate, this.varName[0], this.dims);
-                let [dimsDataV, dataV] = loadVarData(this.fileName, idxDate, this.varName[1], this.dims);
-
-                this.options.data.dataU = dataU.slice(0, dimsDataU.sizes[1]*dimsDataU.sizes[2]);
-                this.options.data.dataV = dataV.slice(0, dimsDataV.sizes[1]*dimsDataV.sizes[2]);
-            }
-        }
-        catch (err)
-        {
-            this.options.data.data  = undefined;
-            this.options.data.dataU = undefined;
-            this.options.data.dataV = undefined;
-        }
-
-
-
+        this.idxDate = idxDate;
 
     },
 
@@ -251,8 +228,8 @@ L.DynscatterLayer = L.Layer.extend({
 
 
     onAdd: function(map) {
-        map.options.zoomAnimation = true;
-        map.zoomControl.options.zoomAnimation = true;
+        map.options.zoomAnimation = false;
+        map.zoomControl.options.zoomAnimation = false;
         L.Browser.any3d = true;
 
         let pane = map.getPane(this.options.pane);
@@ -286,7 +263,7 @@ L.DynscatterLayer = L.Layer.extend({
         let topLeft = map.containerPointToLayerPoint([0, 0]);
         L.DomUtil.setPosition(this._container, topLeft);
 
-        this.draw();
+        // this.draw();
 
 
     },

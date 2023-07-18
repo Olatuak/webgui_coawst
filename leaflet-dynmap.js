@@ -243,7 +243,7 @@ const Cmap = class
 
 }
 
-function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes, cmap, cbar, varThresholdMin, varThresholdMax)
+function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes, cmap, cbar, varThresholdMin, varThresholdMax, visible)
 // Creates and returns a dynamic heatmap map layer (CCS) based on the datafiles.
 {
     const  [dimsTime, times, dimsLat, lat, dimsLon, lon] = loadGridData(fileName, 0, gridType, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes)
@@ -264,7 +264,17 @@ function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOf
     const nt = times.length;
 
     const dims = [ni, nj, nt];
-    let [dimsData, data] = loadVarData(fileName, 0, varName, dims)
+    let dimsData, data;
+    if (visible)
+    {
+        [dimsData, data] = loadVarData(fileName, 0, varName, dims);
+        data = data.slice(0, ni*nj);
+    }
+    else
+    {
+        dimsData = null;
+        data = null;
+    }
 
 
     // Creates the data structure.
@@ -276,7 +286,7 @@ function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOf
             refTime: "2022-09-30 00:00:00",
             latLonDims: dimsLon.sizes.length,
             latLonSize: dimsLon.sizes,},
-            data: data.slice(0, ni*nj),
+            data: data,
             varName: varName,
             fileName: fileName,
             dims: dims,
@@ -304,7 +314,7 @@ function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOf
 
 
 
-function addNewDynVectormapLayer(map, fileName, varNames, gridTypeU, gridTypeV, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes, cmap, cbar, varScale, varThreshold)
+function addNewDynVectormapLayer(map, fileName, varNames, gridTypeU, gridTypeV, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes, cmap, cbar, varScale, varThreshold, visible)
 // Creates and returns a dynamic heatmap map layer (CCS) based on the datafiles.
 {
     if (gridTypeU[0] !== gridTypeV[0]) {
@@ -327,8 +337,21 @@ function addNewDynVectormapLayer(map, fileName, varNames, gridTypeU, gridTypeV, 
 
     const dims = [ni, nj, nt];
 
-    let [dimsDataU, dataU] = loadVarData(fileName, 0, varNames[0], dims)
-    let [dimsDataV, dataV] = loadVarData(fileName, 0, varNames[1], dims)
+    let dimsDataU, dataU, dimsDataV, dataV
+    if (visible)
+    {
+        [dimsDataU, dataU] = loadVarData(fileName, 0, varNames[0], dims);
+        [dimsDataV, dataV] = loadVarData(fileName, 0, varNames[1], dims);
+        dataU = dataU.slice(0, ni*nj)
+        dataV = dataV.slice(0, ni*nj)
+    }
+    else
+    {
+        dimsDataU = null;
+        dimsDataV = null;
+        dataU = null;
+        dataV = null;
+    }
 
     // let ndi = 0,  ndj = 0;
     // let dataUR, dataVR, latR, lonR;
@@ -351,8 +374,8 @@ function addNewDynVectormapLayer(map, fileName, varNames, gridTypeU, gridTypeV, 
             refTime: "2022-09-30 00:00:00",
             latLonDims: dimsLon.sizes.length,
             latLonSize: dimsLon.sizes,},
-        dataU: dataU.slice(0, ni*nj),
-        dataV: dataV.slice(0, ni*nj),
+        dataU: dataU,
+        dataV: dataV,
         varName: varNames,
         fileName: fileName,
         dims: dims,
@@ -516,6 +539,8 @@ L.DynmapLayer = L.Layer.extend({
         const g = this.g;
 
         g.clearRect(0, 0, this._container.width, this._container.height);
+
+        if (dat == null && datU == null && datV == null) return
 
         const TL = this._map.latLngToContainerPoint(this.pTL);
         const TR = this._map.latLngToContainerPoint(this.pTR);
@@ -749,8 +774,8 @@ L.DynmapLayer = L.Layer.extend({
 
 
     onAdd: function(map) {
-        map.options.zoomAnimation = true;
-        map.zoomControl.options.zoomAnimation = true;
+        map.options.zoomAnimation = false;
+        map.zoomControl.options.zoomAnimation = false;
         L.Browser.any3d = true;
 
         let pane = map.getPane(this.options.pane);
@@ -851,7 +876,7 @@ L.DynmapLayer = L.Layer.extend({
         let topLeft = map.containerPointToLayerPoint([0, 0]);
         L.DomUtil.setPosition(this._container, topLeft);
 
-        this.draw();
+        // this.draw();
 
         // var self = this;
         // setTimeout(function () {

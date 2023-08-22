@@ -177,7 +177,7 @@ class Maps:
                     fileName = layer['server']['url']
                     JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
                     timeOffset = layer['server']['timeOffset']
-                    fileName = fileName.format(year = date.year, month = 6+0*date.month, day = date.day*0 + 21)
+                    fileName = fileName.format(year = date.year, month = date.month, day = date.day-1)
                     gridType = layer['gridtype'].split(',')
                     if len(gridType) == 1:
                         dynLayer, times = window.addNewDynHeatmapLayer(mapLayer, fileName,
@@ -225,7 +225,7 @@ class Maps:
                     fileName = layer['server']['url']
                     JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
                     timeOffset = layer['server']['timeOffset']
-                    fileName = fileName.format(year = date.year, month = 6+0*date.month, day = date.day*0 + 21)
+                    fileName = fileName.format(year = date.year, month = date.month, day = date.day)
                     gridType = layer['gridtype'].split(',')
                     dynScatterLayer = window.addNewDynScatterLayer(mapLayer, fileName,
                                                         layer['name'], layer['server']['grids'][gridType[0]],
@@ -247,7 +247,9 @@ class Maps:
             else:
                 pass
 
-
+        console.log(1111)
+        self.mapLayer.draw()
+        console.log(1112)
         self.onDateChange(0)
 
 #         self.update()

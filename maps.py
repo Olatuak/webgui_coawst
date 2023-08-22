@@ -225,7 +225,7 @@ class Maps:
                     fileName = layer['server']['url']
                     JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
                     timeOffset = layer['server']['timeOffset']
-                    fileName = fileName.format(year = date.year, month = date.month, day = date.day)
+                    fileName = fileName.format(year = 2022+0*date.year, month = 9+0*date.month, day = 27+0*date.day-1)
                     gridType = layer['gridtype'].split(',')
                     dynScatterLayer = window.addNewDynScatterLayer(mapLayer, fileName,
                                                         layer['name'], layer['server']['grids'][gridType[0]],

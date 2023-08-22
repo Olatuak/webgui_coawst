@@ -247,13 +247,13 @@ class Maps:
             else:
                 pass
 
-        print(1111)
-        try:
-            dynLayer.draw()
-#             mapLayer.draw()
-        except:
-            pass
-        print(1112)
+            print(1111)
+            try:
+                dynLayer.draw()
+    #             mapLayer.draw()
+            except:
+                pass
+            print(1112)
         self.onDateChange(0)
 
 #         self.update()

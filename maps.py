@@ -249,7 +249,7 @@ class Maps:
 
             print(1111)
             try:
-                leaflet.redrawLayers()
+                leaflet.update()
                 dynLayer.draw()
     #             mapLayer.draw()
             except:

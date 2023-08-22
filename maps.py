@@ -249,6 +249,7 @@ class Maps:
 
             print(1111)
             try:
+                leaflet.redrawLayers()
                 dynLayer.draw()
     #             mapLayer.draw()
             except:

@@ -249,7 +249,8 @@ class Maps:
 
         print(1111)
         try:
-            mapLayer.draw()
+            dynLayer.draw()
+#             mapLayer.draw()
         except:
             pass
         print(1112)

@@ -247,9 +247,9 @@ class Maps:
             else:
                 pass
 
-        console.log(1111)
+        print(1111)
         self.mapLayer.draw()
-        console.log(1112)
+        print(1112)
         self.onDateChange(0)
 
 #         self.update()

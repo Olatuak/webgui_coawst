@@ -217,7 +217,7 @@ class Maps:
 
             elif layerType == 'dynscatter':
                 try:
-                    gridType   = layer['gridtype']
+                    gridType     = layer['gridtype']
                     colorBarName = layer['colorbar']
                     colorbar = conf.colorbars[colorBarName]
                     mapLayer = self.map

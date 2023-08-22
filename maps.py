@@ -248,7 +248,10 @@ class Maps:
                 pass
 
         print(1111)
-        self.mapLayer.draw()
+        try:
+            mapLayer.draw()
+        except:
+            pass
         print(1112)
         self.onDateChange(0)
 

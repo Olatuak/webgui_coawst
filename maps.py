@@ -254,7 +254,7 @@ class Maps:
 
                 print(1111)
 
-            timer.set_timeout(addLayer, 0, (self, conf, layer))
+            timer.set_timeout(addLayer, 0, self, conf, layer)
 
 
         self.onDateChange(0)

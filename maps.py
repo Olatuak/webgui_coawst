@@ -253,9 +253,8 @@ class Maps:
 
             print(1111)
 
-            self.onDateChange(0)
-            print(1112)
 
+        self.onDateChange(0)
 
 #         self.update()
 

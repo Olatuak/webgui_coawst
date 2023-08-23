@@ -249,9 +249,9 @@ class Maps:
 
             print(1111)
             try:
-                leaflet.update()
-                dynLayer.draw()
-    #             mapLayer.draw()
+                leaflet.
+#                 dynLayer.draw()
+                mapLayer.invalidateSize()
             except:
                 pass
             print(1112)

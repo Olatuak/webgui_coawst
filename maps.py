@@ -255,11 +255,12 @@ class Maps:
             print(1111)
             addLayer()
 #             leaflet.
-            document.getElementById('txt1').textContent = document.getElementById('txt1').textContent + ' 1'
+
 #             self.map.setView(self.conf.viewcenter, self.conf.zoom)
             try:
                 def change_color():
 #                     doc['first-text'].style.color = "blue"
+                    document.getElementById('txt1').textContent = document.getElementById('txt1').textContent + ' 1'
                     print('4444')
 
                 timer.set_timeout(change_color,0)

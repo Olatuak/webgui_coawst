@@ -251,7 +251,8 @@ class Maps:
             try:
 #                 leaflet.
 #                 dynLayer.draw()
-                mapLayer.invalidateSize()
+#                 mapLayer.invalidateSize()
+
             except:
                 pass
             print(1112)

@@ -439,7 +439,9 @@ L.DynmapLayer = L.Layer.extend({
         this.indicesCache = null
         this.windowSizes = [0,0];
 
-
+        setTimeout(() => {
+            console.log("Delayed for 1 second.");
+        }, "100");
 
     },
 

@@ -126,132 +126,135 @@ class Maps:
 
         # Creates all the maps and velocity layers.
         for layer in self.layers:
-            colorBarName = layer['colorbar']
-            colorbar = conf.colorbars[colorBarName]
-            layerType  = layer['layertype']
-            serverType = layer['servertype']
-
-
-            if layerType == 'colormap':
-                if (serverType == 'wms'):
-                    mapLayer = self.leaflet.tileLayer.wms(layer['server']['url'], {
-                        'layers': layer['name'],
-                        'format': 'image/png',
-                        'transparent': True,
-                        'colorscalerange': '%.4f,%.4f' % (colorbar['min'], colorbar['max']),
-                        'abovemaxcolor': colorbar['abovemaxcol'],
-                        'belowmincolor': colorbar['belowmincol'],
-                        'time': self.date.strftime('%Y-%m-%dT%H:%M:00.0Z'),  # xxxxxxx
-                        'crs': self.crs,  # leaflet.CRS.EPSG3395,  # 'CRS:84'
-                        'version': '1.3.0',
-                        'styles': colorbar['style'],
-                    })
-
-                    mapLayer.on('tileload', onTileLoad)
-                    mapLayer.on('tileerror', onError)
-                    mapLayer.on('tileloadstart', onTileLoadStart)
-                elif (serverType == 'dap'):
-                    mapLayer = self.map
-                else:
-                    print('ERROR: invalid server type: ', serverType)
-
-                self.listLayer +=[mapLayer]
-                self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
-                self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
-            elif layerType == 'velocitymap':
+            def addLayer():
                 colorBarName = layer['colorbar']
                 colorbar = conf.colorbars[colorBarName]
-                mapLayer = self.map
-                velLayer = window.addNewVelocityLayer(mapLayer)
-                x = velLayer.addTo(self.map)
-                self.listLayer += [x]
-                self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
-                self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
-            elif layerType == 'dynmap':
+                layerType  = layer['layertype']
+                serverType = layer['servertype']
 
-                try:
-                    gridType   = layer['gridtype']
-                    colorBarName = layer['colorbar']
-                    colorbar = conf.colorbars[colorBarName]
-                    mapLayer = self.map
 
-                    fileName = layer['server']['url']
-                    JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
-                    timeOffset = layer['server']['timeOffset']
-                    fileName = fileName.format(year = 2023+0*date.year, month = 6+0*date.month, day = 22+0*date.day-1)
-                    gridType = layer['gridtype'].split(',')
-                    if len(gridType) == 1:
-                        print(6666)
-#                             time.sleep(11)
-#                             print(6667)
-                        dynLayer, times = window.addNewDynHeatmapLayer(mapLayer, fileName,
-                                                        layer['name'], layer['server']['grids'][gridType[0]],
-                                                        layer['server']['time'],
-                                                        (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
-                                                        int(layer['server']['timeFloatBytes']),
-                                                        conf.colormaps[colorbar['style']], colorbar,  layer['varthresholdmin'], layer['varthresholdmax'], layer['visible'])
-                    elif len(gridType) == 2:
-                        dynLayer, times = window.addNewDynVectormapLayer(mapLayer, fileName,
-                                                        layer['name'].split(','), layer['server']['grids'][gridType[0]], layer['server']['grids'][gridType[1]],
-                                                        layer['server']['time'],
-                                                        (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
-                                                        int(layer['server']['timeFloatBytes']),
-                                                        conf.colormaps[colorbar['style']], colorbar, layer['varscale'], layer['varthresholdmax'], layer['visible'])
+                if layerType == 'colormap':
+                    if (serverType == 'wms'):
+                        mapLayer = self.leaflet.tileLayer.wms(layer['server']['url'], {
+                            'layers': layer['name'],
+                            'format': 'image/png',
+                            'transparent': True,
+                            'colorscalerange': '%.4f,%.4f' % (colorbar['min'], colorbar['max']),
+                            'abovemaxcolor': colorbar['abovemaxcol'],
+                            'belowmincolor': colorbar['belowmincol'],
+                            'time': self.date.strftime('%Y-%m-%dT%H:%M:00.0Z'),  # xxxxxxx
+                            'crs': self.crs,  # leaflet.CRS.EPSG3395,  # 'CRS:84'
+                            'version': '1.3.0',
+                            'styles': colorbar['style'],
+                        })
+
+                        mapLayer.on('tileload', onTileLoad)
+                        mapLayer.on('tileerror', onError)
+                        mapLayer.on('tileloadstart', onTileLoadStart)
+                    elif (serverType == 'dap'):
+                        mapLayer = self.map
                     else:
-                        print('ERROR, too many layers')
-                    dynLayer.addTo(self.map)
-                    layer['dynlayer'] = dynLayer
-                    self.listLayer += [dynLayer]
+                        print('ERROR: invalid server type: ', serverType)
+
+                    self.listLayer +=[mapLayer]
                     self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
                     self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
-
-                    # Finds the intersection of dates.
-                    try:
-                        if times is not None and times != []:
-                            self.dates = list(set(self.dates).intersection(set(self.dates)))
-                    except:
-                        if times is not None and times != []:
-                            self.dates= times
-                    self.localDates += [times]
-                except:
-                    self.listLayer += [None]
-                    self.colorMaps += [None]
-                    self.colorBars += [None]
-                    self.localDates += [None]
-
-            elif layerType == 'dynscatter':
-                try:
-                    gridType     = layer['gridtype']
+                elif layerType == 'velocitymap':
                     colorBarName = layer['colorbar']
                     colorbar = conf.colorbars[colorBarName]
                     mapLayer = self.map
-
-                    fileName = layer['server']['url']
-                    JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
-                    timeOffset = layer['server']['timeOffset']
-                    fileName = fileName.format(year = date.year, month = date.month, day = date.day)
-                    gridType = layer['gridtype'].split(',')
-                    dynScatterLayer = window.addNewDynScatterLayer(mapLayer, fileName,
-                                                        layer['name'], layer['server']['grids'][gridType[0]],
-                                                        conf.colormaps[colorbar['style']], colorbar,  layer['varthresholdmin'], layer['varthresholdmax'], layer['visible'])
-
-                    dynScatterLayer.addTo(self.map)
-                    layer['dynlayer'] = dynScatterLayer
-                    self.listLayer += [dynScatterLayer]
+                    velLayer = window.addNewVelocityLayer(mapLayer)
+                    x = velLayer.addTo(self.map)
+                    self.listLayer += [x]
                     self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
                     self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
-                    self.localDates += [None]
+                elif layerType == 'dynmap':
+
+                    try:
+                        gridType   = layer['gridtype']
+                        colorBarName = layer['colorbar']
+                        colorbar = conf.colorbars[colorBarName]
+                        mapLayer = self.map
+
+                        fileName = layer['server']['url']
+                        JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
+                        timeOffset = layer['server']['timeOffset']
+                        fileName = fileName.format(year = 2023+0*date.year, month = 6+0*date.month, day = 22+0*date.day-1)
+                        gridType = layer['gridtype'].split(',')
+                        if len(gridType) == 1:
+                            print(6666)
+    #                             time.sleep(11)
+    #                             print(6667)
+                            dynLayer, times = window.addNewDynHeatmapLayer(mapLayer, fileName,
+                                                            layer['name'], layer['server']['grids'][gridType[0]],
+                                                            layer['server']['time'],
+                                                            (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
+                                                            int(layer['server']['timeFloatBytes']),
+                                                            conf.colormaps[colorbar['style']], colorbar,  layer['varthresholdmin'], layer['varthresholdmax'], layer['visible'])
+                        elif len(gridType) == 2:
+                            dynLayer, times = window.addNewDynVectormapLayer(mapLayer, fileName,
+                                                            layer['name'].split(','), layer['server']['grids'][gridType[0]], layer['server']['grids'][gridType[1]],
+                                                            layer['server']['time'],
+                                                            (layer['server']['timeOffset'] - JSDateOrig).total_seconds(), int(layer['server']['timeUnitsInSeconds']),
+                                                            int(layer['server']['timeFloatBytes']),
+                                                            conf.colormaps[colorbar['style']], colorbar, layer['varscale'], layer['varthresholdmax'], layer['visible'])
+                        else:
+                            print('ERROR, too many layers')
+                        dynLayer.addTo(self.map)
+                        layer['dynlayer'] = dynLayer
+                        self.listLayer += [dynLayer]
+                        self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
+                        self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
+
+                        # Finds the intersection of dates.
+                        try:
+                            if times is not None and times != []:
+                                self.dates = list(set(self.dates).intersection(set(self.dates)))
+                        except:
+                            if times is not None and times != []:
+                                self.dates= times
+                        self.localDates += [times]
+                    except:
+                        self.listLayer += [None]
+                        self.colorMaps += [None]
+                        self.colorBars += [None]
+                        self.localDates += [None]
+
+                elif layerType == 'dynscatter':
+                    try:
+                        gridType     = layer['gridtype']
+                        colorBarName = layer['colorbar']
+                        colorbar = conf.colorbars[colorBarName]
+                        mapLayer = self.map
+
+                        fileName = layer['server']['url']
+                        JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
+                        timeOffset = layer['server']['timeOffset']
+                        fileName = fileName.format(year = date.year, month = date.month, day = date.day)
+                        gridType = layer['gridtype'].split(',')
+                        dynScatterLayer = window.addNewDynScatterLayer(mapLayer, fileName,
+                                                            layer['name'], layer['server']['grids'][gridType[0]],
+                                                            conf.colormaps[colorbar['style']], colorbar,  layer['varthresholdmin'], layer['varthresholdmax'], layer['visible'])
+
+                        dynScatterLayer.addTo(self.map)
+                        layer['dynlayer'] = dynScatterLayer
+                        self.listLayer += [dynScatterLayer]
+                        self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
+                        self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
+                        self.localDates += [None]
 
 
-                except:
-                    self.listLayer += [None]
-                    self.colorMaps += [None]
-                    self.colorBars += [None]
-                    self.localDates += [None]
-            else:
-                pass
+                    except:
+                        self.listLayer += [None]
+                        self.colorMaps += [None]
+                        self.colorBars += [None]
+                        self.localDates += [None]
+                else:
+                    pass
 
-            print(1111)
+                print(1111)
+
+            addLayer()
 
 
         self.onDateChange(0)

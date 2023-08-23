@@ -253,22 +253,9 @@ class Maps:
 
             print(1111)
 
-            self.map.setView(self.conf.viewcenter, self.conf.zoom)
-            try:
-                def test():
-                    document.getElementById('txt1').textContent = document.getElementById('txt1').textContent + ' 1'
-                    print('4444')
-
-                timer.set_timeout(test, 0)
-
-#                 leaflet.
-#                 dynLayer.draw()
-#                 mapLayer.invalidateSize()
-
-            except:
-                pass
-            print(1112)
             self.onDateChange(0)
+            print(1112)
+
 
 #         self.update()
 

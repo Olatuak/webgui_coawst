@@ -250,7 +250,8 @@ class Maps:
 
             print(1111)
             addLayer()
-            self.map.setView(self.conf.viewcenter, self.conf.zoom)
+            document.getElementById('txtCache').textContent = document.getElementById('txtCache').textContent + ' 1'
+#             self.map.setView(self.conf.viewcenter, self.conf.zoom)
             try:
                 def change_color():
 #                     doc['first-text'].style.color = "blue"

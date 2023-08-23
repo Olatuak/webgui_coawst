@@ -249,7 +249,12 @@ class Maps:
 
             print(1111)
             try:
-                pass
+                def change_color():
+#                     doc['first-text'].style.color = "blue"
+                    print('4444')
+
+                timer.set_timeout(change_color, 3)
+
 #                 leaflet.
 #                 dynLayer.draw()
 #                 mapLayer.invalidateSize()

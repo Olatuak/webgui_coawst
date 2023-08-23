@@ -250,7 +250,7 @@ class Maps:
 
             print(1111)
             addLayer()
-            leaflet.
+#             leaflet.
             document.getElementById('txtCache').textContent = document.getElementById('txtCache').textContent + ' 1'
 #             self.map.setView(self.conf.viewcenter, self.conf.zoom)
             try:

@@ -249,7 +249,7 @@ function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOf
 
     setTimeout(() => {
         console.log("Delayed for 1 second.");
-    }, "100");
+    }, "1");
 
     const  [dimsTime, times, dimsLat, lat, dimsLon, lon] = loadGridData(fileName, 0, gridType, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes)
 

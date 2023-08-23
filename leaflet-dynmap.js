@@ -247,7 +247,7 @@ function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOf
 // Creates and returns a dynamic heatmap map layer (CCS) based on the datafiles.
 {
     const  [dimsTime, times, dimsLat, lat, dimsLon, lon] = loadGridData(fileName, 0, gridType, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes)
-
+    map.invalidateSize();
 
     // A general mesh is one that has different lat lon pairs for each node, i.e. lat and lon arrays are bidimensional.
     const isGeneralMesh = dimsLon.sizes.length > 1 && dimsLon.sizes[0] > 1 && dimsLon.sizes[1] > 1;

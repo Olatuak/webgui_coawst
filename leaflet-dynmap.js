@@ -309,7 +309,6 @@ function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOf
         varThresholdMax: varThresholdMax,
     });
 
-    heatmapLayer.invalidateSize();
     return [heatmapLayer, times]
 }
 

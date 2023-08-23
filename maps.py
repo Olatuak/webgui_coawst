@@ -249,7 +249,7 @@ class Maps:
 
             print(1111)
             try:
-                leaflet.
+#                 leaflet.
 #                 dynLayer.draw()
                 mapLayer.invalidateSize()
             except:

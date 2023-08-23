@@ -126,7 +126,7 @@ class Maps:
 
         # Creates all the maps and velocity layers.
         for layer in self.layers:
-            def addLayer():
+            def addLayer(self, conf, layer):
                 colorBarName = layer['colorbar']
                 colorbar = conf.colorbars[colorBarName]
                 layerType  = layer['layertype']
@@ -254,7 +254,7 @@ class Maps:
 
                 print(1111)
 
-            addLayer()
+            timer.set_timeout(addLayer, 0, (self, conf, layer))
 
 
         self.onDateChange(0)

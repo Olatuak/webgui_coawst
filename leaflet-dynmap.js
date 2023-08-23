@@ -246,6 +246,7 @@ const Cmap = class
 function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes, cmap, cbar, varThresholdMin, varThresholdMax, visible)
 // Creates and returns a dynamic heatmap map layer (CCS) based on the datafiles.
 {
+    console.log(" dsadsadadsadsa");
 
     setTimeout(() => {
         console.log("Delayed for 1 second.");

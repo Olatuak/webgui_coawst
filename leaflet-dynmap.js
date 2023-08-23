@@ -246,6 +246,11 @@ const Cmap = class
 function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes, cmap, cbar, varThresholdMin, varThresholdMax, visible)
 // Creates and returns a dynamic heatmap map layer (CCS) based on the datafiles.
 {
+
+    setTimeout(() => {
+        console.log("Delayed for 1 second.");
+    }, "100");
+
     const  [dimsTime, times, dimsLat, lat, dimsLon, lon] = loadGridData(fileName, 0, gridType, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes)
 
 
@@ -439,9 +444,7 @@ L.DynmapLayer = L.Layer.extend({
         this.indicesCache = null
         this.windowSizes = [0,0];
 
-        setTimeout(() => {
-            console.log("Delayed for 1 second.");
-        }, "100");
+
 
     },
 

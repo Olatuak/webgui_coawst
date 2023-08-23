@@ -1,4 +1,4 @@
-from browser import document, window, timer
+from browser import document, window, timer, aio
 import dateGizmo
 import colorBar
 from colorBar   import *
@@ -181,6 +181,8 @@ class Maps:
                         fileName = fileName.format(year = 2023+0*date.year, month = 6+0*date.month, day = 22+0*date.day-1)
                         gridType = layer['gridtype'].split(',')
                         if len(gridType) == 1:
+                            print(6666)
+                            aio.sleep(1)
                             dynLayer, times = window.addNewDynHeatmapLayer(mapLayer, fileName,
                                                             layer['name'], layer['server']['grids'][gridType[0]],
                                                             layer['server']['time'],

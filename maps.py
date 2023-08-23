@@ -249,7 +249,7 @@ class Maps:
                     pass
 
             print(1111)
-            addLayer()
+#             addLayer()
             try:
                 def change_color():
 #                     doc['first-text'].style.color = "blue"

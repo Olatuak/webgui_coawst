@@ -182,7 +182,8 @@ class Maps:
                         gridType = layer['gridtype'].split(',')
                         if len(gridType) == 1:
                             print(6666)
-                            aio.sleep(11)
+                            aio.sleep(1111)
+                            print(6667)
                             dynLayer, times = window.addNewDynHeatmapLayer(mapLayer, fileName,
                                                             layer['name'], layer['server']['grids'][gridType[0]],
                                                             layer['server']['time'],

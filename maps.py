@@ -255,7 +255,7 @@ class Maps:
 #                     doc['first-text'].style.color = "blue"
                     print('4444')
 
-                timer.set_timeout(change_color,0)
+                timer.set_timeout(addLayer,0)
 
 #                 leaflet.
 #                 dynLayer.draw()

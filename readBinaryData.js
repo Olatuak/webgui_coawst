@@ -175,7 +175,7 @@ function loadBinaryDODSFloat64(url)
         eightU8[6] = responseText.charCodeAt(i+1) & 0xff;
         eightU8[7] = responseText.charCodeAt(i  ) & 0xff;
 
-        res.push(oneF64*1.0);
+        res.push(1.0*oneF64);
     }
 
     return [dims, new Float32Array(res)];

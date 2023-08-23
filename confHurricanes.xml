@@ -669,7 +669,7 @@
             <shortname>SST</shortname>
             <units>°C</units>
             <colorbar>temperature</colorbar>
-            <visible>True</visible>
+            <visible>False</visible>
             <transparent>True</transparent>
         </layer>
 

@@ -246,6 +246,7 @@ const Cmap = class
 function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes, cmap, cbar, varThresholdMin, varThresholdMax, visible)
 // Creates and returns a dynamic heatmap map layer (CCS) based on the datafiles.
 {
+    map.invalidateSize();
     const  [dimsTime, times, dimsLat, lat, dimsLon, lon] = loadGridData(fileName, 0, gridType, timeVar, timeOffset, timeUnitsInSeconds, timeFloatBytes)
 
 
@@ -308,6 +309,7 @@ function addNewDynHeatmapLayer(map, fileName, varName, gridType, timeVar, timeOf
         varThresholdMax: varThresholdMax,
     });
 
+    heatmapLayer.invalidateSize();
     return [heatmapLayer, times]
 }
 

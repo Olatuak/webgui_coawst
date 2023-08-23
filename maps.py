@@ -249,13 +249,14 @@ class Maps:
                     pass
 
             print(1111)
-#             addLayer()
+            addLayer()
+            self.map.setView(self.conf.viewcenter, self.conf.zoom)
             try:
                 def change_color():
 #                     doc['first-text'].style.color = "blue"
                     print('4444')
 
-                timer.set_timeout(addLayer,1)
+#                 timer.set_timeout(addLayer,1)
 
 #                 leaflet.
 #                 dynLayer.draw()

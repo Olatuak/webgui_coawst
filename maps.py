@@ -135,6 +135,7 @@ class Maps:
                 print(' ***2')
 
                 if layerType == 'colormap':
+                    print(' ***3')
                     if (serverType == 'wms'):
                         mapLayer = self.leaflet.tileLayer.wms(layer['server']['url'], {
                             'layers': layer['name'],
@@ -148,7 +149,7 @@ class Maps:
                             'version': '1.3.0',
                             'styles': colorbar['style'],
                         })
-
+                        print(' ***4')
                         mapLayer.on('tileload', onTileLoad)
                         mapLayer.on('tileerror', onError)
                         mapLayer.on('tileloadstart', onTileLoadStart)

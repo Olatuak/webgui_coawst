@@ -3,7 +3,7 @@ import dateGizmo
 import colorBar
 from colorBar   import *
 import datetime
-import time
+
 # import velocityPythonAdaptor
 
 reloadTileOnError = False
@@ -183,8 +183,8 @@ class Maps:
                         gridType = layer['gridtype'].split(',')
                         if len(gridType) == 1:
                             print(6666)
-                            time.sleep(11)
-                            print(6667)
+#                             time.sleep(11)
+#                             print(6667)
                             dynLayer, times = window.addNewDynHeatmapLayer(mapLayer, fileName,
                                                             layer['name'], layer['server']['grids'][gridType[0]],
                                                             layer['server']['time'],

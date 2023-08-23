@@ -127,11 +127,12 @@ class Maps:
         # Creates all the maps and velocity layers.
         for layer in self.layers:
             def addLayer(self, conf, layer):
+                print(' ***1')
                 colorBarName = layer['colorbar']
                 colorbar = conf.colorbars[colorBarName]
                 layerType  = layer['layertype']
                 serverType = layer['servertype']
-
+                print(' ***2')
 
                 if layerType == 'colormap':
                     if (serverType == 'wms'):

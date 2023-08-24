@@ -46,6 +46,9 @@ function readDODSHeader(url)
 {
     let res = [];
     let str  = [];
+
+    let a = syncReq(url, "");
+
     let req = new XMLHttpRequest();
     req.open('GET', url, false);
     req.overrideMimeType('text\/plain; charset=x-user-defined');

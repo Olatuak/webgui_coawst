@@ -28,8 +28,8 @@ function syncReq(file, encoding) {
             // The decode() method takes a DataView as a parameter, which is a wrapper on top of the ArrayBuffer.
             var dataView = new DataView(this.response);
             // The TextDecoder interface is documented at http://encoding.spec.whatwg.org/#interface-textdecoder
-            var decoder = new TextDecoder(encoding);
-            var decodedString = decoder.decode(dataView);
+            // var decoder = new TextDecoder(encoding);
+            // var decodedString = decoder.decode(dataView);
             // Add the decoded file's text to the <pre> element on the page.
         } else {
             console.error('Error while requesting', file, this);

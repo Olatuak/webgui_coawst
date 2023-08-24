@@ -22,7 +22,6 @@ function readDODSHeader(url)
     let res = [];
     let str  = [];
     let req = new XMLHttpRequest();
-    req.responseType = "blob";
     req.open('GET', url, false);
     req.overrideMimeType('text\/plain; charset=x-user-defined');
     req.send(null);
@@ -70,7 +69,7 @@ function readDODSHeader(url)
 
     }
 
-    return [dims, req.responseText.slice(idx, -1)]
+    return [dims, stringToArrayBuffer(req.responseText.slice(idx, -1))]
 }
 
 

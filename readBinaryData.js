@@ -124,12 +124,15 @@ function loadBinaryDODSFloat32(url)
 // WARNING: Assumes little endian IEEE754
 {
     let [dims, responseText] = readDODSHeader(url)
-    res = [];
+
 
     // This is like a "union", fourU8 and oneF32 are two different views of the same buffer.
     buf = new ArrayBuffer(4);
     fourU8 = new Uint8Array(buf);
     oneF32 = new Float32Array(buf);
+
+    bufArray = new ArrayBuffer(responseText.length+1);
+    resArrayF32 = new Float32Array(bufArray);
 
     // Reads the rest of bytes as Float32
     for (var i = 0; i < responseText.length; i+=4)
@@ -138,14 +141,9 @@ function loadBinaryDODSFloat32(url)
         fourU8[1] = responseText.charCodeAt(i+2) & 0xff;
         fourU8[2] = responseText.charCodeAt(i+1) & 0xff;
         fourU8[3] = responseText.charCodeAt(i  ) & 0xff;
-        if (true) //(!isNaN(oneF32))
-        {
-            res.push(1.0*oneF32)
-        }
-        else
-        {
-            res.push(null)
-        }
+
+        // res.push(1.0*oneF32)
+        resArrayF32[i/8] = 1.0*oneF32;
     }
 
     return [dims, new Float32Array(res)];
@@ -177,7 +175,7 @@ function loadBinaryDODSFloat64(url)
         eightU8[7] = responseText.charCodeAt(i  ) & 0xff;
 
         // res.push(1.0*oneF64);
-        resArrayF32[i/8] = 1.0*oneF64
+        resArrayF32[i/8] = 1.0*oneF6;
     }
 
     return [dims, resArrayF32];

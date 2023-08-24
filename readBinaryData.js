@@ -16,39 +16,12 @@ function getCachedVar(key)
 }
 
 
-function syncReq(file, encoding) {
-    var xhr = new XMLHttpRequest();
-    var exit = false;
-    xhr.open('GET', file);
-    // Using 'arraybuffer' as the responseType ensures that the raw data is returned,
-    // rather than letting XMLHttpRequest decode the data first.
-    xhr.responseType = 'arraybuffer';
-    xhr.onload = function() {
-        if (this.status == 200) {
-            // The decode() method takes a DataView as a parameter, which is a wrapper on top of the ArrayBuffer.
-            var dataView = new DataView(this.response);
-            // The TextDecoder interface is documented at http://encoding.spec.whatwg.org/#interface-textdecoder
-            // var decoder = new TextDecoder(encoding);
-            // var decodedString = decoder.decode(dataView);
-            // Add the decoded file's text to the <pre> element on the page.
-        } else {
-            console.error('Error while requesting', file, this);
-        }
-        exit = true;
-    };
-    xhr.send();
-
-    // while (!exit) {};
-}
 
 function readDODSHeader(url)
 // Read the ASCII header of the otherwise binary dods file.
 {
     let res = [];
     let str  = [];
-
-    let a = syncReq(url, "");
-
     let req = new XMLHttpRequest();
     req.open('GET', url, false);
     req.overrideMimeType('text\/plain; charset=x-user-defined');
@@ -184,15 +157,13 @@ function loadBinaryDODSFloat64(url)
 {
     let [dims, responseText] = readDODSHeader(url);
 
-    res = [];
-
     // This is like a "union", eightU8 and oneF64 are two different views of the same buffer.
-    buf = new ArrayBuffer(8);
-    eightU8 = new Uint8Array(buf);
-    oneF64 = new Float64Array(buf);
+    let buf = new ArrayBuffer(8);
+    let eightU8 = new Uint8Array(buf);
+    let oneF64 = new Float64Array(buf);
 
-    buf2 = new ArrayBuffer((responseText.length+1)/2);
-    resF32 = new Float32Array(buf2);
+    bufArray = new ArrayBuffer((responseText.length+1)/2);
+    resArrayF32 = new Float32Array(bufArray);
     // Reads the rest of bytes as Float64
     for (let i = 0; i < responseText.length; i+=8)
     {
@@ -206,10 +177,10 @@ function loadBinaryDODSFloat64(url)
         eightU8[7] = responseText.charCodeAt(i  ) & 0xff;
 
         // res.push(1.0*oneF64);
-        resF32[i/8] = 1.0*oneF64
+        resArrayF32[i/8] = 1.0*oneF64
     }
 
-    return [dims, resF32];
+    return [dims, resArrayF32];
 }
 
 

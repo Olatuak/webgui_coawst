@@ -162,7 +162,7 @@ function loadBinaryDODSFloat64(url)
 
     bufArray = new ArrayBuffer((responseText.length+1)/2);
     resArrayU8 = new Uint8Array(bufArray, 0, (responseText.length+1)/2);
-    resArrayF32 = new Float32Array(bufArray, 0, (responseText.length+1)/8);
+    resArrayF64 = new Float64Array(bufArray, 0, (responseText.length+1)/8);
     // Reads the rest of bytes as Float64
     for (let i = 0; i < responseText.length; i+=8)
     {
@@ -181,7 +181,7 @@ function loadBinaryDODSFloat64(url)
         // resArrayF32[i >> 3] = 1.0*oneF64;
     }
 
-    return [dims, resArrayF32];
+    return [dims, new Float32Array(resArrayF64)];
 }
 
 

@@ -38,7 +38,7 @@ function syncReq(file, encoding) {
     };
     xhr.send();
 
-    while (!exit) {};
+    // while (!exit) {};
 }
 
 function readDODSHeader(url)

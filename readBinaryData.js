@@ -22,7 +22,7 @@ function readDODSHeader(url)
     let res = [];
     let str  = [];
     let req = new XMLHttpRequest();
-    req.responseType = "arraybuffer";
+    req.responseType = "blob";
     req.open('GET', url, false);
     req.overrideMimeType('text\/plain; charset=x-user-defined');
     req.send(null);

@@ -146,7 +146,7 @@ function loadBinaryDODSFloat32(url)
         resArrayF32[i/4] = 1.0*oneF32;
     }
 
-    return [dims, new Float32Array(res)];
+    return [dims, resArrayF32];
 }
 
 function loadBinaryDODSFloat64(url)

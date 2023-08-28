@@ -28,6 +28,8 @@ function readDODSHeader(url)
     req.send(null);
 
 
+    if (req.status == 404) console.log('ERROR reading ' + url);
+
     if (req.status > 299) return byteArray;
 
 
@@ -143,8 +145,6 @@ function loadBinaryDODSFloat32(url)
         fourU8[2] = responseText.charCodeAt(i+1) & 0xff;
         fourU8[3] = responseText.charCodeAt(i  ) & 0xff;
 
-        // res.push(1.0*oneF32)
-        // resArrayF32[i/4] = 1.0*oneF32;
         resArrayU8.set(fourU8, i);
     }
 
@@ -178,9 +178,6 @@ function loadBinaryDODSFloat64(url)
         eightU8[7] = responseText.charCodeAt(i  ) & 0xff;
 
         resArrayU8.set(eightU8, i);
-
-        // res.push(1.0*oneF64);
-        // resArrayF32[i >> 3] = 1.0*oneF64;
     }
 
     return [dims, new Float32Array(resArrayF64)];

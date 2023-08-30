@@ -78,7 +78,6 @@ function readDODSHeader(url)
 
 function loadBinaryDODSFloat32Cached(url)
 {
-    console.log('XXXXX ', url);
     let res = getCachedVar(url);
 
     if (res == undefined) res = loadBinaryDODSFloat32ToCache(url);
@@ -89,7 +88,6 @@ function loadBinaryDODSFloat32Cached(url)
 
 function loadBinaryDODSFloat64Cached(url)
 {
-    console.log('XXXXX ', url);
     let res = getCachedVar(url);
 
     if (res == undefined) res = loadBinaryDODSFloat64ToCache(url);
@@ -127,6 +125,7 @@ function loadBinaryDODSFloat32(url)
 // Read a Thredds dods binary file of float32 as an array of bytes
 // WARNING: Assumes little endian IEEE754
 {
+    console.log('XXXXX ', url);
     let [dims, responseText] = readDODSHeader(url)
 
 
@@ -157,6 +156,7 @@ function loadBinaryDODSFloat64(url)
 // Read a Thredds dods binary of float64 file as an array of bytes.
 // WARNING: Assumes little endian IEEE754
 {
+    console.log('XXXXX ', url);
     let [dims, responseText] = readDODSHeader(url);
 
     // This is like a "union", eightU8 and oneF64 are two different views of the same buffer.

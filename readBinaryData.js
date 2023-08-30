@@ -78,6 +78,7 @@ function readDODSHeader(url)
 
 function loadBinaryDODSFloat32Cached(url)
 {
+    console.log('XXXXX ', url);
     let res = getCachedVar(url);
 
     if (res == undefined) res = loadBinaryDODSFloat32ToCache(url);

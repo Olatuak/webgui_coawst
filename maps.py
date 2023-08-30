@@ -181,6 +181,7 @@ class Maps:
                     timeOffset = layer['server']['timeOffset']
                     # fileName = fileName.format(year = 2023+0*date.year, month = 6+0*date.month, day = 22+0*date.day-1)
                     fileName = fileName.format(year=date.year, month=date.month, day=date.day - 1)
+                    print('XXXX', fileName)
                     gridType = layer['gridtype'].split(',')
                     if len(gridType) == 1:
                         dynLayer, times = window.addNewDynHeatmapLayer(mapLayer, fileName,

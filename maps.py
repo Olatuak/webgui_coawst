@@ -180,7 +180,7 @@ class Maps:
                     JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
                     timeOffset = layer['server']['timeOffset']
                     # fileName = fileName.format(year = 2023+0*date.year, month = 6+0*date.month, day = 22+0*date.day-1)
-                    fileName = fileName.format(year=date.year, month=date.month, day=date.day - 1)
+                    fileName = fileName.format(year=date.year, month=date.month, day=date.day)
                     print('XXXX', fileName)
                     gridType = layer['gridtype'].split(',')
                     if len(gridType) == 1:
@@ -229,7 +229,7 @@ class Maps:
                     fileName = layer['server']['url']
                     JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
                     timeOffset = layer['server']['timeOffset']
-                    fileName = fileName.format(year = date.year, month = date.month, day = date.day-1)
+                    fileName = fileName.format(year = date.year, month = date.month, day = date.day)
                     gridType = layer['gridtype'].split(',')
                     dynScatterLayer = window.addNewDynScatterLayer(mapLayer, fileName,
                                                         layer['name'], layer['server']['grids'][gridType[0]],

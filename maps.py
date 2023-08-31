@@ -124,6 +124,17 @@ class Maps:
 
         self.map = self.leaflet.map('mapid').setView(self.conf.viewcenter, self.conf.zoom)
 
+        # Finds the newest date for which there are results.
+        for layer in self.layers:
+            for day in [0, -1, -2, -3, -4]:
+                fileName = layer['server']['url']
+                # JSDateOrig = datetime.datetime(1970, 1, 1, 0, 0, 0, 0, datetime.timezone.utc)
+                # timeOffset = layer['server']['timeOffset']
+                # # fileName = fileName.format(year = 2023+0*date.year, month = 6+0*date.month, day = 22+0*date.day-1)
+                fileName = fileName.format(year=date.year, month=date.month, day=date.day)
+
+                loadTimeData(fileName, layer['server']['time'], int(layer['server']['timeFloatBytes']))
+
         # Creates all the maps and velocity layers.
         for layer in self.layers:
 #             def addLayer(self, conf, layer):
@@ -181,7 +192,6 @@ class Maps:
                     timeOffset = layer['server']['timeOffset']
                     # fileName = fileName.format(year = 2023+0*date.year, month = 6+0*date.month, day = 22+0*date.day-1)
                     fileName = fileName.format(year=date.year, month=date.month, day=date.day)
-                    # print('XXXX', fileName)
                     gridType = layer['gridtype'].split(',')
                     if len(gridType) == 1:
                         dynLayer, times = window.addNewDynHeatmapLayer(mapLayer, fileName,

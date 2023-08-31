@@ -140,6 +140,6 @@ document["btnPoint"].bind("mouseup", onBtnPointClick)
 document["btnPoint"].bind("onclick", onBtnPointClick)
 
 # Hides the rectangle with the pointer values label
-# document['rectCoords'].attributeStyleMap.set('opacity', 0)
-# document['textCoords2'].text = ''
+document['rectCoords'].attributeStyleMap.set('opacity', 0)
+document['textCoords2'].text = ''
 

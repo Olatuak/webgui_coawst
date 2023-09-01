@@ -20,7 +20,7 @@ function clearCache(url)
 {
     for (c of cache)
     {
-        c = null;
+        c = null ;
     }
     cache.clear()
 

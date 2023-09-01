@@ -31,6 +31,7 @@ dateEnd   = datetime.datetime(2025, 10, 2, 0, 0, 0, 0, datetime.timezone.utc)
 nowDate = javascript.Date.new(javascript.Date.now())
 dateFile  = datetime.datetime(nowDate.getYear()+1900, nowDate.getMonth()+1, nowDate.getUTCDate(), 0, 0, 0, 0, datetime.timezone.utc)
 
+document.getElementById('fileDate').valueAsDate = nowDate
 
 # Access the leaflet.js API
 leaflet = window.L
@@ -41,11 +42,18 @@ crs = leaflet.CRS.EPSG4326
 
 
 def onDateChange(layer, date):
+    # the date time changes (detetime *inside* a file, do not confuse with onFileDateChanged)
     global curDate
 
-#     curDate = convertJSDateToPython(date)
-
     mapLayers.onDateChange(date)
+
+
+def onFileDateChange(event):
+    # the date of the data file changes (do not confuse with onFileChange)
+    mapLayers.clearAll()
+
+    pass
+
 
 
 def onPointerMove(event):
@@ -127,17 +135,21 @@ except:
 # Put marker on map
 # leaflet.marker([xyz.latitude, xyz.longitude]).addTo(map)
 
+document["root"].bind("mousemove", onPointerMove)
+document["root"].bind("mousedown", onPointerDown)
+
+document["btnPoint"].bind("mouseup", onBtnPointClick)
+document["btnPoint"].bind("onclick", onBtnPointClick)
+
+document["fileDate"].bind("change", onFileDateChange)
+
+
 curDate = dateStart
 setupDateGizmo(mapLayers.mainLayer, None, None, mapLayers.dates[:], onDateChange, conf)
 setupDepthGizmo(0, 10, False)
 
 # cmap = setupCMap(document, [0,0.5,1], ['#f0ff1a', '#ffffff', '#3370d7'], -50, 50)
 
-document["root"].bind("mousemove", onPointerMove)
-document["root"].bind("mousedown", onPointerDown)
-
-document["btnPoint"].bind("mouseup", onBtnPointClick)
-document["btnPoint"].bind("onclick", onBtnPointClick)
 
 # Hides the rectangle with the pointer values label
 document['rectCoords'].attributeStyleMap.set('opacity', 0)

@@ -16,6 +16,17 @@ function getCachedVar(key)
 }
 
 
+function clearCache(url)
+{
+    for (c of cache)
+    {
+        c = null;
+    }
+    cache.clear()
+
+    totCache = 0;
+    document.getElementById('txtCache').textContent = `${(totCache/1024/1024).toFixed(1)} mb`;
+}
 
 function readDODSHeader(url)
 // Read the ASCII header of the otherwise binary dods file.
@@ -37,7 +48,7 @@ function readDODSHeader(url)
     let foundData = false;
     for (let i = 0; i < req.responseText.length-5; ++i)
     {
-        if (req.responseText.slice(i,i+5) == 'Data:')
+        if (req.responseText.slice(i, i+5) == 'Data:')
         {
             foundData = true;
             idx = i + 14

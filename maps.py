@@ -258,6 +258,15 @@ class Maps:
 
 #         self.update()
 
+    def clearAll(self):
+        self.date = None
+
+        window.clearCache()
+
+        self.listLayer = []
+        self.colorMaps = []
+        self.colorBars = []
+        self.localDates = [] # Each layer may have a different set of dates.
 
 
 

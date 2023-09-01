@@ -136,6 +136,7 @@ function loadBinaryDODSFloat32(url)
 // Read a Thredds dods binary file of float32 as an array of bytes
 // WARNING: Assumes little endian IEEE754
 {
+    console.log('XXXXX ', url);
     let [dims, responseText] = readDODSHeader(url)
 
 
@@ -166,6 +167,7 @@ function loadBinaryDODSFloat64(url)
 // Read a Thredds dods binary of float64 file as an array of bytes.
 // WARNING: Assumes little endian IEEE754
 {
+    console.log('XXXXX ', url);
     let [dims, responseText] = readDODSHeader(url);
 
     // This is like a "union", eightU8 and oneF64 are two different views of the same buffer.
@@ -194,103 +196,14 @@ function loadBinaryDODSFloat64(url)
     return [dims, new Float32Array(resArrayF64)];
 }
 
+let loadTimeData = function loadTimeData(fileName, timeVar, timeFloatBytes) {
 
-// function addNewHeatMap(map)
-// {
-//     // Reads the files/urls
-//     lon  = loadBinaryDODSFloat64('./lon.bin')
-//     lat  = loadBinaryDODSFloat64('./lat.bin')
-//
-//     var Nx = lon.length
-//     var Ny = lat.length
-//
-//     inputData = loadBinaryDODSFloat32('./sample2.bin').slice(0, Nx*Ny)
-//
-//     var arr = []; // Initialize array
-//     var k = 0
-//     for (var j = 0 ; j < Ny; j++) {
-//         arr[j] = []; // Initialize inner array
-//         for (var i = 0; i < Nx; i++) {
-//             arr[j][i] = inputData[k]
-//             k++;
-//         }
-//     }
-//
-//     var data = [{
-//       z: arr,
-//       x: lon,
-//       y: lat,
-//       zsmooth: 'best',
-//       type: 'heatmap',
-//       hoverongaps: false,
-//       connectgaps: false,
-//       showscale: false,
-//               colorscale:  [
-//     ['0.0',            'rgb(165,0,38)'],
-//     ['0.111111111111', 'rgb(215,48,39)'],
-//     ['0.222222222222', 'rgb(244,109,67)'],
-//     ['0.333333333333', 'rgb(253,174,97)'],
-//     ['0.444444444444', 'rgb(254,224,144)'],
-//     ['0.555555555556', 'rgb(224,243,248)'],
-//     ['0.666666666667', 'rgb(171,217,233)'],
-//     ['0.777777777778', 'rgb(116,173,209)'],
-//     ['0.888888888889', 'rgb(69,117,180)'],
-//     ['1.0',            'rgb(49,54,149)']
-//   ],
-//
-//     }];
-
-//
-//     // Gives an id to the basemap, so Plotly can create the plot on top
-//     mapid = document.getElementById('mapid');
-//     baseMap = mapid.childNodes[0].childNodes[0]
-//     baseMap.id = 'baseMapId'  // Warning, assuming many things
-//
-//
-//     var layout = {
-//
-//         xaxis: {range: [Math.min(...lon), Math.max(...lon)], visible: false, fixedrange: true},
-//         yaxis: {range: [Math.min(...lat), Math.max(...lat)], visible: false, fixedrange: true},
-//
-//         height: map._size.y,
-//         width:  map._size.x,
-//         margin: {pad: 0, border:0,l:0, r:0, t:0, b:0, autoexpand:true},
-//         paper_bgcolor: "#00000000",
-//         plot_bgcolor: "#00000000",
-//
-//
-//
-//     };
-//
-//
-//
-//     Plotly.newPlot('baseMapId', data, layout);
-//
-//
-// }
-
-// REMOVE
-// function clearHeatmap(heatmapId)
-// {
-//
-// }
-
-
-// function updateHeatmap(heatmapId, mapLayer)
-// // Ensures that a plotly layer is located in the right position
-// {
-//     try
-//     {
-//         bounds = mapLayer.getBounds()
-//
-//         update = {'xaxis': {'range': [bounds.getWest(),  bounds.getEast()],  'visible': false, 'fixedrange': true},
-//                   'yaxis': {'range': [bounds.getSouth(), bounds.getNorth()], 'visible': false, 'fixedrange': true}}
-//         window.Plotly.relayout(heatmapId, update)
-//     }
-//     catch(e)
-//     {}
-// }
-
-
-
-
+    let dimsTime, timesNC=0;
+    // Read the time dimension
+    if (timeFloatBytes==32) {
+        [dimsTime, timesNC] = window.loadBinaryDODSFloat32Cached(fileName + '?' + timeVar);
+    }
+    else {
+        [dimsTime, timesNC] = window.loadBinaryDODSFloat64Cached(fileName + '?' + timeVar);
+    }
+}

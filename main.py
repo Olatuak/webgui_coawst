@@ -146,6 +146,7 @@ document["btnPoint"].bind("onclick", onBtnPointClick)
 document["fileDate"].bind("change", onFileDateChange)
 
 
+
 curDate = dateStart
 setupDateGizmo(mapLayers.mainLayer, None, None, mapLayers.dates[:], onDateChange, conf)
 setupDepthGizmo(0, 10, False)

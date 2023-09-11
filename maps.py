@@ -136,7 +136,22 @@ class Maps:
 #
 #                 loadTimeData(fileName, layer['server']['time'], int(layer['server']['timeFloatBytes']))
 
-        # Creates all the maps and velocity layers.
+        # Creates all the map layers.
+        self.AddAll(date)
+
+
+    def clearAll(self):
+        self.date = None
+
+        window.clearCache()
+
+        self.listLayer = []
+        self.colorMaps = []
+        self.colorBars = []
+        self.localDates = [] # Each layer may have a different set of dates.
+
+
+    def AddAll(self, date):
         for layer in self.layers:
 #             def addLayer(self, conf, layer):
             print(' ***1')
@@ -273,19 +288,6 @@ class Maps:
         self.onDateChange(0)
 
 #         self.update()
-
-    def clearAll(self):
-        self.date = None
-
-        window.clearCache()
-
-        self.listLayer = []
-        self.colorMaps = []
-        self.colorBars = []
-        self.localDates = [] # Each layer may have a different set of dates.
-
-
-
 
     def update(self):
 

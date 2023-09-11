@@ -55,7 +55,7 @@ def onFileDateChange(event):
     print(dateFile)
     mapLayers.clearAll()
 
-    mapLayers.__init__(dateFile, crs, conf, leaflet)
+    mapLayers.AddAll(dateFile)
 
     pass
 

@@ -51,7 +51,7 @@ def onDateChange(layer, date):
 def onFileDateChange(event):
     # the date of the data file changes (do not confuse with onFileChange)
     print('XXXXXXXXX')
-    print(datetime.strptime(event.target.value, '%Y-%m-%d'))
+    print(datetime.datetime.strptime(event.target.value, '%Y-%m-%d'))
     mapLayers.clearAll()
 
     pass

@@ -51,10 +51,11 @@ def onDateChange(layer, date):
 def onFileDateChange(event):
     # the date of the data file changes (do not confuse with onFileChange)
     print('XXXXXXXXX')
-    print(datetime.datetime.strptime(event.target.value, '%Y-%m-%d'))
+    dateFile = datetime.datetime.strptime(event.target.value, '%Y-%m-%d')
+    print(dateFile)
     mapLayers.clearAll()
 
-    mapLayers.__init__()
+    mapLayers.__init__(dateFile, crs, conf, leaflet)
 
     pass
 

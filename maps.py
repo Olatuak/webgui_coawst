@@ -235,9 +235,9 @@ class Maps:
                     self.listLayer += [dynLayer]
                     self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
                     self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
-                    print('MMMMMM2')
+                    print('MMMMMM2', times)
                     # Finds the intersection of dates.
-                    print('LLLL', self.dates)
+
                     try:
                         if times is not None and times != []:
                             self.dates = list(set(self.dates).intersection(set(self.dates)))

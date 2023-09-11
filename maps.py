@@ -152,6 +152,7 @@ class Maps:
 
 
     def AddAll(self, date):
+    self.date = date
         conf = self.conf
         for layer in self.layers:
             print(' ***1')

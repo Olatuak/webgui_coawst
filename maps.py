@@ -152,8 +152,8 @@ class Maps:
 
 
     def AddAll(self, date):
+        conf = self.conf
         for layer in self.layers:
-#             def addLayer(self, conf, layer):
             print(' ***1')
             colorBarName = layer['colorbar']
             colorbar = conf.colorbars[colorBarName]

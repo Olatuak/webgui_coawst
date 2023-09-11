@@ -124,8 +124,7 @@ class Maps:
 
         self.map = self.leaflet.map('mapid').setView(self.conf.viewcenter, self.conf.zoom)
 
-        fileName = layer['server']['url']
-        fileName = fileName.format(year=date.year, month=date.month, day=date.day)
+
 #         # Finds the newest date for which there are results.
 #         for layer in self.layers:
 #             for day in [0, -1, -2, -3, -4]:
@@ -146,6 +145,9 @@ class Maps:
             layerType  = layer['layertype']
             serverType = layer['servertype']
             print(' ***2')
+
+            fileName = layer['server']['url']
+            fileName = fileName.format(year=date.year, month=date.month, day=date.day)
 
             if layerType == 'colormap':
                 if (serverType == 'wms'):

@@ -54,6 +54,8 @@ def onFileDateChange(event):
     print(datetime.datetime.strptime(event.target.value, '%Y-%m-%d'))
     mapLayers.clearAll()
 
+    mapLayers.init()
+
     pass
 
 

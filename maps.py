@@ -236,12 +236,14 @@ class Maps:
                     self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
 
                     # Finds the intersection of dates.
+                    print('LLLL', self.dates)
                     try:
                         if times is not None and times != []:
                             self.dates = list(set(self.dates).intersection(set(self.dates)))
                     except:
                         if times is not None and times != []:
                             self.dates= times
+                    print('LLLL2', self.dates)
                     self.localDates += [times]
                 except:
                     self.listLayer += [None]

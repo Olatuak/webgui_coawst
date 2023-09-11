@@ -53,6 +53,7 @@ def onFileDateChange(event):
     print('XXXXXXXXX')
     dateFile = datetime.datetime.strptime(event.target.value, '%Y-%m-%d')
     print(dateFile)
+
     mapLayers.clearAll()
 
     mapLayers.AddAll(dateFile)

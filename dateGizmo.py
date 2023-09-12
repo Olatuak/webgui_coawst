@@ -25,7 +25,7 @@ datePos = []
 date1 = 0
 date2 = 0
 
-tickSVGelements = []
+firstTime = True
 
 JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
 
@@ -277,7 +277,7 @@ def onGizmoDateMove(event):
 def setTicks(dates):
 # Puts ticks along the dates line.
 
-    global datePos, tickSVGelements
+    global datePos
 
 
     datePos = []
@@ -301,7 +301,6 @@ def setTicks(dates):
     for idx, date in enumerate(dates):
         newTick = sampleTick.cloneNode(True)
         newTick['id'] = 'dateTick%i' % idx
-        tickSVGelements += [newTick]
         xSample = float(sampleTick['x'])
         xTick = xSample + widthDates * idx / (len(dates) - 1)
         newTick['x'] = '%.4f' % xTick
@@ -316,6 +315,21 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
     global layer
     global oldxPointerSVG, xGizmo
     global conf
+
+    isPlaying = False
+
+    xPointer = -1
+    xGizmo = 0.0
+    oldxPointerSVG = 0
+    isDateGizmoDown = False
+    selectedDateIdx = 0
+
+    x1RectDate = -1
+    x2RectDate = -1
+
+    datePos = []
+    date1 = 0
+    date2 = 0
 
     conf = confFile
 
@@ -362,12 +376,13 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
     date = convertJSDateToPython(dates[0])
     document['gizmoDateText'] =  conf.datefmt % (date.year, date.month, date.day, date.hour, date.minute)
 
-    document["gizmoDateHandle"].bind("mousedown", onGizmoDateDown)
-    document["gizmoDateHandle"].bind("mouseup",   onGizmoDateUp)
-    document["gizmoDateHandle"].bind("mousemove", onGizmoDateMove)
-    document["root"           ].bind("mousemove", onGizmoDateMove)
-    document["root"           ].bind("mouseup",   onGizmoDateUp)
-    document["play2"          ].bind("mousedown", onGizmoPlay)
+    if firstTime:
+        document["gizmoDateHandle"].bind("mousedown", onGizmoDateDown)
+        document["gizmoDateHandle"].bind("mouseup",   onGizmoDateUp)
+        document["gizmoDateHandle"].bind("mousemove", onGizmoDateMove)
+        document["root"           ].bind("mousemove", onGizmoDateMove)
+        document["root"           ].bind("mouseup",   onGizmoDateUp)
+        document["play2"          ].bind("mousedown", onGizmoPlay)
 
     rect = document['rectDateGizmo'].getBoundingClientRect()
     x1RectDate = rect.left

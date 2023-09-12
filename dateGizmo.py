@@ -277,6 +277,8 @@ def setTicks(dates):
 
     global datePos
 
+    print(345678)
+
     datePos = []
 
     # First removes previous ticks (if exist)
@@ -311,6 +313,8 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
     global conf
 
     conf = confFile
+
+    print(3456780)
 
     if dat1 is None:
         date1 = JSdates[0]

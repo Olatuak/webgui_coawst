@@ -390,7 +390,8 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
     x1RectDate = rect.left
     x2RectDate = rect.right
 
-    updateGizmoPos(0)
 
     updateDateText()
+
+    updateGizmoPos(0)
 

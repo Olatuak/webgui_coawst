@@ -384,9 +384,13 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
         document["root"           ].bind("mouseup",   onGizmoDateUp)
         document["play2"          ].bind("mousedown", onGizmoPlay)
 
+    firstTime = False
+
     rect = document['rectDateGizmo'].getBoundingClientRect()
     x1RectDate = rect.left
     x2RectDate = rect.right
+
+    updateGizmoPos(0)
 
     updateDateText()
 

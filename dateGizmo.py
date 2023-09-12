@@ -283,7 +283,7 @@ def setTicks(dates):
     datePos = []
 
     for tick in tickSVGelements:
-        sampleTick.parent.remove(tick)
+        tick.parent.remove(tick)
     tickSVGelements = []
 
 

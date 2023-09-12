@@ -153,6 +153,7 @@ class Maps:
 
     def AddAll(self, date):
         self.date = date
+        self.dates = None
         conf = self.conf
         for layer in self.layers:
             print(' ***1')
@@ -240,7 +241,7 @@ class Maps:
 
                     try:
                         if times is not None and times != []:
-                            self.dates = list(set(self.dates).intersection(set(self.dates)))
+                            self.dates = list(set(self.dates).intersection(set(times)))
                     except:
                         if times is not None and times != []:
                             self.dates= times

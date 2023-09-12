@@ -314,7 +314,7 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
     global onDateChange
     global layer
     global oldxPointerSVG, xGizmo
-    global conf
+    global conf, firstTime
 
     isPlaying = False
 

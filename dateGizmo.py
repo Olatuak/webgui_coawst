@@ -115,7 +115,7 @@ def onGizmoDateDown(event):
 def onGizmoPlay(event):
     global isPlaying
     isPlaying = not isPlaying
-    print(777771, isPlaying)
+    print(777771, isPlaying, event.targer)
     if isPlaying:
         document['iconPlay' ].style['fill-opacity'] = 0.0
         document['iconPause'].style['fill-opacity'] = 1.0

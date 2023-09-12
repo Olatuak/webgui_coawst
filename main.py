@@ -58,6 +58,10 @@ def onFileDateChange(event):
 
     mapLayers.AddAll(dateFile)
 
+    curDate = event.target.value
+    setupDateGizmo(mapLayers.mainLayer, None, None, mapLayers.dates[:], onDateChange, conf)
+    setupDepthGizmo(0, 10, False)
+
     pass
 
 
@@ -120,6 +124,7 @@ setupLayersMenu2(conf, mapLayers)
 
 
 parser = window.DOMParser.new()
+
 
 try:
     server = conf.servers[0]

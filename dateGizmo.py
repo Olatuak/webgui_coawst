@@ -316,6 +316,11 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
     global oldxPointerSVG, xGizmo
     global conf, firstTime
 
+    try:
+        updateGizmoPos(0)
+    except:
+        pass
+
     isPlaying = False
 
     xPointer = -1
@@ -393,5 +398,5 @@ def setupDateGizmo(lyr, dat1, dat2, JSdates, onDateChng, confFile):
 
     updateDateText()
 
-    updateGizmoPos(0)
+
 

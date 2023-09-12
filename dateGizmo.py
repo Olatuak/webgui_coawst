@@ -282,9 +282,6 @@ def setTicks(dates):
 
     datePos = []
 
-    for tick in tickSVGelements:
-        tick.parent.remove(tick)
-    tickSVGelements = []
 
 
     # First removes previous ticks (if exist)
@@ -303,6 +300,7 @@ def setTicks(dates):
     # Creates all the ticks
     for idx, date in enumerate(dates):
         newTick = sampleTick.cloneNode(True)
+        newTick['id'] = 'dateTick%i' % idx
         tickSVGelements += [newTick]
         xSample = float(sampleTick['x'])
         xTick = xSample + widthDates * idx / (len(dates) - 1)

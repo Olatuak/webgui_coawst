@@ -277,7 +277,7 @@ def onGizmoDateMove(event):
 def setTicks(dates):
 # Puts ticks along the dates line.
 
-    global datePos
+    global datePos, tickSVGelements
 
 
     datePos = []

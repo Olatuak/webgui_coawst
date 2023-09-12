@@ -25,6 +25,8 @@ datePos = []
 date1 = 0
 date2 = 0
 
+tickSVGelements = []
+
 JSDateOrig = datetime.datetime(1970,1,1,0,0,0,0,datetime.timezone.utc)
 
 def convertDate(strDate):
@@ -277,9 +279,13 @@ def setTicks(dates):
 
     global datePos
 
-    print(345678)
 
     datePos = []
+
+    for tick in tickSVGelements:
+        sampleTick.parent.remove(tick)
+    tickSVGelements = []
+
 
     # First removes previous ticks (if exist)
     idx = 0
@@ -297,6 +303,7 @@ def setTicks(dates):
     # Creates all the ticks
     for idx, date in enumerate(dates):
         newTick = sampleTick.cloneNode(True)
+        tickSVGelements += [newTick]
         xSample = float(sampleTick['x'])
         xTick = xSample + widthDates * idx / (len(dates) - 1)
         newTick['x'] = '%.4f' % xTick

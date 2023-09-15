@@ -231,12 +231,10 @@ class Maps:
                     else:
                         print('ERROR, too many layers')
                     dynLayer.addTo(self.map)
-                    print('MMMMMM')
                     layer['dynlayer'] = dynLayer
                     self.listLayer += [dynLayer]
                     self.colorMaps += [newSVGCMapFromConfig(conf.colormaps[colorbar['style']])]
                     self.colorBars += [createNewColorBar(self.colorMaps[-1], colorbar)]
-                    print('MMMMMM2', times)
                     # Finds the intersection of dates.
 
                     try:
@@ -245,7 +243,6 @@ class Maps:
                     except:
                         if times is not None and times != []:
                             self.dates= times
-                    print('LLLL2', self.dates)
                     self.localDates += [times]
                 except:
                     self.listLayer += [None]

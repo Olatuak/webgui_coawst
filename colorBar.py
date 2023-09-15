@@ -65,7 +65,7 @@ def createNewColorBar(cmap, colorbar):
     svgColorBar.getElementsByClassName('textMinVal')[0].text = '%.2f' % colorbar['min']
     svgColorBar.getElementsByClassName('textMaxVal')[0].text = '%.2f' % colorbar['max']
     print(111113, svgColorBar.getElementsByClassName('textMinVal')[0].parent)
-#     svgColorBar.getElementsByClassName('textMinVal')[0].bind("mousemove", onPointerMove)
+    svgColorBar.getElementsByClassName('textMinVal')[0].parent.bind("mousemove", onPointerMove)
 #     print(1111133)
     idxColorBar += 1
     createdColorbars += [svgColorBar]

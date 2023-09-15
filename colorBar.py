@@ -6,6 +6,11 @@ createdColorbars = []
 addedColorbarNames = []
 idxColorBarPos = 0
 
+
+def onPointerMove(event):
+    print(8777)
+    print(event.target)
+
 def resetColorBarsInMap(colorBars):
     # Hides all the colorbars in the map. There is a version of each different colorbar already in the string.
     global idxColorBarPos, addedColorbarNames, createdColorbars
@@ -59,6 +64,8 @@ def createNewColorBar(cmap, colorbar):
     svgColorBar.getElementsByClassName('txtUnits')[0].text = '%s, %s' % (colorbar['longname'], colorbar['units'])
     svgColorBar.getElementsByClassName('textMinVal')[0].text = '%.2f' % colorbar['min']
     svgColorBar.getElementsByClassName('textMaxVal')[0].text = '%.2f' % colorbar['max']
+
+    svgColorBar.getElementsByClassName('textMinVal')[0].bind("mousemove", onPointerMove)
 
     idxColorBar += 1
     createdColorbars += [svgColorBar]

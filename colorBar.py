@@ -18,7 +18,7 @@ def onPointerMove(event):
     delta = sgn(event.wheelDelta)
 
     print(897)
-    print(event.target['idxColorBar'])
+    print(event.target)
 
 
 def resetColorBarsInMap(colorBars):

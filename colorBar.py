@@ -7,8 +7,8 @@ addedColorbarNames = []
 idxColorBarPos = 0
 
 
-def onPointerMove(event):
-    print(8777)
+def onPointerMove(event, a):
+    print(8777, a)
     print(event.target)
 
 def resetColorBarsInMap(colorBars):

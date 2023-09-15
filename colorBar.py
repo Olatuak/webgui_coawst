@@ -9,7 +9,7 @@ idxColorBarPos = 0
 
 def onPointerMove(event):
     print(8777)
-    print(event.target.deltaX, event.target.deltaY, event.target.deltaZ)
+    print(event.target)
 
 def resetColorBarsInMap(colorBars):
     # Hides all the colorbars in the map. There is a version of each different colorbar already in the string.

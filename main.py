@@ -50,10 +50,7 @@ def onDateChange(layer, date):
 
 def onFileDateChange(event):
     # the date of the data file changes (do not confuse with onFileChange)
-    print('XXXXXXXXX')
     dateFile = datetime.datetime.strptime(event.target.value, '%Y-%m-%d')
-    print(dateFile)
-
     mapLayers.clearAll()
 
     mapLayers.AddAll(dateFile)

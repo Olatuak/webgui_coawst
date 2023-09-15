@@ -1,5 +1,6 @@
 from browser import svg, document
 
+
 idxCmap = 1
 idxColorBar = 1
 createdColorbars = []
@@ -7,9 +8,18 @@ addedColorbarNames = []
 idxColorBarPos = 0
 
 
+def sgn(x):
+    if x>=0:
+        return 1
+    else:
+        return -1
+
 def onPointerMove(event):
-    print(8777, event.wheelDelta)
-#     print(event.target)
+    delta = sgn(event.wheelDelta)
+
+    print(897)
+    print(event.parent.colorbar)
+
 
 def resetColorBarsInMap(colorBars):
     # Hides all the colorbars in the map. There is a version of each different colorbar already in the string.
@@ -66,6 +76,7 @@ def createNewColorBar(cmap, colorbar):
     svgColorBar.getElementsByClassName('textMaxVal')[0].text = '%.2f' % colorbar['max']
 #     print(111113, svgColorBar.getElementsByClassName('textMinVal')[0].parent)
     svgColorBar.getElementsByClassName('textMinVal')[0].parent.bind("wheel", onPointerMove)
+    svgColorBar.getElementsByClassName('textMinVal')[0].parent.colorbar = colorbar
 #     print(1111133)
     idxColorBar += 1
     createdColorbars += [svgColorBar]

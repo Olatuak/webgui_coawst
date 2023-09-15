@@ -18,7 +18,7 @@ def onPointerMove(event):
     delta = sgn(event.wheelDelta)
 
     print(897)
-    print(event.parent.colorbar)
+    print(event.parent['idxColorBar'])
 
 
 def resetColorBarsInMap(colorBars):
@@ -76,8 +76,8 @@ def createNewColorBar(cmap, colorbar):
     svgColorBar.getElementsByClassName('textMaxVal')[0].text = '%.2f' % colorbar['max']
 #     print(111113, svgColorBar.getElementsByClassName('textMinVal')[0].parent)
     svgColorBar.getElementsByClassName('textMinVal')[0].parent.bind("wheel", onPointerMove)
-    svgColorBar.getElementsByClassName('textMinVal')[0].parent['idx'] = "%i" % idxColorBar
-    print(1111133, svgColorBar.getElementsByClassName('textMinVal')[0].parent)
+    svgColorBar.getElementsByClassName('textMinVal')[0].parent['idxColorBar'] = "%i" % idxColorBar
+#     print(1111133, svgColorBar.getElementsByClassName('textMinVal')[0].parent)
     idxColorBar += 1
     createdColorbars += [svgColorBar]
 

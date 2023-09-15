@@ -285,8 +285,6 @@ class Maps:
             else:
                 pass
 
-            print(1111, self.dates, 1234)
-
 #             timer.set_timeout(addLayer, 0, self, conf, layer)
 
 

@@ -154,8 +154,11 @@ document["fileDate"].bind("change", onFileDateChange)
 
 
 curDate = dateStart
-setupDateGizmo(mapLayers.mainLayer, None, None, mapLayers.dates[:], onDateChange, conf)
-setupDepthGizmo(0, 10, False)
+try:
+    setupDateGizmo(mapLayers.mainLayer, None, None, mapLayers.dates[:], onDateChange, conf)
+    setupDepthGizmo(0, 10, False)
+except:
+    pass
 
 # cmap = setupCMap(document, [0,0.5,1], ['#f0ff1a', '#ffffff', '#3370d7'], -50, 50)
 

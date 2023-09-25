@@ -374,8 +374,8 @@
         </colorbar>
 
         <colorbar>
-            <name>risk</name>
-            <longname>Damage</longname>
+            <name>Damage</name>
+            <longname>Probability</longname>
             <min>0.0</min>
             <max>1.0</max>
             <abovemaxcol>extend</abovemaxcol>
